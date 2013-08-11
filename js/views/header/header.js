@@ -9,6 +9,10 @@ define([ 'jquery', 'underscore', 'backbone', 'events', 'text!templates/header/he
     },
     login : function(e) {
       e.preventDefault();
+      if ($('#login').hasClass('disabled')) {
+        return; // Prevent multiple clicks
+      }
+      $('#login').addClass('disabled');
       $('#top-message :first-child').alert('close'); // Hide previous message
       $.ajax('/login', {
         type : 'POST',
@@ -17,6 +21,7 @@ define([ 'jquery', 'underscore', 'backbone', 'events', 'text!templates/header/he
           password : $('#password').val()
         },
         error : function() {
+          $('#login').removeClass('disabled');
           $('#top-message').html(loginFailedTemplate);
           $('#top-message :first-child').addClass('in');
         },
