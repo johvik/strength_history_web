@@ -8,7 +8,6 @@ define([ 'jquery', 'underscore', 'backbone', 'events', 'text!templates/header/us
       'click #logout' : 'logout'
     },
     logout : function(e) {
-      e.preventDefault();
       $.ajax('/logout', {
         type : 'GET',
         success : function() {
