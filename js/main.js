@@ -32,6 +32,7 @@ require([ 'jquery', 'views/app', 'router', 'events', 'bootstrap', 'text!template
           // Only trigger if authorized
           Events.trigger('logout');
           $('#top-message').html(loginDroppedTemplate);
+          $('#top-message :first-child').addClass('in');
         }
       }
     }

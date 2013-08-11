@@ -9,7 +9,7 @@ define([ 'jquery', 'underscore', 'backbone', 'events', 'text!templates/header/he
     },
     login : function(e) {
       e.preventDefault();
-      $('#top-message .alert').alert('close'); // Hide previous message
+      $('#top-message :first-child').alert('close'); // Hide previous message
       $.ajax('/login', {
         type : 'POST',
         data : {
@@ -18,6 +18,7 @@ define([ 'jquery', 'underscore', 'backbone', 'events', 'text!templates/header/he
         },
         error : function() {
           $('#top-message').html(loginFailedTemplate);
+          $('#top-message :first-child').addClass('in');
         },
         success : function() {
           Events.trigger('login');
