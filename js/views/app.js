@@ -6,8 +6,12 @@ define([ 'jquery', 'underscore', 'backbone', 'events', 'text!templates/layout.ht
       require([ 'views/header/header', 'views/header/userheader' ], function(HeaderView, UserHeaderView) {
         var headerView = new HeaderView();
         var userHeaderView = new UserHeaderView();
-        // TODO How to fix if logged in at start
-        headerView.render();
+
+        if (Events.authorized === true) {
+          userHeaderView.render();
+        } else {
+          headerView.render();
+        }
         Events.on('login', function() {
           userHeaderView.render();
         });
