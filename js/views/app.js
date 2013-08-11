@@ -1,4 +1,4 @@
-define([ 'jquery', 'underscore', 'backbone', 'events', 'text!templates/layout.html' ], function($, _, Backbone, Events, layoutTemplate) {
+define([ 'jquery', 'underscore', 'backbone', 'events', 'vm', 'text!templates/layout.html' ], function($, _, Backbone, Events, Vm, layoutTemplate) {
   var AppView = Backbone.View.extend({
     el : '#main',
     events : {
@@ -19,13 +19,12 @@ define([ 'jquery', 'underscore', 'backbone', 'events', 'text!templates/layout.ht
     render : function() {
       $(this.el).html(layoutTemplate);
       require([ 'views/header/header', 'views/header/userheader' ], function(HeaderView, UserHeaderView) {
-        var headerView = new HeaderView();
-        var userHeaderView = new UserHeaderView();
-
         Events.on('login', function() {
+          var userHeaderView = Vm.create('HeaderView', UserHeaderView);
           userHeaderView.render();
         });
         Events.on('logout', function() {
+          var headerView = Vm.create('HeaderView', HeaderView);
           headerView.render();
         });
         // This will trigger initial rendering
@@ -36,7 +35,7 @@ define([ 'jquery', 'underscore', 'backbone', 'events', 'text!templates/layout.ht
         }
       });
       require([ 'views/footer/footer' ], function(FooterView) {
-        var footerView = new FooterView();
+        var footerView = Vm.create('FooterView', FooterView);
         footerView.render();
       });
     }

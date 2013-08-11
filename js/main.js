@@ -23,7 +23,7 @@ requirejs.config({
 });
 
 // Start the application
-require([ 'jquery', 'views/app', 'router', 'events', 'bootstrap', 'text!templates/messages/logindropped.html' ], function($, AppView, Router, Events, Bootstrap, loginDroppedTemplate) {
+require([ 'jquery', 'views/app', 'router', 'events', 'vm', 'bootstrap', 'text!templates/messages/logindropped.html' ], function($, AppView, Router, Events, Vm, Bootstrap, loginDroppedTemplate) {
   $.ajaxSetup({
     statusCode : {
       // Unauthorized
@@ -37,7 +37,7 @@ require([ 'jquery', 'views/app', 'router', 'events', 'bootstrap', 'text!template
       }
     }
   });
-  var appView = new AppView();
+  var appView = Vm.create('AppView', AppView);
   appView.render();
   Router.initialize();
 });
