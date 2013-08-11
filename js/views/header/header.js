@@ -9,7 +9,7 @@ define([ 'jquery', 'underscore', 'backbone', 'events', 'text!templates/header/he
     },
     login : function(e) {
       e.preventDefault();
-      $('#login-fail .alert').alert('close'); // Hide previous errors
+      $('#top-message .alert').alert('close'); // Hide previous message
       $.ajax('/login', {
         type : 'POST',
         data : {
@@ -17,7 +17,7 @@ define([ 'jquery', 'underscore', 'backbone', 'events', 'text!templates/header/he
           password : $('#password').val()
         },
         error : function() {
-          $('#login-fail').html(loginAlertTemplate);
+          $('#top-message').html(loginAlertTemplate);
         },
         success : function() {
           Events.trigger('login');
