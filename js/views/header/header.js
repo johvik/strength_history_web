@@ -1,4 +1,4 @@
-define([ 'jquery', 'underscore', 'backbone', 'events', 'text!templates/header/header.html', 'text!templates/header/loginalert.html' ], function($, _, Backbone, Events, headerTemplate, loginAlertTemplate) {
+define([ 'jquery', 'underscore', 'backbone', 'events', 'text!templates/header/header.html', 'text!templates/messages/loginfailed.html' ], function($, _, Backbone, Events, headerTemplate, loginFailedTemplate) {
   var HeaderView = Backbone.View.extend({
     el : '#header',
     render : function() {
@@ -17,7 +17,7 @@ define([ 'jquery', 'underscore', 'backbone', 'events', 'text!templates/header/he
           password : $('#password').val()
         },
         error : function() {
-          $('#top-message').html(loginAlertTemplate);
+          $('#top-message').html(loginFailedTemplate);
         },
         success : function() {
           Events.trigger('login');

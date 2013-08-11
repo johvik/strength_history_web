@@ -23,7 +23,7 @@ requirejs.config({
 });
 
 // Start the application
-require([ 'jquery', 'views/app', 'router', 'events', 'bootstrap' ], function($, AppView, Router, Events, Bootstrap) {
+require([ 'jquery', 'views/app', 'router', 'events', 'bootstrap', 'text!templates/messages/logindropped.html' ], function($, AppView, Router, Events, Bootstrap, loginDroppedTemplate) {
   $.ajaxSetup({
     statusCode : {
       // Unauthorized
@@ -31,6 +31,7 @@ require([ 'jquery', 'views/app', 'router', 'events', 'bootstrap' ], function($, 
         if (Events.authorized === true) {
           // Only trigger if authorized
           Events.trigger('logout');
+          $('#top-message').html(loginDroppedTemplate);
         }
       }
     }
