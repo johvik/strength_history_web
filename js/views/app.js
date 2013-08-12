@@ -8,7 +8,7 @@ define([ 'jquery', 'underscore', 'backbone', 'events', 'vm', 'text!templates/lay
       var item = $(e.currentTarget).parent();
       if (!item.hasClass('dropdown')) {
         $('.active').removeClass('active');
-        if (item.find('.brand').length === 0) {
+        if (item.find('.navbar-brand').length === 0) {
           item.addClass('active');
         } else {
           // This is the brand, highlight home instead
