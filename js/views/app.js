@@ -19,24 +19,28 @@ define([ 'jquery', 'underscore', 'backbone', 'events', 'vm', 'text!templates/lay
     render : function() {
       $(this.el).html(layoutTemplate);
       require([ 'views/header/header', 'views/header/userheader' ], function(HeaderView, UserHeaderView) {
-        Events.on('login', function() {
+        Events.on('login', function(initial) {
           var userHeaderView = Vm.create('HeaderView', UserHeaderView);
           userHeaderView.render();
-          // Go to home page
-          Backbone.history.navigate('', {
-            trigger : true
-          });
-          // Highlight home
-          $('.active').removeClass('active');
-          $('#header :first :first').addClass('active');
+          if (initial !== true) {
+            // Go to home page
+            Backbone.history.navigate('', {
+              trigger : true
+            });
+            // Highlight home
+            $('.active').removeClass('active');
+            $('#header :first :first').addClass('active');
+          } else {
+            // TODO Highlight the correct nav item
+          }
         });
         Events.on('logout', function() {
           var headerView = Vm.create('HeaderView', HeaderView);
           headerView.render();
         });
-        // This will trigger initial rendering
+        // Do initial rendering
         if (Events.authorized === true) {
-          Events.trigger('login');
+          Events.trigger('login', true);
         } else {
           Events.trigger('logout');
         }
