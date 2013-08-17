@@ -38,7 +38,7 @@ define([ 'jquery', 'underscore', 'backbone', 'events', 'vm', 'text!templates/lay
           var headerView = Vm.create('HeaderView', HeaderView);
           headerView.render();
         });
-        // Do initial rendering
+        // This will trigger initial rendering
         if (Events.authorized === true) {
           Events.trigger('login', true);
         } else {
