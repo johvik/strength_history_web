@@ -12,7 +12,7 @@ define([ 'jquery', 'underscore', 'backbone', 'events', 'vm', 'text!templates/lay
           item.addClass('active');
         } else {
           // This is the brand, highlight home instead
-          $('#header .nav :first-child').addClass('active');
+          $('#header :first :first').addClass('active');
         }
       }
     },
@@ -22,6 +22,13 @@ define([ 'jquery', 'underscore', 'backbone', 'events', 'vm', 'text!templates/lay
         Events.on('login', function() {
           var userHeaderView = Vm.create('HeaderView', UserHeaderView);
           userHeaderView.render();
+          // Go to home page
+          Backbone.history.navigate('', {
+            trigger : true
+          });
+          // Highlight home
+          $('.active').removeClass('active');
+          $('#header :first :first').addClass('active');
         });
         Events.on('logout', function() {
           var headerView = Vm.create('HeaderView', HeaderView);

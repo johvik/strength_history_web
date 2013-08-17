@@ -1,0 +1,15 @@
+<h1>Exercises</h1>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% _.each(exercises, function(exercise) { %>
+    <tr>
+      <td><%= exercise.get('name') %></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>

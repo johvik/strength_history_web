@@ -2,11 +2,11 @@ define([ 'jquery', 'underscore', 'backbone', 'collections/weight', 'text!templat
   var WeightListPage = Backbone.View.extend({
     el : '#page',
     render : function() {
-      var self = this;
+      var _self = this;
       var weight = new WeightCollection();
       weight.fetch({
         success : function(weights) {
-          $(self.el).html(_.template(weightListTemplate, {
+          $(_self.el).html(_.template(weightListTemplate, {
             weights : weights.models
           }));
         }
