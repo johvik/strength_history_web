@@ -1,0 +1,15 @@
+<td class="value"><%= exercise.get('name') %></td>
+<td class="value"><%= exercise.get('standardIncrease') %></td>
+<td class="edit hidden" colspan="2">
+  <div class="form-group">
+      <label for="exerciseName">Name</label>
+      <input id="exerciseName" type="text" class="form-control" placeholder="Name">
+  </div>
+  <div class="form-group">
+    <label for="standardIncrease">Standard increase</label>
+    <input id="standardIncrease" type="number" step="any" class="form-control" placeholder="Standard increase">
+  </div>
+  <button type="button" class="btn btn-primary save">Save</button>
+  <button type="button" class="btn btn-primary cancel">Cancel</button>
+  <button type="button" class="pull-right btn btn-danger delete">Delete</button>
+</td>

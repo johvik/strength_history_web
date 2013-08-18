@@ -1,6 +1,10 @@
 @import url("bootstrap.min.css");
 @import url("bootstrap-glyphicons.css");
 
+td.value {
+  cursor: pointer;
+}
+
 body {
   padding-top: 60px;
   padding-bottom: 40px;

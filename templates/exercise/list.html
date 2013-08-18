@@ -1,15 +1,11 @@
-<h1>Exercises</h1>
+<h1>Exercises<button id="create-exercise" class="pull-right btn btn-default">Create exercise</button></h1>
 <table class="table table-hover">
   <thead>
     <tr>
       <th>Name</th>
+      <th>Standard increase</th>
     </tr>
   </thead>
   <tbody>
-    <% _.each(exercises, function(exercise) { %>
-    <tr>
-      <td><%= exercise.get('name') %></td>
-    </tr>
-    <% }); %>
   </tbody>
 </table>
