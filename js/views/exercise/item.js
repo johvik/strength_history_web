@@ -18,13 +18,20 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/exercise/item.html'
       return this;
     },
     onSave : function() {
-      // TODO Validate
       var exerciseName = this.$('#exerciseName').val();
       var standardIncrease = this.$('#standardIncrease').val();
-      this.model.save({
+      var attributes = {
         name : exerciseName,
         standardIncrease : standardIncrease
-      });
+      };
+      var invalid = this.model.validate(attributes);
+      if (_.isUndefined(invalid)) {
+        this.model.save(attributes);
+        this.onCancel(); // Ensure it will be hidden
+      } else {
+        this.$('#exerciseName').parent().toggleClass('has-error', invalid.name);
+        this.$('#standardIncrease').parent().toggleClass('has-error', invalid.standardIncrease);
+      }
     },
     onCancel : function() {
       this.$('.edit').addClass('hidden');
@@ -40,6 +47,7 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/exercise/item.html'
         // Already shown
       } else {
         // Show edit and hide values
+        this.$('.form-group').removeClass('has-error');
         hidden.removeClass('hidden');
         this.$('.value').addClass('hidden');
         this.$('#exerciseName').val(this.model.get('name'));

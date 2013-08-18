@@ -6,8 +6,13 @@ define([ 'jquery', 'underscore', 'backbone' ], function($, _, Backbone) {
       var exerciseName = attributes.name;
       var standardIncrease = attributes.standardIncrease;
       var len = exerciseName.length;
-      if (!(len >= 1 && len <= 64) || !_.isFinite(standardIncrease)) {
-        return 'Invalid exercise attributes';
+      var invalidName = !(len >= 1 && len <= 64);
+      var invalidStandardIncrease = !_.isFinite(standardIncrease);
+      if (invalidName || invalidStandardIncrease) {
+        return {
+          name : invalidName,
+          standardIncrease : invalidStandardIncrease
+        };
       }
     },
     initialize : function() {
