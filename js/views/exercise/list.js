@@ -13,6 +13,7 @@ define([ 'jquery', 'underscore', 'backbone', 'vm', 'collections/exercise', 'text
       $(this.el).html(_.template(exerciseListTemplate));
     },
     render : function() {
+      this.addAll();
       // console.log('render');
     },
     createExercise : function() {

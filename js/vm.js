@@ -5,6 +5,7 @@ define([ 'jquery', 'underscore', 'backbone' ], function($, _, Backbone) {
     if (!_.isUndefined(old)) {
       // Do some cleanup
       old.undelegateEvents();
+      old.stopListening();
     }
     // Create a new instance
     var view = new View(options);
