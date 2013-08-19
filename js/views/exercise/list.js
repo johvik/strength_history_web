@@ -7,14 +7,20 @@ define([ 'jquery', 'underscore', 'backbone', 'vm', 'collections/exercise', 'text
     exercises : new ExerciseCollection(),
     initialize : function() {
       this.listenTo(this.exercises, 'add', this.addOne);
-      // this.listenTo(this.exercises, 'reset', this.addAll);
-      // this.listenTo(this.exercises, 'all', this.render);
+      this.listenTo(this.exercises, 'reset', this.reset);
+      this.listenTo(this.exercises, 'sort', this.reset);
+      this.listenTo(this.exercises, 'change', function() {
+        this.exercises.sort();
+      });
       this.exercises.fetch();
       $(this.el).html(_.template(exerciseListTemplate));
     },
+    reset : function() {
+      $(this.el).html(_.template(exerciseListTemplate));
+      this.render();
+    },
     render : function() {
       this.addAll();
-      // console.log('render');
     },
     createExercise : function() {
       this.exercises.create({
