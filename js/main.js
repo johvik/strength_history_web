@@ -23,16 +23,15 @@ requirejs.config({
 });
 
 // Start the application
-require([ 'jquery', 'views/app', 'router', 'events', 'vm', 'bootstrap', 'text!templates/messages/logindropped.html' ], function($, AppView, Router, Events, Vm, Bootstrap, loginDroppedTemplate) {
+require([ 'jquery', 'views/app', 'router', 'events', 'vm', 'bootstrap' ], function($, AppView, Router, Events, Vm, Bootstrap) {
   $.ajaxSetup({
     statusCode : {
       // Unauthorized
       401 : function() {
         if (Events.authorized === true) {
           // Only trigger if authorized
-          Events.trigger('logout');
-          $('#top-message').html(loginDroppedTemplate);
-          $('#top-message :first-child').addClass('in');
+          window.location.replace('/#login-dropped');
+          window.location.reload();
         }
       }
     }
