@@ -52,7 +52,7 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/exercise/item.html'
       this.$('.value').addClass('hidden');
       this.$('#exerciseName').val(this.model.get('name'));
       this.$('#standardIncrease').val(this.model.get('standardIncrease'));
-      this.$('#exerciseName').select();
+      this.$('#exerciseName').focus();
     }
   });
   return ExerciseItem;
