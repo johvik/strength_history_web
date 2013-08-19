@@ -7,6 +7,8 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/exercise/item.html'
       'click button.delete' : 'onDelete',
       'click td.value a' : 'startEdit',
       'click td.value' : 'startEdit',
+      'keyup input' : 'onKeyup',
+      'keypress input' : 'onKeypress'
     },
     initialize : function() {
       this.listenTo(this.model, 'change', this.render);
@@ -55,6 +57,16 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/exercise/item.html'
       this.$('#exerciseName').val(this.model.get('name'));
       this.$('#standardIncrease').val(this.model.get('standardIncrease'));
       this.$('#exerciseName').focus();
+    },
+    onKeyup : function(e) {
+      if (e.keyCode == 27) { // escape
+        this.onCancel();
+      }
+    },
+    onKeypress : function(e) {
+      if (e.keyCode == 13) { // enter
+        this.onSave();
+      }
     }
   });
   return ExerciseItem;
