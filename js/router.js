@@ -1,7 +1,6 @@
 define([ 'jquery', 'underscore', 'backbone', 'vm' ], function($, _, Backbone, Vm) {
   var AppRouter = Backbone.Router.extend({
     routes : {
-      'login-dropped' : 'loginDropped',
       'history/weight' : 'weightHistory',
       'exercises' : 'exercises',
 
@@ -16,18 +15,6 @@ define([ 'jquery', 'underscore', 'backbone', 'vm' ], function($, _, Backbone, Vm
       require([ 'views/test/page' ], function(TestPage) {
         var testPage = Vm.create('Page', TestPage);
         testPage.render();
-      });
-    });
-    router.on('route:loginDropped', function() {
-      // Show message
-      require([ 'text!templates/messages/logindropped.html' ], function(loginDroppedTemplate) {
-        $('#top-message').html(loginDroppedTemplate);
-        $('#top-message :first-child').addClass('in');
-      });
-      // Redirect to home page
-      Backbone.history.navigate('/', {
-        trigger : true,
-        replace : true
       });
     });
     router.on('route:weightHistory', function() {

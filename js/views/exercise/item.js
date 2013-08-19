@@ -6,6 +6,7 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/exercise/item.html'
       'click button.cancel' : 'onCancel',
       'click button.delete' : 'onDelete',
       'click td.value a' : 'startEdit',
+      'click td.value' : 'startEdit',
     },
     initialize : function() {
       this.listenTo(this.model, 'change', this.render);
@@ -43,6 +44,7 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/exercise/item.html'
     },
     startEdit : function(e) {
       e.preventDefault();
+      e.stopPropagation();
       // Cancel all others
       $('.edit:not(hidden)').addClass('hidden');
       $('.value.hidden').removeClass('hidden');

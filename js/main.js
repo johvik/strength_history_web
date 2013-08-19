@@ -28,11 +28,7 @@ require([ 'jquery', 'views/app', 'router', 'events', 'vm', 'bootstrap' ], functi
     statusCode : {
       // Unauthorized
       401 : function() {
-        if (Events.authorized === true) {
-          // Only trigger if authorized
-          window.location.replace('/#login-dropped');
-          window.location.reload();
-        }
+        window.location.assign('/');
       }
     }
   });

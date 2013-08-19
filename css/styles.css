@@ -1,4 +1,5 @@
 @import url("bootstrap.min.css");
+
 @import url("bootstrap-glyphicons.css");
 
 .left-fix {
@@ -18,8 +19,13 @@
   }
 }
 
-td.value a {
-  display: block;
+td.value {
+  cursor: pointer;
+}
+
+tr:hover .value a {
+  color: #2a6496;
+  text-decoration: underline;
 }
 
 td.edit {
