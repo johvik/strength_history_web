@@ -1,8 +1,29 @@
 @import url("bootstrap.min.css");
 @import url("bootstrap-glyphicons.css");
 
-td.value {
-  cursor: pointer;
+.left-fix {
+  padding-left: 0;
+}
+
+.right-fix {
+  padding-right: 0;
+}
+
+@media ( min-width : 768px) {
+  .left-fix {
+    padding-left: 15px;
+  }
+  .right-fix {
+    padding-right: 15px;
+  }
+}
+
+td.value a {
+  display: block;
+}
+
+td.edit {
+  background-color: #fff !important;
 }
 
 body {

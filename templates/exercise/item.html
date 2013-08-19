@@ -1,13 +1,13 @@
-<td class="value"><%= exercise.get('name') %></td>
+<td class="value"><a href="/#edit"><%= exercise.get('name') %></a></td>
 <td class="value"><%= exercise.get('standardIncrease') %></td>
 <td class="edit hidden" colspan="2">
-  <div class="form-group">
-      <label for="exerciseName">Name</label>
+  <div class="row">
+    <div class="left-fix form-group col-xs-6">
       <input id="exerciseName" type="text" class="form-control" placeholder="Name">
-  </div>
-  <div class="form-group">
-    <label for="standardIncrease">Standard increase</label>
-    <input id="standardIncrease" type="number" step="any" class="form-control" placeholder="Standard increase">
+    </div>
+    <div class="right-fix form-group col-xs-6">
+      <input id="standardIncrease" type="number" step="any" class="form-control" placeholder="Standard increase">
+    </div>
   </div>
   <button type="button" class="btn btn-primary save">Save</button>
   <button type="button" class="btn btn-primary cancel">Cancel</button>

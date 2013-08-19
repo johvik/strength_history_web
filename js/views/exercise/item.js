@@ -5,7 +5,7 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/exercise/item.html'
       'click button.save' : 'onSave',
       'click button.cancel' : 'onCancel',
       'click button.delete' : 'onDelete',
-      'click td.value' : 'startEdit'
+      'click td.value a' : 'startEdit',
     },
     initialize : function() {
       this.listenTo(this.model, 'change', this.render);
@@ -41,18 +41,18 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/exercise/item.html'
       // TODO Confirm?
       this.model.destroy();
     },
-    startEdit : function() {
-      var hidden = this.$('.edit.hidden');
-      if (hidden.length === 0) {
-        // Already shown
-      } else {
-        // Show edit and hide values
-        this.$('.form-group').removeClass('has-error');
-        hidden.removeClass('hidden');
-        this.$('.value').addClass('hidden');
-        this.$('#exerciseName').val(this.model.get('name'));
-        this.$('#standardIncrease').val(this.model.get('standardIncrease'));
-      }
+    startEdit : function(e) {
+      e.preventDefault();
+      // Cancel all others
+      $('.edit:not(hidden)').addClass('hidden');
+      $('.value.hidden').removeClass('hidden');
+      // Update values/visibility on this
+      this.$('.form-group').removeClass('has-error');
+      this.$('.edit').removeClass('hidden');
+      this.$('.value').addClass('hidden');
+      this.$('#exerciseName').val(this.model.get('name'));
+      this.$('#standardIncrease').val(this.model.get('standardIncrease'));
+      this.$('#exerciseName').select();
     }
   });
   return ExerciseItem;
