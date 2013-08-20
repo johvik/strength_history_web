@@ -21,8 +21,8 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/exercise/item.html'
       return this;
     },
     onSave : function() {
-      var exerciseName = this.$('#exerciseName').val();
-      var standardIncrease = this.$('#standardIncrease').val();
+      var exerciseName = this.$('.exercise-name').val();
+      var standardIncrease = this.$('.standard-increase').val();
       var attributes = {
         name : exerciseName,
         standardIncrease : standardIncrease
@@ -32,8 +32,8 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/exercise/item.html'
         this.model.save(attributes);
         this.onCancel(); // Ensure it will be hidden
       } else {
-        this.$('#exerciseName').parent().toggleClass('has-error', invalid.name);
-        this.$('#standardIncrease').parent().toggleClass('has-error', invalid.standardIncrease);
+        this.$('.exercise-name').parent().toggleClass('has-error', invalid.name);
+        this.$('.standard-increase').parent().toggleClass('has-error', invalid.standardIncrease);
       }
     },
     onCancel : function() {
@@ -54,9 +54,9 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/exercise/item.html'
       this.$('.form-group').removeClass('has-error');
       this.$('.edit').removeClass('hidden');
       this.$('.value').addClass('hidden');
-      this.$('#exerciseName').val(this.model.get('name'));
-      this.$('#standardIncrease').val(this.model.get('standardIncrease'));
-      this.$('#exerciseName').focus();
+      this.$('.exercise-name').val(this.model.get('name'));
+      this.$('.standard-increase').val(this.model.get('standardIncrease'));
+      this.$('.exercise-name').focus();
     },
     onKeyup : function(e) {
       if (e.keyCode == 27) { // escape
