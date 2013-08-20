@@ -1,18 +1,18 @@
 define([
   'jquery',
   'underscore',
-  'backbone'
-], function($, _, Backbone) {
+  'backbone',
+  'userdata'
+], function($, _, Backbone, UserData) {
   var vent = _.extend({
-    // Read from global CheckLogin variable
-    // CheckLogin isn't updated! Use vent.authorized
-    authorized : CheckLogin
+    // UserData isn't updated! Use vent.authenticated
+    authenticated : UserData.authenticated
   }, Backbone.Events);
   vent.on('login', function() {
-    vent.authorized = true;
+    vent.authenticated = true;
   });
   vent.on('logout', function() {
-    vent.authorized = false;
+    vent.authenticated = false;
   });
   return vent;
 });

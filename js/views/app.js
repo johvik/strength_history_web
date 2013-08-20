@@ -49,7 +49,7 @@ define([
           headerView.render();
         });
         // This will trigger initial rendering
-        if (Events.authorized === true) {
+        if (Events.authenticated === true) {
           Events.trigger('login', true);
         } else {
           Events.trigger('logout');
