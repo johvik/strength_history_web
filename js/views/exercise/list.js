@@ -16,17 +16,23 @@ define([ 'jquery', 'underscore', 'backbone', 'vm', 'collections/exercise', 'text
       $(this.el).html(_.template(exerciseListTemplate));
     },
     reset : function() {
-      $(this.el).html(_.template(exerciseListTemplate));
+      this.$('table tbody').empty();
       this.render();
     },
     render : function() {
       this.addAll();
     },
     createExercise : function() {
-      // TODO Start edit this one!
-      this.exercises.create({
+      var newItem = this.exercises.create({
         name : 'New exercise',
         standardIncrease : 2.5
+      });
+      this.listenToOnce(newItem, 'sync', function() {
+        var index = this.exercises.indexOf(newItem);
+        if (0 <= index) {
+          // Trigger edit on the new item
+          this.$('tbody tr td.value:first-child a:eq(' + index + ')').trigger('click');
+        }
       });
     },
     addOne : function(exercise) {

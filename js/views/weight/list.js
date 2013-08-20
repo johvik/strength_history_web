@@ -16,7 +16,7 @@ define([ 'jquery', 'underscore', 'backbone', 'vm', 'collections/weight', 'text!t
       $(this.el).html(_.template(weightListTemplate));
     },
     reset : function() {
-      $(this.el).html(_.template(weightListTemplate));
+      this.$('table tbody').empty();
       this.render();
     },
     render : function() {
@@ -29,12 +29,18 @@ define([ 'jquery', 'underscore', 'backbone', 'vm', 'collections/weight', 'text!t
         // Use latest as base
         weight = first.get('weight');
       }
-      // TODO Start edit this one!
       var newDate = new Date();
       newDate.setMilliseconds(0);
-      this.weights.create({
+      var newItem = this.weights.create({
         time : newDate.getTime(),
         weight : weight
+      });
+      this.listenToOnce(newItem, 'sync', function() {
+        var index = this.weights.indexOf(newItem);
+        if (0 <= index) {
+          // Trigger edit on the new item
+          this.$('tbody tr td.value:first-child a:eq(' + index + ')').trigger('click');
+        }
       });
     },
     addOne : function(weight) {

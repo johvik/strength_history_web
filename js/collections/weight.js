@@ -12,9 +12,9 @@ define([ 'jquery', 'underscore', 'backbone', 'models/weight' ], function($, _, B
       } else {
         // Compare by id if same name
         if (a.id > b.id) {
-          return 1;
+          return -1;
         }
-        return -1;
+        return 1;
       }
     }
   });
