@@ -1,4 +1,8 @@
-define([ 'jquery', 'underscore', 'backbone' ], function($, _, Backbone) {
+define([
+  'jquery',
+  'underscore',
+  'backbone'
+], function($, _, Backbone) {
   var views = [];
   var create = function(name, View, options) {
     var old = views[name];

@@ -1,4 +1,12 @@
-define([ 'jquery', 'underscore', 'backbone', 'vm', 'collections/exercise', 'text!templates/exercise/list.html', 'views/exercise/item' ], function($, _, Backbone, Vm, ExerciseCollection, exerciseListTemplate, ExerciseItemView) {
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+  'vm',
+  'collections/exercise',
+  'text!templates/exercise/list.html',
+  'views/exercise/item'
+], function($, _, Backbone, Vm, ExerciseCollection, exerciseListTemplate, ExerciseItemView) {
   var ExerciseListPage = Backbone.View.extend({
     el : '#page',
     events : {

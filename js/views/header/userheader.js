@@ -1,4 +1,9 @@
-define([ 'jquery', 'underscore', 'backbone', 'text!templates/header/userheader.html' ], function($, _, Backbone, userHeaderTemplate) {
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+  'text!templates/header/userheader.html'
+], function($, _, Backbone, userHeaderTemplate) {
   var UserHeaderView = Backbone.View.extend({
     el : '#header',
     render : function() {

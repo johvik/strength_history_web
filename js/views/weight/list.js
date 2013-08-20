@@ -1,4 +1,12 @@
-define([ 'jquery', 'underscore', 'backbone', 'vm', 'collections/weight', 'text!templates/weight/list.html', 'views/weight/item' ], function($, _, Backbone, Vm, WeightCollection, weightListTemplate, WeightItemView) {
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+  'vm',
+  'collections/weight',
+  'text!templates/weight/list.html',
+  'views/weight/item'
+], function($, _, Backbone, Vm, WeightCollection, weightListTemplate, WeightItemView) {
   var WeightListPage = Backbone.View.extend({
     el : '#page',
     events : {

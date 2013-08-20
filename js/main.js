@@ -13,17 +13,29 @@ requirejs.config({
       exports : '_'
     },
     backbone : {
-      deps : [ 'underscore', 'jquery' ],
+      deps : [
+        'underscore',
+        'jquery'
+      ],
       exports : 'Backbone'
     },
     bootstrap : {
-      deps : [ 'jquery' ]
+      deps : [
+        'jquery'
+      ]
     }
   }
 });
 
 // Start the application
-require([ 'jquery', 'views/app', 'router', 'events', 'vm', 'bootstrap' ], function($, AppView, Router, Events, Vm, Bootstrap) {
+require([
+  'jquery',
+  'views/app',
+  'router',
+  'events',
+  'vm',
+  'bootstrap'
+], function($, AppView, Router, Events, Vm, Bootstrap) {
   $.ajaxSetup({
     statusCode : {
       // Unauthorized

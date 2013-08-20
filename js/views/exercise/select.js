@@ -1,4 +1,11 @@
-define([ 'jquery', 'underscore', 'backbone', 'vm', 'collections/exercise', 'text!templates/exercise/option.html' ], function($, _, Backbone, Vm, ExerciseCollection, ExerciseOptionTemplate) {
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+  'vm',
+  'collections/exercise',
+  'text!templates/exercise/option.html'
+], function($, _, Backbone, Vm, ExerciseCollection, ExerciseOptionTemplate) {
   var ExerciseSelectPage = Backbone.View.extend({
     tagName : 'select',
     className : 'form-control',

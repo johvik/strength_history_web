@@ -1,4 +1,9 @@
-define([ 'jquery', 'underscore', 'backbone', 'text!templates/test/page.html' ], function($, _, Backbone, testPageTemplate) {
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+  'text!templates/test/page.html'
+], function($, _, Backbone, testPageTemplate) {
   var TestPage = Backbone.View.extend({
     el : '#page',
     render : function() {

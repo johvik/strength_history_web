@@ -1,4 +1,9 @@
-define([ 'jquery', 'underscore', 'backbone', 'text!templates/weight/item.html' ], function($, _, Backbone, weightItemTemplate) {
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+  'text!templates/weight/item.html'
+], function($, _, Backbone, weightItemTemplate) {
   var WeightItem = Backbone.View.extend({
     tagName : 'tr',
     events : {

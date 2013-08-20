@@ -1,4 +1,8 @@
-define([ 'jquery', 'underscore', 'backbone' ], function($, _, Backbone) {
+define([
+  'jquery',
+  'underscore',
+  'backbone'
+], function($, _, Backbone) {
   var WeightModel = Backbone.Model.extend({
     idAttribute : '_id',
     urlRoot : '/weight',

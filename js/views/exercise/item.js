@@ -1,4 +1,9 @@
-define([ 'jquery', 'underscore', 'backbone', 'text!templates/exercise/item.html' ], function($, _, Backbone, exerciseItemTemplate) {
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+  'text!templates/exercise/item.html'
+], function($, _, Backbone, exerciseItemTemplate) {
   var ExerciseItem = Backbone.View.extend({
     tagName : 'tr',
     events : {

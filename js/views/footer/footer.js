@@ -1,4 +1,9 @@
-define([ 'jquery', 'underscore', 'backbone', 'text!templates/footer/footer.html' ], function($, _, Backbone, footerTemplate) {
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+  'text!templates/footer/footer.html'
+], function($, _, Backbone, footerTemplate) {
   var FooterView = Backbone.View.extend({
     el : '#footer',
     render : function() {
