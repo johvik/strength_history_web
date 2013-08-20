@@ -3,6 +3,7 @@ define([ 'jquery', 'underscore', 'backbone', 'vm' ], function($, _, Backbone, Vm
     routes : {
       'history/weight' : 'weightHistory',
       'exercises' : 'exercises',
+      'workouts' : 'workouts',
 
       // Default - catch all
       '*actions' : 'defaultRoute'
@@ -27,6 +28,12 @@ define([ 'jquery', 'underscore', 'backbone', 'vm' ], function($, _, Backbone, Vm
       require([ 'views/exercise/list' ], function(ExerciseListPage) {
         var exerciseListPage = Vm.create('Page', ExerciseListPage);
         exerciseListPage.render();
+      });
+    });
+    router.on('route:workouts', function() {
+      require([ 'views/workout/list' ], function(WorkoutListPage) {
+        var workoutListPage = Vm.create('Page', WorkoutListPage);
+        workoutListPage.render();
       });
     });
     Backbone.history.start();
