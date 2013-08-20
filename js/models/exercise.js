@@ -10,6 +10,7 @@ define([ 'jquery', 'underscore', 'backbone' ], function($, _, Backbone) {
       var invalidStandardIncrease = !_.isFinite(standardIncrease);
       if (invalidName || invalidStandardIncrease) {
         return {
+          str : 'Invalid exercise attributes: ' + exerciseName + ' ' + standardIncrease,
           name : invalidName,
           standardIncrease : invalidStandardIncrease
         };

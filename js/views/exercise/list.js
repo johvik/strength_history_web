@@ -23,6 +23,7 @@ define([ 'jquery', 'underscore', 'backbone', 'vm', 'collections/exercise', 'text
       this.addAll();
     },
     createExercise : function() {
+      // TODO Start edit this one!
       this.exercises.create({
         name : 'New exercise',
         standardIncrease : 2.5

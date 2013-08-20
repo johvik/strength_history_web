@@ -1,4 +1,4 @@
-<h1>Weight history</h1>
+<h1>Weight history<button id="add-weight" class="pull-right btn btn-default">Add weight</button></h1>
 <table class="table table-hover">
   <thead>
     <tr>
@@ -7,11 +7,5 @@
     </tr>
   </thead>
   <tbody>
-    <% _.each(weights, function(weight) { %>
-    <tr>
-      <td><%= new Date(weight.get('time')).toLocaleString() %></td>
-      <td><%= weight.get('weight') %></td>
-    </tr>
-    <% }); %>
   </tbody>
 </table>
