@@ -42,21 +42,22 @@ define([
     },
     renderExercises : function() {
       var array = this.model.get('exercises');
+      var container = this.$('.exercises');
       // If we need more
       while (array.length > this.selectRemoveViews.length) {
-        this.selectRemoveViews.push(new ExerciseSelectView({
+        var view = new ExerciseSelectView({
           type : 'remove'
-        }));
+        });
+        // Add to list
+        this.selectRemoveViews.push(view);
+        container.append(view.render().el);
       }
       // If we need less
       while (array.length < this.selectRemoveViews.length) {
         this.selectRemoveViews.pop().remove();
       }
-      var container = this.$('.exercises');
-      container.empty();
+      // Update values
       _.each(this.selectRemoveViews, function(v, i) {
-        // Add to list
-        container.append(v.render().el);
         // Set value
         v.$('select').val(array[i]);
       });
