@@ -4,7 +4,7 @@ define([
   'backbone',
   'text!templates/weight/edit.html'
 ], function($, _, Backbone, weightEditTemplate) {
-  var WeightRow = Backbone.View.extend({
+  var WeightEdit = Backbone.View.extend({
     events : {
       'click button.save' : 'onSave',
       'click button.cancel' : 'onCancel',
@@ -60,5 +60,5 @@ define([
       }
     }
   });
-  return WeightRow;
+  return WeightEdit;
 });

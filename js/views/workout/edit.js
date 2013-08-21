@@ -2,32 +2,29 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'events',
-  'text!templates/workout/item.html'
-], function($, _, Backbone, Events, workoutItemTemplate) {
-  var WorkoutItem = Backbone.View.extend({
-    tagName : 'tr',
+  'text!templates/workout/edit.html'
+], function($, _, Backbone, workoutEditTemplate) {
+  var WorkoutEdit = Backbone.View.extend({
     events : {
       'click button.save' : 'onSave',
       'click button.cancel' : 'onCancel',
       'click button.delete' : 'onDelete',
       'click button.add' : 'onAdd',
       'click button.remove' : 'onRemove',
-      'click td.value a' : 'startEdit',
-      'click td.value' : 'startEdit',
       'keyup input' : 'onKeyup',
       'keyup select' : 'onKeyup',
       'keypress input' : 'onKeypress'
     },
     initialize : function() {
-      this.listenTo(this.model, 'change', this.render);
-      this.listenTo(this.model, 'destroy', this.remove);
-      this.listenTo(Events, 'workouts:clear', this.remove);
+      this.$el.html(workoutEditTemplate);
     },
     render : function() {
-      this.$el.html(_.template(workoutItemTemplate, {
-        workout : this.model
-      }));
+      // Hide/show all others
+      $('.edit:not(hidden)').addClass('hidden');
+      $('.value.hidden').removeClass('hidden');
+      // Update this
+      this.$('.workout-name').val(this.model.get('name'));
+      this.$('.form-group').removeClass('has-error');
       return this;
     },
     onSave : function() {
@@ -48,9 +45,7 @@ define([
       }
     },
     onCancel : function() {
-      this.$('.edit').addClass('hidden');
-      this.$('.value').removeClass('hidden');
-      Events.trigger('workouts:stopEdit');
+      this.options.rowView.stopEdit();
     },
     onDelete : function() {
       this.onCancel(); // Ensure it will be hidden
@@ -63,19 +58,6 @@ define([
     onRemove : function() {
       // TODO Remove exercise
     },
-    startEdit : function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Cancel all others
-      $('.edit:not(hidden)').addClass('hidden');
-      $('.value.hidden').removeClass('hidden');
-      // Update values/visibility on this
-      this.$('.form-group').removeClass('has-error');
-      this.$('.edit').removeClass('hidden');
-      this.$('.value').addClass('hidden');
-      this.$('.workout-name').val(this.model.get('name'));
-      this.$('.workout-name').focus();
-    },
     onKeyup : function(e) {
       if (e.keyCode == 27) { // escape
         this.onCancel();
@@ -87,5 +69,5 @@ define([
       }
     }
   });
-  return WorkoutItem;
+  return WorkoutEdit;
 });

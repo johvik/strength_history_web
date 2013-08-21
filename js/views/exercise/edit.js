@@ -2,29 +2,27 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'events',
-  'text!templates/exercise/item.html'
-], function($, _, Backbone, Events, exerciseItemTemplate) {
-  var ExerciseItem = Backbone.View.extend({
-    tagName : 'tr',
+  'text!templates/exercise/edit.html'
+], function($, _, Backbone, exerciseEditTemplate) {
+  var ExerciseEdit = Backbone.View.extend({
     events : {
       'click button.save' : 'onSave',
       'click button.cancel' : 'onCancel',
       'click button.delete' : 'onDelete',
-      'click td.value a' : 'startEdit',
-      'click td.value' : 'startEdit',
       'keyup input' : 'onKeyup',
       'keypress input' : 'onKeypress'
     },
     initialize : function() {
-      this.listenTo(this.model, 'change', this.render);
-      this.listenTo(this.model, 'destroy', this.remove);
-      this.listenTo(Events, 'exercises:clear', this.remove);
+      this.$el.html(exerciseEditTemplate);
     },
     render : function() {
-      this.$el.html(_.template(exerciseItemTemplate, {
-        exercise : this.model
-      }));
+      // Hide/show all others
+      $('.edit:not(hidden)').addClass('hidden');
+      $('.value.hidden').removeClass('hidden');
+      // Update this
+      this.$('.exercise-name').val(this.model.get('name'));
+      this.$('.standard-increase').val(this.model.get('standardIncrease'));
+      this.$('.form-group').removeClass('has-error');
       return this;
     },
     onSave : function() {
@@ -44,28 +42,12 @@ define([
       }
     },
     onCancel : function() {
-      this.$('.edit').addClass('hidden');
-      this.$('.value').removeClass('hidden');
-      Events.trigger('exercises:stopEdit');
+      this.options.rowView.stopEdit();
     },
     onDelete : function() {
       this.onCancel(); // Ensure it will be hidden
       // TODO Confirm?
       this.model.destroy();
-    },
-    startEdit : function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Cancel all others
-      $('.edit:not(hidden)').addClass('hidden');
-      $('.value.hidden').removeClass('hidden');
-      // Update values/visibility on this
-      this.$('.form-group').removeClass('has-error');
-      this.$('.edit').removeClass('hidden');
-      this.$('.value').addClass('hidden');
-      this.$('.exercise-name').val(this.model.get('name'));
-      this.$('.standard-increase').val(this.model.get('standardIncrease'));
-      this.$('.exercise-name').focus();
     },
     onKeyup : function(e) {
       if (e.keyCode == 27) { // escape
@@ -78,5 +60,5 @@ define([
       }
     }
   });
-  return ExerciseItem;
+  return ExerciseEdit;
 });

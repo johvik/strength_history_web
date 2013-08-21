@@ -5,9 +5,9 @@ define([
   'vm',
   'events',
   'globals/exercise',
-  'views/exercise/item',
+  'views/exercise/row',
   'text!templates/exercise/list.html'
-], function($, _, Backbone, Vm, Events, Exercises, ExerciseItemView, exerciseListTemplate) {
+], function($, _, Backbone, Vm, Events, Exercises, ExerciseRowView, exerciseListTemplate) {
   var ExerciseListPage = Backbone.View.extend({
     el : '#page',
     events : {
@@ -43,7 +43,7 @@ define([
       this.editCid = newItem.cid; // Start edit
     },
     addOne : function(exercise) {
-      var exerciseView = Vm.create('ex_' + exercise.cid, ExerciseItemView, {
+      var exerciseView = Vm.create('ex_' + exercise.cid, ExerciseRowView, {
         model : exercise
       });
       this.$el.find('table tbody:first').append(exerciseView.render().el);
