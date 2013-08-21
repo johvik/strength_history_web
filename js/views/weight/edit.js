@@ -20,6 +20,7 @@ define([
       $('.edit:not(hidden)').addClass('hidden');
       $('.value.hidden').removeClass('hidden');
       // Update this
+      // TODO Support browsers without datetime-local
       this.$('.weight-date').val(new Date(this.model.get('time')).toISOString().slice(0, -1));
       this.$('.weight').val(this.model.get('weight'));
       this.$('.form-group').removeClass('has-error');
