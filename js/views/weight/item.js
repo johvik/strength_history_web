@@ -34,8 +34,8 @@ define([
       };
       var invalid = this.model.validate(attributes);
       if (_.isUndefined(invalid)) {
-        this.model.save(attributes);
         this.onCancel(); // Ensure it will be hidden
+        this.model.save(attributes);
       } else {
         this.$('.weight-date').parent().toggleClass('has-error', invalid.time);
         this.$('.weight').parent().toggleClass('has-error', invalid.weight);
@@ -44,8 +44,10 @@ define([
     onCancel : function() {
       this.$('.edit').addClass('hidden');
       this.$('.value').removeClass('hidden');
+      this.attributes.master.editCid = null;
     },
     onDelete : function() {
+      this.onCancel(); // Ensure it will be hidden
       // TODO Confirm?
       this.model.destroy();
     },
