@@ -2,9 +2,9 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'events',
   'text!templates/exercise/item.html'
-], function($, _, Backbone, exerciseItemTemplate) {
-  // TODO Move edit part into a separate view!
+], function($, _, Backbone, Events, exerciseItemTemplate) {
   var ExerciseItem = Backbone.View.extend({
     tagName : 'tr',
     events : {
@@ -19,6 +19,7 @@ define([
     initialize : function() {
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.remove);
+      this.listenTo(Events, 'exercises:clear', this.remove);
     },
     render : function() {
       this.$el.html(_.template(exerciseItemTemplate, {
@@ -45,7 +46,7 @@ define([
     onCancel : function() {
       this.$('.edit').addClass('hidden');
       this.$('.value').removeClass('hidden');
-      this.attributes.master.editCid = null;
+      Events.trigger('exercises:stopEdit');
     },
     onDelete : function() {
       this.onCancel(); // Ensure it will be hidden
