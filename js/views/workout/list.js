@@ -4,16 +4,18 @@ define([
   'backbone',
   'vm',
   'events',
+  'globals/exercise',
   'globals/workout',
   'views/workout/row',
   'text!templates/workout/list.html'
-], function($, _, Backbone, Vm, Events, Workouts, WorkoutRowView, workoutListTemplate) {
+], function($, _, Backbone, Vm, Events, Exercises, Workouts, WorkoutRowView, workoutListTemplate) {
   var WorkoutListPage = Backbone.View.extend({
     el : '#page',
     events : {
       'click #create-workout' : 'createWorkout'
     },
     initialize : function() {
+      this.listenTo(Exercises, 'sync', this.reset); // If exercises aren't loaded directly
       this.listenTo(Workouts, 'add', this.addOne);
       this.listenTo(Workouts, 'reset sort', this.reset);
       this.listenTo(Events, 'workouts:stopEdit', function() {
