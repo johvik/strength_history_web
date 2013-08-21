@@ -18,8 +18,12 @@ define([
   var initialize = function() {
     var router = new AppRouter();
     router.on('route', function() {
-      // Remove navbar highlight
+      // Remove navbar highlight and collapse
       $('.navbar .active').removeClass('active');
+      var collapse = $('.navbar button.navbar-toggle:not(.collapsed)');
+      if (collapse.css('display') !== 'none') {
+        collapse.trigger('click');
+      }
     });
     router.on('route:defaultRoute', function() {
       require([

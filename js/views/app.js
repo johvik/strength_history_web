@@ -8,12 +8,6 @@ define([
 ], function($, _, Backbone, Events, Vm, layoutTemplate) {
   var AppView = Backbone.View.extend({
     el : '#main',
-    events : {
-      'click .navbar a' : 'highlightMenuItem'
-    },
-    highlightMenuItem : function() {
-      // TODO Collapse navbar on click
-    },
     render : function() {
       $(this.el).html(layoutTemplate);
       require([
