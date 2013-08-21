@@ -19,7 +19,7 @@ define([
       if ($('#login').hasClass('disabled')) {
         return; // Prevent multiple clicks
       }
-      $('#login').addClass('disabled');
+      $('#login').button('loading');
       $('#top-message :first-child').alert('close'); // Hide previous message
       $.ajax('/login', {
         type : 'POST',
@@ -28,7 +28,7 @@ define([
           password : $('#password').val()
         },
         error : function() {
-          $('#login').removeClass('disabled');
+          $('#login').button('reset');
           $('#top-message').html(loginFailedTemplate);
           $('#top-message :first-child').addClass('in');
         },

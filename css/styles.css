@@ -1,5 +1,9 @@
 @import url("bootstrap.min.css");
 
+button#login {
+  width: 80px;
+}
+
 td.value {
   cursor: pointer;
 }
@@ -15,5 +19,4 @@ td.edit {
 
 body {
   padding-top: 60px;
-  padding-bottom: 40px;
 }
