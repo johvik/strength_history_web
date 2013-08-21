@@ -8,7 +8,7 @@ define([
   'views/exercise/row',
   'text!templates/exercise/list.html'
 ], function($, _, Backbone, Vm, Events, Exercises, ExerciseRowView, exerciseListTemplate) {
-  var ExerciseListPage = Backbone.View.extend({
+  var ExercisePage = Backbone.View.extend({
     el : '#page',
     events : {
       'click #create-exercise' : 'createExercise'
@@ -52,5 +52,5 @@ define([
       Exercises.each(this.addOne, this);
     }
   });
-  return ExerciseListPage;
+  return ExercisePage;
 });

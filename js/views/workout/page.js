@@ -9,7 +9,7 @@ define([
   'views/workout/row',
   'text!templates/workout/list.html'
 ], function($, _, Backbone, Vm, Events, Exercises, Workouts, WorkoutRowView, workoutListTemplate) {
-  var WorkoutListPage = Backbone.View.extend({
+  var WorkoutPage = Backbone.View.extend({
     el : '#page',
     events : {
       'click #create-workout' : 'createWorkout'
@@ -54,5 +54,5 @@ define([
       Workouts.each(this.addOne, this);
     }
   });
-  return WorkoutListPage;
+  return WorkoutPage;
 });

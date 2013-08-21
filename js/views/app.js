@@ -11,17 +11,8 @@ define([
     events : {
       'click .navbar a' : 'highlightMenuItem'
     },
-    highlightMenuItem : function(e) {
-      var item = $(e.currentTarget).parent();
-      if (!item.hasClass('dropdown')) {
-        $('.active').removeClass('active');
-        if (item.find('.navbar-brand').length === 0) {
-          item.addClass('active');
-        } else {
-          // This is the brand, highlight home instead
-          $('#header :first :first').addClass('active');
-        }
-      }
+    highlightMenuItem : function() {
+      // TODO Collapse navbar on click
     },
     render : function() {
       $(this.el).html(layoutTemplate);
@@ -37,11 +28,7 @@ define([
             Backbone.history.navigate('', {
               trigger : true
             });
-            // Highlight home
-            $('.active').removeClass('active');
-            $('#header :first :first').addClass('active');
-          } else {
-            // TODO Highlight the correct nav item
+            $('#nav-home').addClass('active');
           }
         });
         Events.on('logout', function() {

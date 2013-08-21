@@ -8,7 +8,7 @@ define([
   'views/weight/row',
   'text!templates/weight/list.html'
 ], function($, _, Backbone, Vm, Events, Weights, WeightRowView, weightListTemplate) {
-  var WeightListPage = Backbone.View.extend({
+  var WeightPage = Backbone.View.extend({
     el : '#page',
     events : {
       'click #add-weight' : 'addWeight'
@@ -60,5 +60,5 @@ define([
       Weights.each(this.addOne, this);
     }
   });
-  return WeightListPage;
+  return WeightPage;
 });
