@@ -5,9 +5,9 @@ define([
   'vm',
   'events',
   'globals/weight',
-  'views/weight/item',
+  'views/weight/row',
   'text!templates/weight/list.html'
-], function($, _, Backbone, Vm, Events, Weights, WeightItemView, weightListTemplate) {
+], function($, _, Backbone, Vm, Events, Weights, WeightRowView, weightListTemplate) {
   var WeightListPage = Backbone.View.extend({
     el : '#page',
     events : {
@@ -51,7 +51,7 @@ define([
       this.editCid = newItem.cid; // Start edit
     },
     addOne : function(weight) {
-      var weightView = Vm.create('we_' + weight.cid, WeightItemView, {
+      var weightView = Vm.create('we_' + weight.cid, WeightRowView, {
         model : weight
       });
       this.$el.find('table tbody:first').append(weightView.render().el);
