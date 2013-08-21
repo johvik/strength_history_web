@@ -3,9 +3,11 @@ define([
   'underscore',
   'backbone',
   'events',
+  'globals/exercise',
   'views/workout/edit',
-  'text!templates/workout/row.html'
-], function($, _, Backbone, Events, WorkoutEditView, workoutRowTemplate) {
+  'text!templates/workout/row.html',
+  'text!templates/global/broken.html'
+], function($, _, Backbone, Events, Exercises, WorkoutEditView, workoutRowTemplate, globalBrokenTemplate) {
   var WorkoutRow = Backbone.View.extend({
     tagName : 'tr',
     events : {
@@ -27,7 +29,15 @@ define([
     render : function() {
       this.$el.html(_.template(workoutRowTemplate, {
         workout : this.model,
-        exercises : 'Exercises' // TODO Fix this
+        exercises : _.compact(_.map(this.model.get('exercises'), function(v) {
+          var exercise = Exercises.get(v);
+          if (_.isObject(exercise)) {
+            return exercise.get('name');
+          }
+          return _.template(globalBrokenTemplate, {
+            type : 'Exercise'
+          });
+        })).join(', ')
       }));
       return this;
     },
