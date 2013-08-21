@@ -4,27 +4,35 @@ define([
   'backbone',
   'vm',
   'globals/exercise',
+  'text!templates/exercise/selectadd.html',
+  'text!templates/exercise/selectremove.html',
   'text!templates/exercise/option.html'
-], function($, _, Backbone, Vm, Exercises, ExerciseOptionTemplate) {
+], function($, _, Backbone, Vm, Exercises, exerciseSelectAddTemplate, exerciseSelectRemoveTemplate, exerciseOptionTemplate) {
   var ExerciseSelectPage = Backbone.View.extend({
-    tagName : 'select',
-    className : 'form-control',
+    className : 'form-group',
     initialize : function() {
       this.listenTo(Exercises, 'add', this.addOne);
       this.listenTo(Exercises, 'reset sort', this.reset);
+      if (this.options.type === 'add') {
+        this.$el.html(exerciseSelectAddTemplate);
+      } else if (this.options.type === 'remove') {
+        this.$el.html(exerciseSelectRemoveTemplate);
+      } else {
+        throw new Error('Invalid ExerciseSelect type');
+      }
     },
     reset : function() {
-      var oldVal = this.$el.val();
-      this.$el.empty();
+      var oldVal = this.$('select').val();
+      this.$('select').empty();
       this.render();
-      this.$el.val(oldVal);
+      this.$('select').val(oldVal);
     },
     render : function() {
       this.addAll();
       return this;
     },
     addOne : function(exercise) {
-      this.$el.append(_.template(ExerciseOptionTemplate, {
+      this.$('select').append(_.template(exerciseOptionTemplate, {
         exercise : exercise
       }));
     },
