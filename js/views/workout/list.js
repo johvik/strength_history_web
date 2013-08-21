@@ -3,10 +3,11 @@ define([
   'underscore',
   'backbone',
   'vm',
+  'events',
   'globals/workout',
   'views/workout/item',
   'text!templates/workout/list.html'
-], function($, _, Backbone, Vm, Workouts, WorkoutItemView, workoutListTemplate) {
+], function($, _, Backbone, Vm, Events, Workouts, WorkoutItemView, workoutListTemplate) {
   var WorkoutListPage = Backbone.View.extend({
     el : '#page',
     events : {
@@ -15,10 +16,13 @@ define([
     initialize : function() {
       this.listenTo(Workouts, 'add', this.addOne);
       this.listenTo(Workouts, 'reset sort', this.reset);
+      this.listenTo(Events, 'workouts:stopEdit', function() {
+        delete this.editCid;
+      });
       $(this.el).html(_.template(workoutListTemplate));
     },
     reset : function() {
-      this.$('table tbody').empty();
+      Events.trigger('workouts:clear');
       this.render();
       if (_.isString(this.editCid)) {
         var index = Workouts.indexOf(Workouts.get(this.editCid));
@@ -40,10 +44,7 @@ define([
     },
     addOne : function(workout) {
       var workoutView = Vm.create('wo_' + workout.cid, WorkoutItemView, {
-        model : workout,
-        attributes : {
-          master : this
-        }
+        model : workout
       });
       this.$el.find('table tbody:first').append(workoutView.render().el);
     },

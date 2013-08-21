@@ -3,10 +3,11 @@ define([
   'underscore',
   'backbone',
   'vm',
+  'events',
   'globals/weight',
   'views/weight/item',
   'text!templates/weight/list.html'
-], function($, _, Backbone, Vm, Weights, WeightItemView, weightListTemplate) {
+], function($, _, Backbone, Vm, Events, Weights, WeightItemView, weightListTemplate) {
   var WeightListPage = Backbone.View.extend({
     el : '#page',
     events : {
@@ -15,10 +16,13 @@ define([
     initialize : function() {
       this.listenTo(Weights, 'add', this.addOne);
       this.listenTo(Weights, 'reset sort', this.reset);
+      this.listenTo(Events, 'weights:stopEdit', function() {
+        delete this.editCid;
+      });
       $(this.el).html(_.template(weightListTemplate));
     },
     reset : function() {
-      this.$('table tbody').empty();
+      Events.trigger('weights:clear');
       this.render();
       if (_.isString(this.editCid)) {
         var index = Weights.indexOf(Weights.get(this.editCid));
@@ -48,10 +52,7 @@ define([
     },
     addOne : function(weight) {
       var weightView = Vm.create('we_' + weight.cid, WeightItemView, {
-        model : weight,
-        attributes : {
-          master : this
-        }
+        model : weight
       });
       this.$el.find('table tbody:first').append(weightView.render().el);
     },

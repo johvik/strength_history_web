@@ -2,8 +2,9 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'events',
   'text!templates/workout/item.html'
-], function($, _, Backbone, workoutItemTemplate) {
+], function($, _, Backbone, Events, workoutItemTemplate) {
   var WorkoutItem = Backbone.View.extend({
     tagName : 'tr',
     events : {
@@ -21,6 +22,7 @@ define([
     initialize : function() {
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.remove);
+      this.listenTo(Events, 'workouts:clear', this.remove);
     },
     render : function() {
       this.$el.html(_.template(workoutItemTemplate, {
@@ -48,7 +50,7 @@ define([
     onCancel : function() {
       this.$('.edit').addClass('hidden');
       this.$('.value').removeClass('hidden');
-      this.attributes.master.editCid = null;
+      Events.trigger('workouts:stopEdit');
     },
     onDelete : function() {
       this.onCancel(); // Ensure it will be hidden

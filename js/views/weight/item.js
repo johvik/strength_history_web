@@ -2,8 +2,9 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'events',
   'text!templates/weight/item.html'
-], function($, _, Backbone, weightItemTemplate) {
+], function($, _, Backbone, Events, weightItemTemplate) {
   var WeightItem = Backbone.View.extend({
     tagName : 'tr',
     events : {
@@ -18,6 +19,7 @@ define([
     initialize : function() {
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.remove);
+      this.listenTo(Events, 'weights:clear', this.remove);
     },
     render : function() {
       this.$el.html(_.template(weightItemTemplate, {
@@ -44,7 +46,7 @@ define([
     onCancel : function() {
       this.$('.edit').addClass('hidden');
       this.$('.value').removeClass('hidden');
-      this.attributes.master.editCid = null;
+      Events.trigger('weights:stopEdit');
     },
     onDelete : function() {
       this.onCancel(); // Ensure it will be hidden
