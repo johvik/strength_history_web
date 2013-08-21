@@ -6,8 +6,9 @@ define([
   'globals/exercise',
   'text!templates/exercise/selectadd.html',
   'text!templates/exercise/selectremove.html',
-  'text!templates/exercise/option.html'
-], function($, _, Backbone, Vm, Exercises, exerciseSelectAddTemplate, exerciseSelectRemoveTemplate, exerciseOptionTemplate) {
+  'text!templates/exercise/option.html',
+  'text!templates/exercise/optionselect.html'
+], function($, _, Backbone, Vm, Exercises, exerciseSelectAddTemplate, exerciseSelectRemoveTemplate, exerciseOptionTemplate, exerciseOptionSelectTemplate) {
   var ExerciseSelectPage = Backbone.View.extend({
     className : 'form-group',
     initialize : function() {
@@ -28,6 +29,8 @@ define([
       this.$('select').val(oldVal);
     },
     render : function() {
+      // Add extra option
+      this.$('select').append(exerciseOptionSelectTemplate);
       this.addAll();
       return this;
     },

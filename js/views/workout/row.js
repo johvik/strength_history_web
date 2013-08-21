@@ -26,7 +26,8 @@ define([
     },
     render : function() {
       this.$el.html(_.template(workoutRowTemplate, {
-        workout : this.model
+        workout : this.model,
+        exercises : 'Exercises' // TODO Fix this
       }));
       return this;
     },

@@ -65,7 +65,10 @@ define([
       var workoutName = this.$('.workout-name').val();
       var exercises = [];
       this.$('.exercises select').each(function() {
-        exercises.push($(this).val());
+        var val = $(this).val();
+        if (val !== 'default') {
+          exercises.push(val);
+        }
       });
       var attributes = {
         name : workoutName,
