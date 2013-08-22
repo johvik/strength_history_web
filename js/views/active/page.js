@@ -5,9 +5,9 @@ define([
   'vm',
   'events',
   'globals/activeworkout',
-  'views/workout/row',
+  'views/active/row',
   'text!templates/active/list.html'
-], function($, _, Backbone, Vm, Events, ActiveWorkouts, WorkoutRowView, activeListTemplate) {
+], function($, _, Backbone, Vm, Events, ActiveWorkouts, ActiveWorkoutRowView, activeListTemplate) {
   var ActivePage = Backbone.View.extend({
     el : '#page',
     initialize : function() {
@@ -16,17 +16,17 @@ define([
       $(this.el).html(_.template(activeListTemplate));
     },
     reset : function() {
-      Events.trigger('workouts:clear');
+      Events.trigger('activeworkouts:clear');
       this.render();
     },
     render : function() {
       this.addAll();
     },
     addOne : function(workout) {
-      var workoutView = Vm.create('wo_' + workout.cid, WorkoutRowView, {
+      var activeWorkoutView = Vm.create('awo_' + workout.cid, ActiveWorkoutRowView, {
         model : workout
       });
-      this.$el.find('table tbody:first').append(workoutView.render().el);
+      this.$el.find('table tbody:first').append(activeWorkoutView.render().el);
     },
     addAll : function() {
       ActiveWorkouts.each(this.addOne, this);
