@@ -9,6 +9,7 @@ define([
       'history/weight' : 'weightHistory',
       'exercises' : 'exercises',
       'workouts' : 'workouts',
+      'log' : 'log',
 
       // Default - catch all
       '*actions' : 'defaultRoute'
@@ -59,6 +60,15 @@ define([
         $('#nav-workouts').addClass('active');
         var workoutPage = Vm.create('Page', WorkoutPage);
         workoutPage.render();
+      });
+    });
+    router.on('route:log', function() {
+      require([
+        'views/active/page'
+      ], function(ActivePage) {
+        $('#nav-log').addClass('active');
+        var activePage = Vm.create('Page', ActivePage);
+        activePage.render();
       });
     });
     Backbone.history.start();
