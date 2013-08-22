@@ -10,7 +10,7 @@ define([
       'exercises' : 'exercises',
       'workouts' : 'workouts',
       'log' : 'log',
-      'start/:workout' : 'startWorkout',
+      'run/:workout(/:step)' : 'runWorkout',
 
       // Default - catch all
       '*actions' : 'defaultRoute'
@@ -64,15 +64,15 @@ define([
         activePage.render();
       });
     },
-    startWorkout : function(workout) {
+    runWorkout : function(workout, step) {
       require([
-        'views/active/start'
-      ], function(ActiveStartPage) {
+        'views/active/run'
+      ], function(ActiveRunPage) {
         $('#nav-log').addClass('active');
-        var activeStartPage = Vm.create('Page', ActiveStartPage, {
-          workoutId : workout
+        Vm.create('Page', ActiveRunPage, {
+          workoutId : workout,
+          step : step,
         });
-        activeStartPage.render();
       });
     }
   });

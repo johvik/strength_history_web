@@ -35,7 +35,7 @@ define([
               _self.set({
                 latest : new Date(time).getTime()
               });
-              _self.trigger('latest');
+              _self.trigger('latest:workout');
             }
           }
         });

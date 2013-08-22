@@ -1,1 +1,20 @@
-<h1>Step</h1>
+<h1><%= exercise.get('name') %></h1>
+<div class="form-group">
+  <label for="weight-step">Weight</label>
+  <input id="weight-step" type="number" step="<%= exercise.get('standardIncrease') %>" class="form-control" placeholder="Weight" value="<%= weightValue %>">
+</div>
+<div class="form-group">
+  <label for="reps-step">Repetitions</label>
+  <input id="reps-step" type="number" step="1" min="0" class="form-control" placeholder="Repetitions" value="<%= repsValue %>">
+</div>
+<button type="button" class="btn btn-primary add">Add set</button>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th class="col-xs-6">Weight</th>
+      <th class="col-xs-6">Repetitions</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>

@@ -39,7 +39,7 @@ define([
     startWorkout : function(e) {
       e.preventDefault();
       e.stopPropagation();
-      Backbone.history.navigate('start/' + this.model.id, {
+      Backbone.history.navigate('run/' + this.model.id, {
         trigger : true
       });
     }

@@ -24,6 +24,22 @@ define([
       this.bind('invalid', function(model, error) {
         console.log(error);
       });
+    },
+    latest : function() {
+      if (!_.isUndefined(this.id)) {
+        var _self = this;
+        Backbone.ajax('/exercise/latest/' + this.id, {
+          success : function(data) {
+            var time = data.time;
+            if (!_.isUndefined(time)) {
+              _self.set({
+                latest : new Date(time).getTime()
+              });
+              _self.trigger('latest:exercise');
+            }
+          }
+        });
+      }
     }
   });
   return ExerciseModel;

@@ -15,7 +15,7 @@ define([
       workout.latest();
     });
   });
-  ActiveWorkouts.listenTo(ActiveWorkouts, 'latest change:name', function() {
+  ActiveWorkouts.listenTo(ActiveWorkouts, 'latest:workout change:name', function() {
     ActiveWorkouts.sort();
   });
 

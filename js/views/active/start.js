@@ -2,52 +2,50 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'vm',
-  'events',
-  'globals/workout',
   'globals/exercise',
-  'views/active/step',
-  'text!templates/active/start.html',
-  'text!templates/active/notfound.html'
-], function($, _, Backbone, Vm, Events, Workouts, Exercise, ActiveWorkoutStepView, activeStartTemplate, activeNotFoundTemplate) {
-  var ActiveStartPage = Backbone.View.extend({
-    el : '#page',
-    initialize : function() {
-      var model = Workouts.get(this.options.workoutId);
-      if (_.isUndefined(model)) {
-        // Not found try to listen for it!
-        var workoutId = this.options.workoutId;
-        this.listenTo(Workouts, 'add', function(workout) {
-          if (workoutId === workout.id) {
-            this.workoutFound(workout);
-          }
-        });
-        this.listenTo(Workouts, 'reset', function(workouts) {
-          var workout = workouts.get(workoutId);
-          if (!_.isUndefined(workout)) {
-            this.workoutFound(workout);
-          }
-        });
-      } else {
-        this.workoutFound(model);
-      }
+  'views/global/pager',
+  'text!templates/active/start.html'
+], function($, _, Backbone, Exercises, PagerView, activeStartTemplate) {
+  var ActiveWorkoutStart = Backbone.View.extend({
+    events : {
+      'click .pager .next a' : 'onStart'
     },
-    workoutFound : function(model) {
-      // TODO Create workout data model
-      this.stopListening(Workouts);
-      this.model = model;
-      this.render();
+    initialize : function() {
+      // TODO Add previous results
+      this.$el.html(_.template(activeStartTemplate, {
+        workout : this.model
+      }));
+      this.$el.append(new PagerView({
+        prev : {
+          href : '/#log',
+          text : 'Cancel'
+        },
+        next : {
+          href : '/#run/' + this.model.id + '/1',
+          text : 'Start'
+        }
+      }).render().el);
     },
     render : function() {
-      if (_.isUndefined(this.model)) {
-        $(this.el).html(_.template(activeNotFoundTemplate));
-      } else {
-        $(this.el).html(_.template(activeStartTemplate, {
-          workout : this.model
-        }));
-        this.$('#activeDate').val(new Date().toISOString().slice(0, -5));
-      }
+      this.$('#activeDate').val(new Date().toISOString().slice(0, -5));
+      return this;
+    },
+    onStart : function() {
+      console.log('toskfksodf');
+      var data = [];
+      _.each(this.model.get('exercises'), function(exercise) {
+        data.push({
+          exercise : exercise,
+          sets : []
+        });
+      });
+      var workoutData = {
+        time : new Date(this.$('#activeDate').val()).getTime(),
+        workout : this.model.id,
+        data : data
+      };
+      sessionStorage.setItem('workoutData', JSON.stringify(workoutData)); // Reset data
     }
   });
-  return ActiveStartPage;
+  return ActiveWorkoutStart;
 });
