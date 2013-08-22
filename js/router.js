@@ -10,9 +10,70 @@ define([
       'exercises' : 'exercises',
       'workouts' : 'workouts',
       'log' : 'log',
+      'start/:workout' : 'startWorkout',
 
       // Default - catch all
       '*actions' : 'defaultRoute'
+    },
+    defaultRoute : function() {
+      require([
+        'views/test/page'
+      ], function(TestPage) {
+        $('#nav-home').addClass('active');
+        var testPage = Vm.create('Page', TestPage);
+        testPage.render();
+        // Make sure path is home page
+        Backbone.history.navigate('', {
+          replace : true
+        });
+      });
+    },
+    weightHistory : function() {
+      require([
+        'views/weight/page'
+      ], function(WeightPage) {
+        $('#nav-weight-history').addClass('active');
+        var weightPage = Vm.create('Page', WeightPage);
+        weightPage.render();
+      });
+    },
+    exercises : function() {
+      require([
+        'views/exercise/page'
+      ], function(ExercisePage) {
+        $('#nav-exercises').addClass('active');
+        var exercisePage = Vm.create('Page', ExercisePage);
+        exercisePage.render();
+      });
+    },
+    workouts : function() {
+      require([
+        'views/workout/page'
+      ], function(WorkoutPage) {
+        $('#nav-workouts').addClass('active');
+        var workoutPage = Vm.create('Page', WorkoutPage);
+        workoutPage.render();
+      });
+    },
+    log : function() {
+      require([
+        'views/active/page'
+      ], function(ActivePage) {
+        $('#nav-log').addClass('active');
+        var activePage = Vm.create('Page', ActivePage);
+        activePage.render();
+      });
+    },
+    startWorkout : function(workout) {
+      require([
+        'views/active/start'
+      ], function(ActiveStartPage) {
+        $('#nav-log').addClass('active');
+        var activeStartPage = Vm.create('Page', ActiveStartPage, {
+          workoutId : workout
+        });
+        activeStartPage.render();
+      });
     }
   });
 
@@ -25,51 +86,6 @@ define([
       if (collapse.css('display') !== 'none') {
         collapse.trigger('click');
       }
-    });
-    router.on('route:defaultRoute', function() {
-      require([
-        'views/test/page'
-      ], function(TestPage) {
-        $('#nav-home').addClass('active');
-        var testPage = Vm.create('Page', TestPage);
-        testPage.render();
-      });
-    });
-    router.on('route:weightHistory', function() {
-      require([
-        'views/weight/page'
-      ], function(WeightPage) {
-        $('#nav-weight-history').addClass('active');
-        var weightPage = Vm.create('Page', WeightPage);
-        weightPage.render();
-      });
-    });
-    router.on('route:exercises', function() {
-      require([
-        'views/exercise/page'
-      ], function(ExercisePage) {
-        $('#nav-exercises').addClass('active');
-        var exercisePage = Vm.create('Page', ExercisePage);
-        exercisePage.render();
-      });
-    });
-    router.on('route:workouts', function() {
-      require([
-        'views/workout/page'
-      ], function(WorkoutPage) {
-        $('#nav-workouts').addClass('active');
-        var workoutPage = Vm.create('Page', WorkoutPage);
-        workoutPage.render();
-      });
-    });
-    router.on('route:log', function() {
-      require([
-        'views/active/page'
-      ], function(ActivePage) {
-        $('#nav-log').addClass('active');
-        var activePage = Vm.create('Page', ActivePage);
-        activePage.render();
-      });
     });
     Backbone.history.start();
   };

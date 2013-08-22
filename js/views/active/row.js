@@ -39,7 +39,9 @@ define([
     startWorkout : function(e) {
       e.preventDefault();
       e.stopPropagation();
-      // TODO Start workout
+      Backbone.history.navigate('start/' + this.model.id, {
+        trigger : true
+      });
     }
   });
   return WorkoutRow;
