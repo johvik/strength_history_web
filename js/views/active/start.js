@@ -14,7 +14,6 @@ define([
     },
     initialize : function() {
       this.listenTo(Exercises, 'sync', this.reset);
-      // TODO Add previous results
       this.$el.html(_.template(activeStartTemplate, {
         workout : this.model
       }));
