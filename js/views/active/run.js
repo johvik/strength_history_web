@@ -8,8 +8,9 @@ define([
   'globals/exercise',
   'views/active/start',
   'views/active/step',
+  'views/active/summary',
   'text!templates/global/notfound.html'
-], function($, _, Backbone, Vm, Events, Workouts, Exercise, ActiveStartView, ActiveStepView, globalNotFoundTemplate) {
+], function($, _, Backbone, Vm, Events, Workouts, Exercise, ActiveStartView, ActiveStepView, ActiveSummaryView, globalNotFoundTemplate) {
   var ActiveRunPage = Backbone.View.extend({
     el : '#page',
     initialize : function() {
@@ -68,7 +69,11 @@ define([
         } else {
           // Summary page
           step = exercises.length + 1;
-          this.$el.html('summary');
+          var activeSummaryView = new ActiveSummaryView({
+            model : this.model,
+            step : step
+          });
+          this.$el.html(activeSummaryView.render().el);
           console.log('summary');
         }
       }

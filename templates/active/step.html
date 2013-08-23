@@ -18,3 +18,13 @@
   <tbody>
   </tbody>
 </table>
+<% if (first) { %>
+<button type="button" class="btn btn-danger previous">Discard</button>
+<% } else { %>
+<button type="button" class="btn btn-primary previous">Previous</button>
+<% } %>
+<% if (last) { %>
+<button type="button" class="pull-right btn btn-success next">Summary</button>
+<% } else { %>
+<button type="button" class="pull-right btn btn-primary next">Next</button>
+<% } %>

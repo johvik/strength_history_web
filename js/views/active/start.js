@@ -3,28 +3,18 @@ define([
   'underscore',
   'backbone',
   'globals/exercise',
-  'views/global/pager',
   'text!templates/active/start.html'
-], function($, _, Backbone, Exercises, PagerView, activeStartTemplate) {
+], function($, _, Backbone, Exercises, activeStartTemplate) {
   var ActiveWorkoutStart = Backbone.View.extend({
     events : {
-      'click .pager .next a' : 'onStart'
+      'click button.start' : 'onStart',
+      'click button.cancel' : 'onCancel'
     },
     initialize : function() {
       // TODO Add previous results
       this.$el.html(_.template(activeStartTemplate, {
         workout : this.model
       }));
-      this.$el.append(new PagerView({
-        prev : {
-          href : '/#log',
-          text : 'Cancel'
-        },
-        next : {
-          href : '/#run/' + this.model.id + '/1',
-          text : 'Start'
-        }
-      }).render().el);
     },
     render : function() {
       this.$('#activeDate').val(new Date().toISOString().slice(0, -5));
@@ -45,6 +35,15 @@ define([
         data : data
       };
       sessionStorage.setItem('workoutData', JSON.stringify(workoutData)); // Reset data
+      // Go to next page
+      Backbone.history.navigate('run/' + this.model.id + '/1', {
+        trigger : true
+      });
+    },
+    onCancel : function() {
+      Backbone.history.navigate('log', {
+        trigger : true
+      });
     }
   });
   return ActiveWorkoutStart;
