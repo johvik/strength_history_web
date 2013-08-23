@@ -12,8 +12,10 @@ define([
     },
     initialize : function() {
       // TODO
+      var time = JSON.parse(sessionStorage.getItem('workoutData')).time;
       this.$el.html(_.template(activeSummaryTemplate, {
-        workout : this.model
+        workout : this.model,
+        time : time
       }));
     },
     render : function() {
