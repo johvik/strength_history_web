@@ -2,19 +2,36 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'events',
   'globals/exercise',
+  'views/active/previous',
   'text!templates/active/start.html'
-], function($, _, Backbone, Exercises, activeStartTemplate) {
+], function($, _, Backbone, Events, Exercises, ActivePreviousView, activeStartTemplate) {
   var ActiveWorkoutStart = Backbone.View.extend({
     events : {
       'click button.start' : 'onStart',
       'click button.cancel' : 'onCancel'
     },
     initialize : function() {
+      this.listenTo(Exercises, 'sync', this.reset);
       // TODO Add previous results
       this.$el.html(_.template(activeStartTemplate, {
         workout : this.model
       }));
+      this.reset();
+    },
+    reset : function() {
+      Events.trigger('previous:clear');
+      var _self = this;
+      var exercises = this.model.get('exercises');
+      _.each(_.unique(exercises), function(exerciseId) {
+        var exercise = Exercises.get(exerciseId);
+        if (_.isObject(exercise)) {
+          _self.$('table tbody:first').append(new ActivePreviousView({
+            model : exercise
+          }).render().el);
+        }
+      });
     },
     render : function() {
       this.$('#activeDate').val(new Date().toISOString().slice(0, -5));

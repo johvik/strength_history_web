@@ -1,0 +1,11 @@
+<td><%= exercise.get('name') %></td>
+<td colspan="2">
+  <table class="table">
+    <% _.each(sets, function(set) { %>
+    <tr>
+      <td><%= set.weight %></td>
+      <td><%= set.reps %></td>
+    </tr>
+    <% }); %>
+  </table>
+</td>

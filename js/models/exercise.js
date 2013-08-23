@@ -30,10 +30,12 @@ define([
         var _self = this;
         Backbone.ajax('/exercise/latest/' + this.id, {
           success : function(data) {
-            var time = data.time;
-            if (!_.isUndefined(time)) {
+            var res = _.find(data.data, function(d) {
+              return d.exercise == _self.id;
+            });
+            if (!_.isUndefined(res)) {
               _self.set({
-                latest : new Date(time).getTime()
+                latest : res.sets
               });
               _self.trigger('latest:exercise');
             }
