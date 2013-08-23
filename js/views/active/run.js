@@ -34,7 +34,6 @@ define([
       }
     },
     workoutFound : function(model) {
-      // TODO Create workout data model
       this.stopListening(Workouts);
       this.model = model;
       this.render();
@@ -43,8 +42,6 @@ define([
       if (_.isUndefined(this.model)) {
         this.$el.html(globalNotFoundTemplate);
       } else {
-        var data = sessionStorage.getItem('workoutData');
-        console.log(data);
         var step = parseInt(this.options.step, 10);
         if (_.isNaN(step)) {
           step = 0;
@@ -57,7 +54,12 @@ define([
             model : this.model
           });
           this.$el.html(activeStartView.render().el);
-          console.log('start');
+        } else if (_.isNull(sessionStorage.getItem('workoutData'))) {
+          // Data is gone! Go to start page
+          // TODO Notify user?
+          Backbone.history.navigate('run/' + this.model.id, {
+            trigger : true
+          });
         } else if (step <= exercises.length) {
           // Step page
           var activeStepView = new ActiveStepView({
@@ -65,7 +67,6 @@ define([
             step : step
           });
           this.$el.html(activeStepView.render().el);
-          console.log('step');
         } else {
           // Summary page
           step = exercises.length + 1;
@@ -74,7 +75,6 @@ define([
             step : step
           });
           this.$el.html(activeSummaryView.render().el);
-          console.log('summary');
         }
       }
     }

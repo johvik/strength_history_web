@@ -3,8 +3,8 @@ define([
   'underscore',
   'backbone',
   'events',
-  'text!templates/active/previous.html'
-], function($, _, Backbone, Events, activePreviousTemplate) {
+  'text!templates/active/exerciserow.html'
+], function($, _, Backbone, Events, activeExerciseRowTemplate) {
   var ActivePrevious = Backbone.View.extend({
     tagName : 'tr',
     initialize : function() {
@@ -13,8 +13,8 @@ define([
       this.listenTo(Events, 'previous:clear', this.remove);
     },
     render : function() {
-      this.$el.html(_.template(activePreviousTemplate, {
-        exercise : this.model,
+      this.$el.html(_.template(activeExerciseRowTemplate, {
+        exercisename : this.model.get('name'),
         sets : this.model.get('latest')
       }));
       return this;

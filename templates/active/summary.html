@@ -1,11 +1,12 @@
-<h1>Summary of <%= workout.get('name') %></h1>
+<h1>Summary of <%= workout.get('name') %><button type="button" class="pull-right btn btn-danger discard">Discard</button></h1>
 <label for="activeDate">Date</label>
 <time id="activeDate"><%= new Date(time).toDateString() %></time>
 <table class="table table-hover">
   <thead>
     <tr>
       <th class="col-xs-6">Exercise</th>
-      <th class="col-xs-6">Result</th>
+      <th class="col-xs-3">Weight</th>
+      <th class="col-xs-3">Repetitions</th>
     </tr>
   </thead>
   <tbody>

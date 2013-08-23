@@ -28,12 +28,13 @@ define([
       // TODO
     },
     onPrevious : function() {
-      this.storeData();
       if (this.options.step <= 1) {
+        sessionStorage.removeItem('workoutData'); // Remove data
         Backbone.history.navigate('run/' + this.model.id, {
           trigger : true
         });
       } else {
+        this.storeData();
         Backbone.history.navigate('run/' + this.model.id + '/' + (this.options.step - 1), {
           trigger : true
         });

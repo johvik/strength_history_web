@@ -37,7 +37,6 @@ define([
       return this;
     },
     onStart : function() {
-      console.log('toskfksodf');
       var data = [];
       _.each(this.model.get('exercises'), function(exercise) {
         data.push({
