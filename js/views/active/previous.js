@@ -3,9 +3,8 @@ define([
   'underscore',
   'backbone',
   'events',
-  'globals/exercise',
   'text!templates/active/previous.html'
-], function($, _, Backbone, Events, Exercises, activePreviousTemplate) {
+], function($, _, Backbone, Events, activePreviousTemplate) {
   var ActivePrevious = Backbone.View.extend({
     tagName : 'tr',
     initialize : function() {
