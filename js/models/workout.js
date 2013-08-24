@@ -11,7 +11,7 @@ define([
       var exercises = attributes.exercises;
       var len = workoutName.length;
       var invalidName = !(len >= 1 && len <= 64);
-      var invalidExercises = _.isUndefined(exercises);
+      var invalidExercises = !_.isArray(exercises) || !(exercises.length >= 0 && exercises.length <= 64);
       if (invalidName || invalidExercises) {
         return {
           str : 'Invalid workout attributes: ' + workoutName + ' ' + exercises,
