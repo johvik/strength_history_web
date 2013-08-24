@@ -1,13 +1,14 @@
-<h1><%= exercise.get('name') %></h1>
-<div class="form-group">
-  <label for="weight-step">Weight</label>
-  <input id="weight-step" type="number" step="<%= exercise.get('standardIncrease') %>" class="form-control" placeholder="Weight" value="<%= weightValue %>">
+<h1><%= exercise.get('name') %><button type="button" class="pull-right btn btn-default add">Add set</button></h1>
+<div class="row form-group">
+  <div class="col-xs-6">
+    <label for="weight-step">Weight</label>
+    <input id="weight-step" type="number" step="<%= exercise.get('standardIncrease') %>" class="form-control" placeholder="Weight" value="<%= weightValue %>">
+  </div>
+  <div class="col-xs-6">
+    <label for="reps-step">Repetitions</label>
+    <input id="reps-step" type="number" step="1" min="0" class="form-control" placeholder="Repetitions" value="<%= repsValue %>">
+  </div>
 </div>
-<div class="form-group">
-  <label for="reps-step">Repetitions</label>
-  <input id="reps-step" type="number" step="1" min="0" class="form-control" placeholder="Repetitions" value="<%= repsValue %>">
-</div>
-<button type="button" class="btn btn-primary add">Add set</button>
 <table class="table table-hover">
   <thead>
     <tr>
@@ -22,8 +23,7 @@
 <button type="button" class="btn btn-danger previous">Discard</button>
 <% } else { %>
 <button type="button" class="btn btn-primary previous">Previous</button>
-<% } %>
-<% if (last) { %>
+<% } %> <% if (last) { %>
 <button type="button" class="pull-right btn btn-success next">Summary</button>
 <% } else { %>
 <button type="button" class="pull-right btn btn-primary next">Next</button>
