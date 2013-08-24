@@ -9,8 +9,9 @@ define([
   'views/active/start',
   'views/active/step',
   'views/active/summary',
-  'text!templates/global/notfound.html'
-], function($, _, Backbone, Vm, Events, Workouts, Exercise, ActiveStartView, ActiveStepView, ActiveSummaryView, globalNotFoundTemplate) {
+  'text!templates/global/notfound.html',
+  'text!templates/messages/workoutdatagone.html'
+], function($, _, Backbone, Vm, Events, Workouts, Exercise, ActiveStartView, ActiveStepView, ActiveSummaryView, globalNotFoundTemplate, workoutDataGoneTemplate) {
   var ActiveRunPage = Backbone.View.extend({
     el : '#page',
     initialize : function() {
@@ -56,7 +57,8 @@ define([
           this.$el.html(activeStartView.render().el);
         } else if (_.isNull(sessionStorage.getItem('workoutData'))) {
           // Data is gone! Go to start page
-          // TODO Notify user?
+          $('#top-message').html(workoutDataGoneTemplate);
+          $('#top-message :first-child').addClass('in');
           Backbone.history.navigate('run/' + this.model.id, {
             trigger : true
           });

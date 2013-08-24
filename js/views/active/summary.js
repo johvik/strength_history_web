@@ -6,8 +6,9 @@ define([
   'globals/workout',
   'models/workoutdata',
   'views/active/summaryrow',
-  'text!templates/active/summary.html'
-], function($, _, Backbone, Exercises, Workouts, WorkoutDataModel, ActiveSummaryRowView, activeSummaryTemplate) {
+  'text!templates/active/summary.html',
+  'text!templates/messages/savefailed.html'
+], function($, _, Backbone, Exercises, Workouts, WorkoutDataModel, ActiveSummaryRowView, activeSummaryTemplate, saveFailedTemplate) {
   var ActiveWorkoutSummary = Backbone.View.extend({
     events : {
       'click button.back' : 'onBack',
@@ -42,6 +43,8 @@ define([
       });
     },
     onSave : function() {
+      // TODO Handle messages better, maybe stack and timeout?
+      $('#top-message :first-child').alert('close'); // Hide previous message
       this.$('table:first tr').removeClass('danger');
       var workoutData = new WorkoutDataModel(this.data);
       if (workoutData.isValid()) {
@@ -54,13 +57,14 @@ define([
               workout.latest();
             }
             _self.onDiscard();
+          },
+          error : function() {
+            $('#top-message').html(saveFailedTemplate);
+            $('#top-message :first-child').addClass('in');
           }
         });
       } else {
         var error = workoutData.validationError;
-        if (error.data) {
-          // TODO Notify user, too many exercises
-        }
         _.each(error.sets, function(i) {
           this.$('table:first tr').eq(i).addClass('danger');
         });
