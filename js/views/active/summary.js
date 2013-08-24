@@ -64,7 +64,6 @@ define([
         _.each(error.sets, function(i) {
           this.$('table:first tr').eq(i).addClass('danger');
         });
-        this.$('.exercises').parent().toggleClass('has-error', error.sets);
       }
     }
   });
