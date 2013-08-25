@@ -37,6 +37,10 @@ define([
               });
               _self.trigger('latest:workout');
             }
+          },
+          error : function() {
+            _self.unset('latest');
+            _self.trigger('latest:workout');
           }
         });
       }

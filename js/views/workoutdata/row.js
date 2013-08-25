@@ -45,6 +45,11 @@ define([
     onDelete : function(e) {
       e.stopPropagation();
       this.model.destroy();
+      var workout = Workouts.get(this.model.get('workout'));
+      if (_.isObject(workout)) {
+        // Update latest, it might have changed
+        workout.latest();
+      }
     }
   });
   return WorkoutDataRow;
