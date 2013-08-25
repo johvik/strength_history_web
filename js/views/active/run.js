@@ -59,9 +59,6 @@ define([
           // Data is gone! Go to start page
           $('#top-message').html(workoutDataGoneTemplate);
           $('#top-message :first-child').addClass('in');
-          Backbone.history.navigate('run/' + this.model.id, {
-            trigger : true
-          });
         } else if (step <= exercises.length) {
           // Step page
           var activeStepView = new ActiveStepView({
