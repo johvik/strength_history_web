@@ -13,7 +13,8 @@ define([
     events : {
       'click button.back' : 'onBack',
       'click button.discard' : 'onDiscard',
-      'click button.save' : 'onSave'
+      'click button.save' : 'onSave',
+      'click tr.click' : 'onRowClick'
     },
     initialize : function() {
       this.data = JSON.parse(sessionStorage.getItem('workoutData'));
@@ -70,6 +71,12 @@ define([
           this.$('table:first tr').eq(i).addClass('danger');
         });
       }
+    },
+    onRowClick : function(e) {
+      var index = this.$('tr.click').index(this.$(e.currentTarget));
+      Backbone.history.navigate('run/' + this.model.id + '/' + (index + 1), {
+        trigger : true
+      });
     }
   });
   return ActiveWorkoutSummary;

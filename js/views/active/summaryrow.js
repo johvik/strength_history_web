@@ -8,6 +8,7 @@ define([
 ], function($, _, Backbone, Exercises, activeExerciseRowTemplate, globalBrokenTemplate) {
   var ActiveSummaryRow = Backbone.View.extend({
     tagName : 'tr',
+    className : 'click',
     initialize : function() {
       this.listenTo(Exercises, 'sync', this.render);
     },

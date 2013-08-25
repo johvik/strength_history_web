@@ -4,7 +4,7 @@ button#login {
   width: 80px;
 }
 
-td.value {
+tr.click, td.value {
   cursor: pointer;
 }
 
