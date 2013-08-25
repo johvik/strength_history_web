@@ -43,6 +43,7 @@ define([
       // TODO Edit
     },
     onDelete : function(e) {
+      // TODO Create better solution for the delete button
       e.stopPropagation();
       this.model.destroy();
       var workout = Workouts.get(this.model.get('workout'));
