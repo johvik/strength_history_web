@@ -13,7 +13,7 @@ define([
     events : {
       'click a' : 'startEdit',
       'click td' : 'startEdit',
-      'click button.delete' : 'onDelete'
+      'click button.hover-delete' : 'onDelete'
     },
     initialize : function() {
       this.listenTo(this.model, 'change', this.render);
