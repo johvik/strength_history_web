@@ -7,6 +7,7 @@ define([
   var AppRouter = Backbone.Router.extend({
     routes : {
       'history/weight' : 'weightHistory',
+      'history/workout' : 'workoutHistory',
       'exercises' : 'exercises',
       'workouts' : 'workouts',
       'log' : 'log',
@@ -35,6 +36,16 @@ define([
         $('#nav-weight-history').addClass('active');
         var weightPage = Vm.create('Page', WeightPage);
         weightPage.render();
+      });
+    },
+    workoutHistory : function() {
+      // TODO Merge workout and weight history into one view!
+      require([
+        'views/workoutdata/page'
+      ], function(WorkoutDataPage) {
+        $('#nav-workout-history').addClass('active');
+        var workoutDataPage = Vm.create('Page', WorkoutDataPage);
+        workoutDataPage.render();
       });
     },
     exercises : function() {
