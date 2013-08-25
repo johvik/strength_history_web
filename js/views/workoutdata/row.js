@@ -37,20 +37,23 @@ define([
       return this;
     },
     startEdit : function(e) {
-      console.log(this.model.get('workout'));
-      e.preventDefault();
       e.stopPropagation();
-      // TODO Edit
-    },
-    onDelete : function(e) {
-      // TODO Create better solution for the delete button
-      e.stopPropagation();
-      this.model.destroy();
-      var workout = Workouts.get(this.model.get('workout'));
-      if (_.isObject(workout)) {
-        // Update latest, it might have changed
-        workout.latest();
-      }
+      var exerciseData = [];
+      var data = this.model.get('data');
+      var _self = this;
+      _.each(data, function(i, index) {
+        var set = _self.model.bestSet(index);
+        exerciseData.push({
+          id : i.exercise,
+          weight : set ? set.weight : 50,
+          reps : set ? set.reps : 5
+        });
+      });
+      sessionStorage.setItem('exerciseData', JSON.stringify(exerciseData));
+      sessionStorage.setItem('workoutData', JSON.stringify(this.model));
+      Backbone.history.navigate('edit/' + this.model.get('workout'), {
+        trigger : true
+      });
     }
   });
   return WorkoutDataRow;

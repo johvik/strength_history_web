@@ -29,6 +29,32 @@ define([
       this.bind('invalid', function(model, error) {
         console.log(error);
       });
+    },
+    parse : function(data, options) {
+      if (_.has(data, 'time')) {
+        // Convert date string to time
+        data.time = new Date(data.time).getTime();
+      }
+      return data;
+    },
+    bestSet : function(index) {
+      var data = this.get('data')[index];
+      if (data) {
+        var best = _.reduce(data.sets, function(memo, i) {
+          if (memo) {
+            if (i.weight > memo.weight) {
+              return i;
+            } else if (i.weight == memo.weight) {
+              if (i.reps > memo.reps) {
+                return i;
+              }
+            }
+            return memo;
+          }
+          return i;
+        }, undefined);
+        return best;
+      }
     }
   });
   return WorkoutDataModel;

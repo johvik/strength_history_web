@@ -12,6 +12,7 @@ define([
       'workouts' : 'workouts',
       'log' : 'log',
       'run/:workout(/:step)' : 'runWorkout',
+      'edit/:workout(/:step)' : 'editWorkout',
 
       // Default - catch all
       '*actions' : 'defaultRoute'
@@ -81,6 +82,17 @@ define([
       ], function(ActiveRunPage) {
         $('#nav-log').addClass('active');
         Vm.create('Page', ActiveRunPage, {
+          workoutId : workout,
+          step : step,
+        });
+      });
+    },
+    editWorkout : function(workout, step) {
+      require([
+        'views/workoutdata/edit'
+      ], function(WorkoutDataEditPage) {
+        $('#nav-workout-history').addClass('active');
+        Vm.create('Page', WorkoutDataEditPage, {
           workoutId : workout,
           step : step,
         });
