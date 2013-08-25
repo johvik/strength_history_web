@@ -36,6 +36,12 @@ define([
           Events.trigger('login');
         }
       });
+      // Remove navbar highlight and collapse
+      $('.navbar .active').removeClass('active');
+      var collapse = $('.navbar button.navbar-toggle:not(.collapsed)');
+      if (collapse.css('display') !== 'none') {
+        collapse.trigger('click');
+      }
     }
   });
   return HeaderView;
