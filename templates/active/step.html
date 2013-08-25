@@ -1,4 +1,4 @@
-<h1><%= exercise.get('name') %><button type="button" class="pull-right btn btn-default add">Add set</button></h1>
+<h1><%= exercise.get('name') %></h1>
 <div class="row form-group">
   <div class="col-xs-6">
     <label for="weight-step">Weight</label>
@@ -9,6 +9,7 @@
     <input id="reps-step" type="number" step="1" min="0" class="form-control" placeholder="Repetitions" value="<%= repsValue %>">
   </div>
 </div>
+<button type="button" class="pull-right btn btn-primary add">Add set</button>
 <table class="table table-hover">
   <thead>
     <tr>
