@@ -4,11 +4,12 @@ define([
   'backbone',
   'globals/exercise',
   'globals/workout',
+  'globals/workoutdata',
   'models/workoutdata',
   'views/active/summaryrow',
   'text!templates/active/summary.html',
   'text!templates/messages/savefailed.html'
-], function($, _, Backbone, Exercises, Workouts, WorkoutDataModel, ActiveSummaryRowView, activeSummaryTemplate, saveFailedTemplate) {
+], function($, _, Backbone, Exercises, Workouts, WorkoutData, WorkoutDataModel, ActiveSummaryRowView, activeSummaryTemplate, saveFailedTemplate) {
   var ActiveWorkoutSummary = Backbone.View.extend({
     events : {
       'click button.back' : 'onBack',
@@ -51,7 +52,7 @@ define([
       var workoutData = new WorkoutDataModel(this.data);
       if (workoutData.isValid()) {
         var _self = this;
-        workoutData.save({}, {
+        WorkoutData.create(workoutData, {
           success : function() {
             // Update latest
             var workout = Workouts.get(_self.data.workout);
