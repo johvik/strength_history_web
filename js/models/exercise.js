@@ -33,7 +33,6 @@ define([
             var res = _.filter(data.data, function(d) {
               return d.exercise == _self.id;
             });
-            console.log(res);
             var latest = _.reduce(res, function(memo, i) {
               if (memo) {
                 _.each(i.sets, function(set) {
@@ -43,7 +42,6 @@ define([
               }
               return i;
             }, undefined);
-            console.log(latest);
             if (!_.isUndefined(latest)) {
               _self.set({
                 latest : latest.sets
