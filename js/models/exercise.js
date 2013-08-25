@@ -30,19 +30,30 @@ define([
         var _self = this;
         Backbone.ajax('/exercise/latest/' + this.id, {
           success : function(data) {
-            var res = _.find(data.data, function(d) {
+            var res = _.filter(data.data, function(d) {
               return d.exercise == _self.id;
             });
-            if (!_.isUndefined(res)) {
+            console.log(res);
+            var latest = _.reduce(res, function(memo, i) {
+              if (memo) {
+                _.each(i.sets, function(set) {
+                  memo.sets.push(set);
+                });
+                return memo;
+              }
+              return i;
+            }, undefined);
+            console.log(latest);
+            if (!_.isUndefined(latest)) {
               _self.set({
-                latest : res.sets
+                latest : latest.sets
               });
               _self.trigger('latest:exercise', _self);
             }
           },
           error : function() {
             _self.unset('latest');
-            _self.trigger('latest:exercise');
+            _self.trigger('latest:exercise', _self);
           }
         });
       }
