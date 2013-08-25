@@ -11,12 +11,14 @@ define([
       'click button.add' : 'onAddSet',
       'click button.remove' : 'onRemoveSet',
       'click button.previous' : 'onPrevious',
-      'click button.next' : 'onNext'
+      'click button.next' : 'onNext',
+      'change input#weight-step' : 'onDataChange',
+      'change input#reps-step' : 'onDataChange'
     },
     initialize : function() {
       this.data = JSON.parse(sessionStorage.getItem('workoutData'));
-      var setData = JSON.parse(sessionStorage.getItem('exerciseData'))[this.options.step - 1];
-      // TODO Set values on value change
+      this.exerciseData = JSON.parse(sessionStorage.getItem('exerciseData'));
+      var setData = this.exerciseData[this.options.step - 1];
       var exercises = this.model.get('exercises');
       this.$el.html(_.template(activeStepTemplate, {
         exercise : Exercises.get(exercises[this.options.step - 1]),
@@ -68,6 +70,12 @@ define([
       Backbone.history.navigate('run/' + this.model.id + '/' + (this.options.step + 1), {
         trigger : true
       });
+    },
+    onDataChange : function() {
+      var setData = this.exerciseData[this.options.step - 1];
+      setData.weight = this.$('#weight-step').val();
+      setData.reps = this.$('#reps-step').val();
+      sessionStorage.setItem('exerciseData', JSON.stringify(this.exerciseData));
     }
   });
   return ActiveWorkoutStep;
