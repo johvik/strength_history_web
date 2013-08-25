@@ -4,14 +4,6 @@ button#login {
   width: 80px;
 }
 
-tr button.hover-delete {
-  visibility: hidden;
-}
-
-tr:hover button.hover-delete {
-  visibility: visible;
-}
-
 tr.click,td.value {
   cursor: pointer;
 }
