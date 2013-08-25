@@ -21,17 +21,12 @@ define([
     },
     initialize : function() {
       this.data = JSON.parse(sessionStorage.getItem('workoutData'));
-      if (this.options.edit === true) {
-        this.$el.html(_.template(workoutDataSummaryTemplate, {
-          workout : this.model,
-          time : this.data.time
-        }));
-      } else {
-        this.$el.html(_.template(activeSummaryTemplate, {
-          workout : this.model,
-          time : this.data.time
-        }));
-      }
+      var template = this.options.edit === true ? workoutDataSummaryTemplate : activeSummaryTemplate;
+      this.$el.html(_.template(template, {
+        workout : this.model,
+        time : this.data.time,
+        first : this.options.step === 1
+      }));
       var _self = this;
       _.each(this.data.data, function(i) {
         _self.$('table tbody:first').append(new ActiveSummaryRowView({

@@ -13,5 +13,9 @@
   <tbody>
   </tbody>
 </table>
+<% if (first) { %>
+<button type="button" class="btn btn-danger discard">Discard</button>
+<% } else { %>
 <button type="button" class="btn btn-primary back">Back</button>
+<% } %>
 <button type="button" class="pull-right btn btn-success save">Save</button>

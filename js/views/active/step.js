@@ -68,7 +68,7 @@ define([
         if (this.options.step <= 1) {
           sessionStorage.removeItem('workoutData'); // Remove data
           sessionStorage.removeItem('exerciseData');
-          Backbone.history.navigate('run/' + this.model.id, {
+          Backbone.history.navigate('log', {
             trigger : true
           });
         } else {
