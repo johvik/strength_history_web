@@ -13,7 +13,30 @@ define([
       'click button.cancel' : 'onCancel'
     },
     initialize : function() {
+      this.exerciseData = [];
+      var exercises = this.model.get('exercises');
+      var _self = this;
+      _.each(exercises, function(i) {
+        _self.exerciseData.push({
+          id : i,
+          weight : 50,
+          reps : 5
+        });
+      });
       this.listenTo(Exercises, 'sync', this.reset);
+      this.listenTo(Exercises, 'latest:exercise', function(exercise) {
+        if (_.contains(exercises, exercise.id)) {
+          _.each(this.exerciseData, function(i) {
+            if (i.id === exercise.id) {
+              var data = exercise.bestLatest();
+              if (_.isObject(data)) {
+                i.weight = data.weight;
+                i.reps = data.reps;
+              }
+            }
+          });
+        }
+      });
       this.$el.html(_.template(activeStartTemplate, {
         workout : this.model
       }));
@@ -26,6 +49,7 @@ define([
       _.each(_.unique(exercises), function(exerciseId) {
         var exercise = Exercises.get(exerciseId);
         if (_.isObject(exercise)) {
+          exercise.latest();
           _self.$('table tbody:first').append(new ActivePreviousView({
             model : exercise
           }).render().el);
@@ -49,6 +73,7 @@ define([
         workout : this.model.id,
         data : data
       };
+      sessionStorage.setItem('exerciseData', JSON.stringify(this.exerciseData));
       sessionStorage.setItem('workoutData', JSON.stringify(workoutData)); // Reset data
       // Go to next page
       Backbone.history.navigate('run/' + this.model.id + '/1', {

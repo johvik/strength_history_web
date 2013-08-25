@@ -9,7 +9,6 @@ define([
     tagName : 'tr',
     initialize : function() {
       this.listenTo(this.model, 'latest:exercise', this.render);
-      this.model.latest();
       this.listenTo(Events, 'previous:clear', this.remove);
     },
     render : function() {

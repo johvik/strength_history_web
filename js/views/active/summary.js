@@ -38,6 +38,7 @@ define([
     },
     onDiscard : function() {
       sessionStorage.removeItem('workoutData'); // Remove data
+      sessionStorage.removeItem('exerciseData');
       Backbone.history.navigate('log', {
         trigger : true
       });

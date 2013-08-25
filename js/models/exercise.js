@@ -37,10 +37,29 @@ define([
               _self.set({
                 latest : res.sets
               });
-              _self.trigger('latest:exercise');
+              _self.trigger('latest:exercise', _self);
             }
           }
         });
+      }
+    },
+    bestLatest : function() {
+      var latest = this.get('latest');
+      if (_.isArray(latest)) {
+        var best = _.reduce(latest, function(memo, i) {
+          if (memo) {
+            if (i.weight > memo.weight) {
+              return i;
+            } else if (i.weight == memo.weight) {
+              if (i.reps > memo.reps) {
+                return i;
+              }
+            }
+            return memo;
+          }
+          return i;
+        }, undefined);
+        return best;
       }
     }
   });

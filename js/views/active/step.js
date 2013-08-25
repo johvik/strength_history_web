@@ -15,12 +15,13 @@ define([
     },
     initialize : function() {
       this.data = JSON.parse(sessionStorage.getItem('workoutData'));
-      // TODO Set values
+      var setData = JSON.parse(sessionStorage.getItem('exerciseData'))[this.options.step - 1];
+      // TODO Set values on value change
       var exercises = this.model.get('exercises');
       this.$el.html(_.template(activeStepTemplate, {
         exercise : Exercises.get(exercises[this.options.step - 1]),
-        weightValue : 0,
-        repsValue : 1,
+        weightValue : setData.weight,
+        repsValue : setData.reps,
         first : this.options.step <= 1,
         last : this.options.step >= exercises.length
       }));
@@ -53,6 +54,7 @@ define([
     onPrevious : function() {
       if (this.options.step <= 1) {
         sessionStorage.removeItem('workoutData'); // Remove data
+        sessionStorage.removeItem('exerciseData');
         Backbone.history.navigate('run/' + this.model.id, {
           trigger : true
         });
