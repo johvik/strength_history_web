@@ -2,9 +2,10 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'text!templates/workout/edit.html',
-  'views/exercise/select'
-], function($, _, Backbone, workoutEditTemplate, ExerciseSelectView) {
+  'views/global/confirm',
+  'views/exercise/select',
+  'text!templates/workout/edit.html'
+], function($, _, Backbone, ConfirmView, ExerciseSelectView, workoutEditTemplate) {
   var WorkoutEdit = Backbone.View.extend({
     events : {
       'click button.save' : 'onSave',
@@ -88,9 +89,14 @@ define([
       this.options.rowView.stopEdit();
     },
     onDelete : function() {
-      this.onCancel(); // Ensure it will be hidden
-      // TODO Confirm?
-      this.model.destroy();
+      var _self = this;
+      new ConfirmView({
+        message : 'Workout and all references will be permanently lost, are you sure?',
+        callback : function() {
+          _self.onCancel(); // Ensure it will be hidden
+          _self.model.destroy();
+        }
+      }).render();
     },
     onAdd : function() {
       // Add new select view

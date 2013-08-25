@@ -47,7 +47,6 @@ define([
     },
     onDelete : function() {
       this.onCancel(); // Ensure it will be hidden
-      // TODO Confirm?
       this.model.destroy();
     },
     onKeyup : function(e) {

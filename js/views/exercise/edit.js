@@ -2,8 +2,9 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'views/global/confirm',
   'text!templates/exercise/edit.html'
-], function($, _, Backbone, exerciseEditTemplate) {
+], function($, _, Backbone, ConfirmView, exerciseEditTemplate) {
   var ExerciseEdit = Backbone.View.extend({
     events : {
       'click button.save' : 'onSave',
@@ -45,9 +46,14 @@ define([
       this.options.rowView.stopEdit();
     },
     onDelete : function() {
-      this.onCancel(); // Ensure it will be hidden
-      // TODO Confirm?
-      this.model.destroy();
+      var _self = this;
+      new ConfirmView({
+        message : 'Exercise and all references will be permanently lost, are you sure?',
+        callback : function() {
+          _self.onCancel(); // Ensure it will be hidden
+          _self.model.destroy();
+        }
+      }).render();
     },
     onKeyup : function(e) {
       if (e.keyCode == 27) { // escape
