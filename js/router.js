@@ -116,6 +116,20 @@ define([
         collapse.trigger('click');
       }
     });
+    // All navigation that is relative should be passed through the navigate
+    // method, to be processed by the router. If the link has a 'data-bypass'
+    // attribute, bypass the delegation completely.
+    $(document).on('click', 'a[href]:not([data-bypass])', function(e) {
+      var href = $(this).attr('href');
+      // Match all that starts with a slash
+      if (href !== '' || href[0] === '/') {
+        // Stop the default event to ensure the link will not cause a page refresh.
+        e.preventDefault();
+        Backbone.history.navigate(href, {
+          trigger : true
+        });
+      }
+    });
     // TODO Change to pushState
     Backbone.history.start();
   };

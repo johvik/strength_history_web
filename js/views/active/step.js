@@ -20,6 +20,7 @@ define([
       this.exerciseData = JSON.parse(sessionStorage.getItem('exerciseData'));
       var setData = this.exerciseData[this.options.step - 1];
       var exercises = this.model.get('exercises');
+      // TODO Fix when exercise is deleted!
       this.$el.html(_.template(activeStepTemplate, {
         exercise : Exercises.get(exercises[this.options.step - 1]),
         weightValue : setData.weight,
