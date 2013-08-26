@@ -16,7 +16,8 @@ define([
       'click button.back' : 'onBack',
       'click button.discard' : 'onDiscard',
       'click button.save' : 'onSave',
-      'click tr.click' : 'onRowClick'
+      'click tr.click' : 'onRowClick',
+      'change input#activeDate' : 'onDataChange'
     },
     initialize : function() {
       this.data = JSON.parse(sessionStorage.getItem('workoutData'));
@@ -79,10 +80,6 @@ define([
       // TODO Handle messages better, maybe stack and timeout?
       $('#top-message :first-child').alert('close'); // Hide previous message
       this.$('table:first tr').removeClass('danger');
-      if (this.options.edit === true) {
-        this.data.time = new Date(this.$('#activeDate').val()).getTime();
-      }
-      // TODO Allow date change for summary
       var workoutData = new WorkoutDataModel(this.data);
       if (workoutData.isValid()) {
         var _self = this;
@@ -136,6 +133,10 @@ define([
           trigger : true
         });
       }
+    },
+    onDataChange : function() {
+      this.data.time = new Date(this.$('#activeDate').val()).getTime();
+      sessionStorage.setItem('workoutData', JSON.stringify(this.data));
     }
   });
   return ActiveWorkoutSummary;
