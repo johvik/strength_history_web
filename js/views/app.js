@@ -9,6 +9,7 @@ define([
   var AppView = Backbone.View.extend({
     el : '#main',
     render : function() {
+      // TODO Move layout into index.html?
       $(this.el).html(layoutTemplate);
       require([
         'views/header/header',
