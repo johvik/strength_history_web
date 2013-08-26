@@ -48,6 +48,7 @@ define([
       this.$('.value').removeClass('hidden');
     },
     startEdit : function(e) {
+      // TODO Use the path
       e.preventDefault();
       e.stopPropagation();
       // Try to reuse old one

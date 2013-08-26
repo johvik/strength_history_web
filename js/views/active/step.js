@@ -60,7 +60,7 @@ define([
     },
     onPrevious : function() {
       if (this.options.edit === true) {
-        Backbone.history.navigate('edit/' + this.model.id, {
+        Backbone.history.navigate('history/workout/edit/' + this.model.id, {
           trigger : true
         });
       } else {
@@ -80,7 +80,7 @@ define([
     onNext : function() {
       if (this.options.edit === true) {
         sessionStorage.setItem('workoutData', JSON.stringify(this.data));
-        Backbone.history.navigate('edit/' + this.model.id, {
+        Backbone.history.navigate('history/workout/edit/' + this.model.id, {
           trigger : true
         });
       } else {

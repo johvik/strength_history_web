@@ -125,7 +125,7 @@ define([
     onRowClick : function(e) {
       var index = this.$('tr.click').index(this.$(e.currentTarget));
       if (this.options.edit === true) {
-        Backbone.history.navigate('edit/' + this.model.id + '/' + (index + 1), {
+        Backbone.history.navigate('history/workout/edit/' + this.model.id + '/' + (index + 1), {
           trigger : true
         });
       } else {

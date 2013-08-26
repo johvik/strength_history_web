@@ -8,7 +8,6 @@ define([
   var WorkoutRow = Backbone.View.extend({
     tagName : 'tr',
     events : {
-      'click td.value a' : 'startWorkout',
       'click td.value' : 'startWorkout'
     },
     initialize : function() {

@@ -37,6 +37,7 @@ define([
       return this;
     },
     startEdit : function(e) {
+      e.preventDefault();
       e.stopPropagation();
       var exerciseData = [];
       var data = this.model.get('data');
@@ -51,7 +52,7 @@ define([
       });
       sessionStorage.setItem('exerciseData', JSON.stringify(exerciseData));
       sessionStorage.setItem('workoutData', JSON.stringify(this.model));
-      Backbone.history.navigate('edit/' + this.model.get('workout'), {
+      Backbone.history.navigate('history/workout/edit/' + this.model.get('workout'), {
         trigger : true
       });
     }

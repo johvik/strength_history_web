@@ -12,7 +12,7 @@ define([
       'workouts' : 'workouts',
       'log' : 'log',
       'run/:workout(/:step)' : 'runWorkout',
-      'edit/:workout(/:step)' : 'editWorkout',
+      'history/workout/edit/:workout(/:step)' : 'editWorkout',
 
       // Default - catch all
       '*actions' : 'defaultRoute'
