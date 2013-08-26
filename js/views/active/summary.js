@@ -83,6 +83,7 @@ define([
       if (this.options.edit === true) {
         this.data.time = new Date(this.$('#activeDate').val()).getTime();
       }
+      // TODO Allow date change for summary
       var workoutData = new WorkoutDataModel(this.data);
       if (workoutData.isValid()) {
         var _self = this;

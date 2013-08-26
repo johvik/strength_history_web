@@ -9,7 +9,7 @@ define([
   'views/active/step',
   'views/active/summary',
   'text!templates/global/notfound.html',
-  'text!templates/messages/workoutdatagone.html'
+  'text!templates/active/workoutdatagone.html'
 ], function($, _, Backbone, Vm, Events, Workouts, Exercise, ActiveStepView, ActiveSummaryView, globalNotFoundTemplate, workoutDataGoneTemplate) {
   var WorkoutDataEditPage = Backbone.View.extend({
     el : '#page',
@@ -49,9 +49,8 @@ define([
 
         var exercises = this.model.get('exercises');
         if (_.isNull(sessionStorage.getItem('workoutData'))) {
-          // Data is gone! Go to start page
-          $('#top-message').html(workoutDataGoneTemplate);
-          $('#top-message :first-child').addClass('in');
+          // Data is gone!
+          this.$el.html(workoutDataGoneTemplate);
         } else if (step >= 1 && step <= exercises.length) {
           // Step page
           var activeStepView = new ActiveStepView({
