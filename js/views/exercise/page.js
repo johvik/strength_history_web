@@ -14,37 +14,40 @@ define([
       'click #create-exercise' : 'createExercise'
     },
     initialize : function() {
+      this.listenTo(Exercises, 'change:_id', function(e) {
+        // New exercises will trigger id change
+        this.options.editId = e.id;
+        // A sort will be done after a change therefore no need to use trigger
+        Backbone.history.navigate('exercises/edit/' + e.id);
+
+      });
       this.listenTo(Exercises, 'add', this.addOne);
       this.listenTo(Exercises, 'reset sort', this.reset);
       this.listenTo(Events, 'exercises:stopEdit', function() {
-        delete this.editCid;
+        delete this.options.editId;
       });
       $(this.el).html(_.template(exerciseListTemplate));
     },
     reset : function() {
       Events.trigger('exercises:clear');
       this.render();
-      if (_.isString(this.editCid)) {
-        var index = Exercises.indexOf(Exercises.get(this.editCid));
-        if (0 <= index) {
-          // Trigger edit on the new item
-          this.$('tbody tr td.value:first-child a:eq(' + index + ')').trigger('click');
-        }
-      }
     },
     render : function() {
       this.addAll();
+      if (_.isString(this.options.editId)) {
+        Events.trigger('exercises:edit', this.options.editId);
+      }
     },
     createExercise : function() {
-      var newItem = Exercises.create({
+      Exercises.create({
         name : 'New exercise',
         standardIncrease : 2.5
       });
-      this.editCid = newItem.cid; // Start edit
     },
     addOne : function(exercise) {
       var exerciseView = Vm.create('ex_' + exercise.cid, ExerciseRowView, {
-        model : exercise
+        model : exercise,
+        editId : this.options.editId
       });
       this.$el.find('table tbody:first').append(exerciseView.render().el);
     },

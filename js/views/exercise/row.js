@@ -9,13 +9,17 @@ define([
   var ExerciseRow = Backbone.View.extend({
     tagName : 'tr',
     events : {
-      'click td.value a' : 'startEdit',
-      'click td.value' : 'startEdit'
+      'click td.value' : 'onEdit'
     },
     initialize : function() {
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.remove);
       this.listenTo(Events, 'exercises:clear', this.remove);
+      this.listenTo(Events, 'exercises:edit', function(id) {
+        if (id === this.model.id) {
+          this.startEdit();
+        }
+      });
     },
     remove : function() {
       Backbone.View.prototype.remove.apply(this);
@@ -36,10 +40,7 @@ define([
       this.$('.edit').addClass('hidden');
       this.$('.value').removeClass('hidden');
     },
-    startEdit : function(e) {
-      // TODO Use the path
-      e.preventDefault();
-      e.stopPropagation();
+    startEdit : function() {
       // Try to reuse old one
       if (!_.isObject(this.editView)) {
         this.editView = new ExerciseEditView({
@@ -54,6 +55,12 @@ define([
       this.$('.edit').removeClass('hidden');
       this.$('.value').addClass('hidden');
       this.$('.exercise-name').focus();
+    },
+    onEdit : function(e) {
+      if (!this.$(e.target).is('a')) {
+        // Click link
+        this.$('td:first a:first')[0].click();
+      }
     }
   });
   return ExerciseRow;

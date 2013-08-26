@@ -8,7 +8,7 @@ define([
     routes : {
       'history/weight' : 'weightHistory',
       'history/workout' : 'workoutHistory',
-      'exercises' : 'exercises',
+      'exercises(/edit/:id)' : 'exercises',
       'workouts' : 'workouts',
       'log' : 'log',
       'run/:workout(/:step)' : 'runWorkout',
@@ -49,12 +49,14 @@ define([
         workoutDataPage.render();
       });
     },
-    exercises : function() {
+    exercises : function(id) {
       require([
         'views/exercise/page'
       ], function(ExercisePage) {
         $('#nav-exercises').addClass('active');
-        var exercisePage = Vm.create('Page', ExercisePage);
+        var exercisePage = Vm.create('Page', ExercisePage, {
+          editId : id
+        });
         exercisePage.render();
       });
     },
