@@ -110,6 +110,7 @@ define([
         collapse.trigger('click');
       }
     });
+    // TODO Change to pushState
     Backbone.history.start();
   };
   return {
