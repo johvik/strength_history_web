@@ -36,7 +36,6 @@ define([
       return this;
     },
     startWorkout : function(e) {
-      // TODO Fix all other rows like this :)
       if (!this.$(e.target).is('a')) {
         // Click link
         this.$('td:first a:first')[0].click();
