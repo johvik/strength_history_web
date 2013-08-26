@@ -15,11 +15,10 @@ define([
     },
     initialize : function() {
       this.listenTo(Exercises, 'change:_id', function(e) {
-        // New exercises will trigger id change
+        // New items will trigger id change
         this.options.editId = e.id;
         // A sort will be done after a change therefore no need to use trigger
         Backbone.history.navigate('exercises/edit/' + e.id);
-
       });
       this.listenTo(Exercises, 'add', this.addOne);
       this.listenTo(Exercises, 'reset sort', this.reset);

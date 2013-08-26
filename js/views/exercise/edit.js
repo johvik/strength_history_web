@@ -44,7 +44,6 @@ define([
     },
     onCancel : function() {
       this.options.rowView.stopEdit();
-      Backbone.history.navigate('exercises');
     },
     onDelete : function() {
       var _self = this;

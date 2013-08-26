@@ -39,6 +39,7 @@ define([
       // Hide edit
       this.$('.edit').addClass('hidden');
       this.$('.value').removeClass('hidden');
+      Backbone.history.navigate('exercises');
     },
     startEdit : function() {
       // Try to reuse old one

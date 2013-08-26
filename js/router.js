@@ -6,7 +6,7 @@ define([
 ], function($, _, Backbone, Vm) {
   var AppRouter = Backbone.Router.extend({
     routes : {
-      'history/weight' : 'weightHistory',
+      'history/weight(/edit/:id)' : 'weightHistory',
       'history/workout' : 'workoutHistory',
       'exercises(/edit/:id)' : 'exercises',
       'workouts' : 'workouts',
@@ -30,12 +30,14 @@ define([
         });
       });
     },
-    weightHistory : function() {
+    weightHistory : function(id) {
       require([
         'views/weight/page'
       ], function(WeightPage) {
         $('#nav-weight-history').addClass('active');
-        var weightPage = Vm.create('Page', WeightPage);
+        var weightPage = Vm.create('Page', WeightPage, {
+          editId : id
+        });
         weightPage.render();
       });
     },
