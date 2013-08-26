@@ -36,11 +36,11 @@ define([
       return this;
     },
     startWorkout : function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      Backbone.history.navigate('run/' + this.model.id, {
-        trigger : true
-      });
+      // TODO Fix all other rows like this :)
+      if (!this.$(e.target).is('a')) {
+        // Click link
+        this.$('td:first a:first')[0].click();
+      }
     }
   });
   return WorkoutRow;

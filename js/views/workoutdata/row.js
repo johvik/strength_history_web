@@ -11,9 +11,7 @@ define([
     tagName : 'tr',
     className : 'click',
     events : {
-      'click a' : 'startEdit',
-      'click td' : 'startEdit',
-      'click button.delete' : 'onDelete'
+      'click td' : 'startEdit'
     },
     initialize : function() {
       this.listenTo(this.model, 'change', this.render);
@@ -37,24 +35,25 @@ define([
       return this;
     },
     startEdit : function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var exerciseData = [];
-      var data = this.model.get('data');
-      var _self = this;
-      _.each(data, function(i, index) {
-        var set = _self.model.bestSet(index);
-        exerciseData.push({
-          id : i.exercise,
-          weight : set ? set.weight : 50,
-          reps : set ? set.reps : 5
+      if (!this.$(e.target).is('a')) {
+        // Click link
+        this.$('td:first a:first')[0].click();
+      } else {
+        // Set data to be used
+        var exerciseData = [];
+        var data = this.model.get('data');
+        var _self = this;
+        _.each(data, function(i, index) {
+          var set = _self.model.bestSet(index);
+          exerciseData.push({
+            id : i.exercise,
+            weight : set ? set.weight : 50,
+            reps : set ? set.reps : 5
+          });
         });
-      });
-      sessionStorage.setItem('exerciseData', JSON.stringify(exerciseData));
-      sessionStorage.setItem('workoutData', JSON.stringify(this.model));
-      Backbone.history.navigate('history/workout/edit/' + this.model.get('workout'), {
-        trigger : true
-      });
+        sessionStorage.setItem('exerciseData', JSON.stringify(exerciseData));
+        sessionStorage.setItem('workoutData', JSON.stringify(this.model));
+      }
     }
   });
   return WorkoutDataRow;
