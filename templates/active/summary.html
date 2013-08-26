@@ -1,7 +1,13 @@
 <h1>Summary of <%= workout.get('name') %></h1>
-<label for="activeDate">Date</label>
-<time id="activeDate"><%= new Date(time).toDateString() %></time>
+<div class="form-group">
+  <label for="activeDate">Date</label>
+  <input id="activeDate" type="datetime-local" class="form-control" placeholder="Date" value="<%= new Date(time).toISOString().slice(0, -5) %>">
+</div>
+<% if (edit) { %>
+<button type="button" class="pull-right btn btn-danger discard">Delete</button>
+<% } else { %>
 <button type="button" class="pull-right btn btn-danger discard">Discard</button>
+<% } %>
 <table class="table table-hover">
   <thead>
     <tr>
@@ -13,9 +19,13 @@
   <tbody>
   </tbody>
 </table>
-<% if (first) { %>
-<button type="button" class="btn btn-danger discard">Discard</button>
+<% if (edit) { %>
+  <button type="button" class="btn btn-default back">Cancel</button>
 <% } else { %>
-<button type="button" class="btn btn-primary back">Back</button>
+  <% if (first) { %>
+  <button type="button" class="btn btn-danger discard">Discard</button>
+  <% } else { %>
+  <button type="button" class="btn btn-primary back">Back</button>
+  <% } %>
 <% } %>
 <button type="button" class="pull-right btn btn-success save">Save</button>

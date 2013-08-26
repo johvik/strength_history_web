@@ -4,9 +4,8 @@ define([
   'backbone',
   'globals/exercise',
   'views/active/steprow',
-  'text!templates/active/step.html',
-  'text!templates/workoutdata/step.html'
-], function($, _, Backbone, Exercises, ActiveStepRowView, activeStepTemplate, workoutDataStepTemplate) {
+  'text!templates/active/step.html'
+], function($, _, Backbone, Exercises, ActiveStepRowView, activeStepTemplate) {
   var ActiveWorkoutStep = Backbone.View.extend({
     events : {
       'click button.add' : 'onAddSet',
@@ -21,13 +20,13 @@ define([
       this.exerciseData = JSON.parse(sessionStorage.getItem('exerciseData'));
       var setData = this.exerciseData[this.options.step - 1];
       var exercises = this.model.get('exercises');
-      var template = this.options.edit === true ? workoutDataStepTemplate : activeStepTemplate;
-      this.$el.html(_.template(template, {
+      this.$el.html(_.template(activeStepTemplate, {
         exercise : Exercises.get(exercises[this.options.step - 1]),
         weightValue : setData.weight,
         repsValue : setData.reps,
         first : this.options.step <= 1,
-        last : this.options.step >= exercises.length
+        last : this.options.step >= exercises.length,
+        edit : this.options.edit === true
       }));
     },
     render : function() {

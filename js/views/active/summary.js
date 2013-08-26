@@ -9,9 +9,8 @@ define([
   'views/active/summaryrow',
   'views/global/confirm',
   'text!templates/active/summary.html',
-  'text!templates/workoutdata/summary.html',
   'text!templates/messages/savefailed.html'
-], function($, _, Backbone, Exercises, Workouts, WorkoutData, WorkoutDataModel, ActiveSummaryRowView, ConfirmView, activeSummaryTemplate, workoutDataSummaryTemplate, saveFailedTemplate) {
+], function($, _, Backbone, Exercises, Workouts, WorkoutData, WorkoutDataModel, ActiveSummaryRowView, ConfirmView, activeSummaryTemplate, saveFailedTemplate) {
   var ActiveWorkoutSummary = Backbone.View.extend({
     events : {
       'click button.back' : 'onBack',
@@ -21,11 +20,11 @@ define([
     },
     initialize : function() {
       this.data = JSON.parse(sessionStorage.getItem('workoutData'));
-      var template = this.options.edit === true ? workoutDataSummaryTemplate : activeSummaryTemplate;
-      this.$el.html(_.template(template, {
+      this.$el.html(_.template(activeSummaryTemplate, {
         workout : this.model,
         time : this.data.time,
-        first : this.options.step === 1
+        first : this.options.step === 1,
+        edit : this.options.edit === true
       }));
       var _self = this;
       _.each(this.data.data, function(i) {
