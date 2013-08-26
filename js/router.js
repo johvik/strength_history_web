@@ -9,7 +9,7 @@ define([
       'history/weight(/edit/:id)' : 'weightHistory',
       'history/workout' : 'workoutHistory',
       'exercises(/edit/:id)' : 'exercises',
-      'workouts' : 'workouts',
+      'workouts(/edit/:id)' : 'workouts',
       'log' : 'log',
       'run/:workout(/:step)' : 'runWorkout',
       'history/workout/edit/:workout(/:step)' : 'editWorkout',
@@ -62,12 +62,14 @@ define([
         exercisePage.render();
       });
     },
-    workouts : function() {
+    workouts : function(id) {
       require([
         'views/workout/page'
       ], function(WorkoutPage) {
         $('#nav-workouts').addClass('active');
-        var workoutPage = Vm.create('Page', WorkoutPage);
+        var workoutPage = Vm.create('Page', WorkoutPage, {
+          editId : id
+        });
         workoutPage.render();
       });
     },

@@ -11,13 +11,17 @@ define([
   var WorkoutRow = Backbone.View.extend({
     tagName : 'tr',
     events : {
-      'click td.value a' : 'startEdit',
-      'click td.value' : 'startEdit'
+      'click td.value' : 'onEdit'
     },
     initialize : function() {
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.remove);
       this.listenTo(Events, 'workouts:clear', this.remove);
+      this.listenTo(Events, 'workouts:edit', function(id) {
+        if (id === this.model.id) {
+          this.startEdit();
+        }
+      });
     },
     remove : function() {
       Backbone.View.prototype.remove.apply(this);
@@ -46,11 +50,9 @@ define([
       // Hide edit
       this.$('.edit').addClass('hidden');
       this.$('.value').removeClass('hidden');
+      Backbone.history.navigate('workouts');
     },
-    startEdit : function(e) {
-      // TODO Use the path
-      e.preventDefault();
-      e.stopPropagation();
+    startEdit : function() {
       // Try to reuse old one
       if (!_.isObject(this.editView)) {
         this.editView = new WorkoutEditView({
@@ -65,6 +67,12 @@ define([
       this.$('.edit').removeClass('hidden');
       this.$('.value').addClass('hidden');
       this.$('.workout-name').focus();
+    },
+    onEdit : function(e) {
+      if (!this.$(e.target).is('a')) {
+        // Click link
+        this.$('td:first a:first')[0].click();
+      }
     }
   });
   return WorkoutRow;

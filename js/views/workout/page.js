@@ -15,38 +15,40 @@ define([
       'click #create-workout' : 'createWorkout'
     },
     initialize : function() {
+      this.listenTo(Workouts, 'change:_id', function(w) {
+        // New items will trigger id change
+        this.options.editId = w.id;
+        // A sort will be done after a change therefore no need to use trigger
+        Backbone.history.navigate('workouts/edit/' + w.id);
+      });
       this.listenTo(Exercises, 'sync', this.reset); // If exercises aren't loaded directly
       this.listenTo(Workouts, 'add', this.addOne);
       this.listenTo(Workouts, 'reset sort', this.reset);
       this.listenTo(Events, 'workouts:stopEdit', function() {
-        delete this.editCid;
+        delete this.options.editId;
       });
       $(this.el).html(_.template(workoutListTemplate));
     },
     reset : function() {
       Events.trigger('workouts:clear');
       this.render();
-      if (_.isString(this.editCid)) {
-        var index = Workouts.indexOf(Workouts.get(this.editCid));
-        if (0 <= index) {
-          // Trigger edit on the new item
-          this.$('tbody tr td.value:first-child a:eq(' + index + ')').trigger('click');
-        }
-      }
     },
     render : function() {
       this.addAll();
+      if (_.isString(this.options.editId)) {
+        Events.trigger('workouts:edit', this.options.editId);
+      }
     },
     createWorkout : function() {
-      var newItem = Workouts.create({
+      Workouts.create({
         name : 'New workout',
         exercises : []
       });
-      this.editCid = newItem.cid; // Start edit
     },
     addOne : function(workout) {
       var workoutView = Vm.create('wo_' + workout.cid, WorkoutRowView, {
-        model : workout
+        model : workout,
+        editId : this.options.editId
       });
       this.$el.find('table tbody:first').append(workoutView.render().el);
     },
