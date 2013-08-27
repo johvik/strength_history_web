@@ -2,15 +2,15 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'vm'
-], function($, _, Backbone, Vm) {
+  'vm',
+  'events'
+], function($, _, Backbone, Vm, Events) {
   var AppRouter = Backbone.Router.extend({
     routes : {
       'history/weight(/edit/:id)' : 'weightHistory',
       'history/workout' : 'workoutHistory',
       'exercises(/edit/:id)' : 'exercises',
       'workouts(/edit/:id)' : 'workouts',
-      'log' : 'log',
       'run/:workout(/:step)' : 'runWorkout',
       'history/workout/edit/:workout(/:step)' : 'editWorkout',
 
@@ -18,17 +18,31 @@ define([
       '*actions' : 'defaultRoute'
     },
     defaultRoute : function() {
-      require([
-        'views/test/page'
-      ], function(TestPage) {
-        $('#nav-home').addClass('active');
-        var testPage = Vm.create('Page', TestPage);
-        testPage.render();
-        // Make sure path is home page
-        Backbone.history.navigate('', {
-          replace : true
+      if (Events.authenticated === true) {
+        require([
+          'views/active/page'
+        ], function(ActivePage) {
+          $('#nav-home').addClass('active');
+          var activePage = Vm.create('Page', ActivePage);
+          activePage.render();
+          // Make sure path is home page
+          Backbone.history.navigate('', {
+            replace : true
+          });
         });
-      });
+      } else {
+        require([
+          'views/test/page'
+        ], function(TestPage) {
+          $('#nav-home').addClass('active');
+          var testPage = Vm.create('Page', TestPage);
+          testPage.render();
+          // Make sure path is home page
+          Backbone.history.navigate('', {
+            replace : true
+          });
+        });
+      }
     },
     weightHistory : function(id) {
       require([
@@ -73,20 +87,11 @@ define([
         workoutPage.render();
       });
     },
-    log : function() {
-      require([
-        'views/active/page'
-      ], function(ActivePage) {
-        $('#nav-log').addClass('active');
-        var activePage = Vm.create('Page', ActivePage);
-        activePage.render();
-      });
-    },
     runWorkout : function(workout, step) {
       require([
         'views/active/run'
       ], function(ActiveRunPage) {
-        $('#nav-log').addClass('active');
+        $('#nav-home').addClass('active');
         Vm.create('Page', ActiveRunPage, {
           workoutId : workout,
           step : step,
@@ -114,6 +119,11 @@ define([
       var collapse = $('.navbar button.navbar-toggle:not(.collapsed)');
       if (collapse.css('display') !== 'none') {
         collapse.trigger('click');
+      }
+    });
+    Events.on('login', function(initial) {
+      if (initial !== true) {
+        router.defaultRoute();
       }
     });
     // All navigation that is relative should be passed through the navigate

@@ -18,13 +18,6 @@ define([
         Events.on('login', function(initial) {
           var userHeaderView = Vm.create('HeaderView', UserHeaderView);
           userHeaderView.render();
-          if (initial !== true) {
-            // Go to home page
-            Backbone.history.navigate('', {
-              trigger : true
-            });
-            $('#nav-home').addClass('active');
-          }
         });
         Events.on('logout', function() {
           var headerView = Vm.create('HeaderView', HeaderView);

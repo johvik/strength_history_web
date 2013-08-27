@@ -83,7 +83,7 @@ define([
         if (this.options.step <= 1) {
           sessionStorage.removeItem('workoutData'); // Remove data
           sessionStorage.removeItem('exerciseData');
-          Backbone.history.navigate('log', {
+          Backbone.history.navigate('', {
             trigger : true
           });
         } else {
