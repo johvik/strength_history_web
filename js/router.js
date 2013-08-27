@@ -113,7 +113,8 @@ define([
 
   var initialize = function() {
     var router = new AppRouter();
-    router.on('route', function() {
+    router.on('route', function(a) {
+      console.log('test', a);
       // Remove navbar highlight and collapse
       $('.navbar .active').removeClass('active');
       var collapse = $('.navbar button.navbar-toggle:not(.collapsed)');
@@ -140,8 +141,9 @@ define([
         });
       }
     });
-    // TODO Change to pushState
-    Backbone.history.start();
+    Backbone.history.start({
+      pushState : true
+    });
   };
   return {
     initialize : initialize
