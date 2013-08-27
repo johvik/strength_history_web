@@ -14,8 +14,16 @@ define([
       'run/:workout(/:step)' : 'runWorkout',
       'history/workout/edit/:workout(/:step)' : 'editWorkout',
 
+      // Allow '/' at end of path
+      '*dummy/' : 'endsWithSlash',
       // Default - catch all
       '*actions' : 'defaultRoute'
+    },
+    endsWithSlash : function(dummy) {
+      Backbone.history.navigate(dummy, {
+        trigger : true,
+        replace : true
+      });
     },
     defaultRoute : function() {
       if (Events.authenticated === true) {
