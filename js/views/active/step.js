@@ -4,8 +4,9 @@ define([
   'backbone',
   'globals/exercise',
   'views/active/steprow',
-  'text!templates/active/step.html'
-], function($, _, Backbone, Exercises, ActiveStepRowView, activeStepTemplate) {
+  'text!templates/active/step.html',
+  'text!templates/global/broken.html'
+], function($, _, Backbone, Exercises, ActiveStepRowView, activeStepTemplate, globalBrokenTemplate) {
   var ActiveWorkoutStep = Backbone.View.extend({
     events : {
       'click button.add' : 'onAddSet',
@@ -20,9 +21,23 @@ define([
       this.exerciseData = JSON.parse(sessionStorage.getItem('exerciseData'));
       var setData = this.exerciseData[this.options.step - 1];
       var exercises = this.model.get('exercises');
-      // TODO Fix when exercise is deleted!
+      var exerciseId = exercises[this.options.step - 1];
+      var exercise = Exercises.get(exerciseId);
+      var exerciseName;
+      var standardIncrease;
+      if (_.isObject(exercise)) {
+        exerciseName = exercise.get('name');
+        standardIncrease = exercise.get('standardIncrease');
+      } else {
+        // Not found
+        exerciseName = _.template(globalBrokenTemplate, {
+          type : 'Exercise'
+        });
+        standardIncrease = 2.5;
+      }
       this.$el.html(_.template(activeStepTemplate, {
-        exercise : Exercises.get(exercises[this.options.step - 1]),
+        exerciseName : exerciseName,
+        standardIncrease : standardIncrease,
         weightValue : setData.weight,
         repsValue : setData.reps,
         first : this.options.step <= 1,
