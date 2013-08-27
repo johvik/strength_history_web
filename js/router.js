@@ -122,7 +122,7 @@ define([
     $(document).on('click', 'a[href]:not([data-bypass])', function(e) {
       var href = $(this).attr('href');
       // Match all that starts with a slash
-      if (href !== '' || href[0] === '/') {
+      if (href !== '' && href[0] === '/') {
         // Stop the default event to ensure the link will not cause a page refresh.
         e.preventDefault();
         Backbone.history.navigate(href, {
