@@ -113,8 +113,7 @@ define([
 
   var initialize = function() {
     var router = new AppRouter();
-    router.on('route', function(a) {
-      console.log('test', a);
+    router.on('route', function() {
       // Remove navbar highlight and collapse
       $('.navbar .active').removeClass('active');
       var collapse = $('.navbar button.navbar-toggle:not(.collapsed)');
