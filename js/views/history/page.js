@@ -10,7 +10,6 @@ define([
   'views/history/workoutdata/row',
   'text!templates/history/list.html'
 ], function($, _, Backbone, Vm, Events, HistoryData, Workouts, WeightRowView, WorkoutDataRowView, historyListTemplate) {
-  // TODO Fix add weight button! And the events when new data is created
   var HistoryDataPage = Backbone.View.extend({
     el : '#page',
     initialize : function() {

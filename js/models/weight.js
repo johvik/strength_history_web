@@ -1,8 +1,9 @@
 define([
   'jquery',
   'underscore',
-  'backbone'
-], function($, _, Backbone) {
+  'backbone',
+  'events'
+], function($, _, Backbone, Events) {
   var WeightModel = Backbone.Model.extend({
     idAttribute : '_id',
     urlRoot : '/weight',
@@ -30,6 +31,18 @@ define([
         data.time = new Date(data.time).getTime();
       }
       return data;
+    },
+  }, {
+    // static function
+    latest : function() {
+      Backbone.ajax('/weight/latest', {
+        success : function(data) {
+          var weight = data.weight;
+          if (!_.isUndefined(weight)) {
+            Events.trigger('latest:weight', weight);
+          }
+        }
+      });
     }
   });
   return WeightModel;

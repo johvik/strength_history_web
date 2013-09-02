@@ -4,13 +4,13 @@ define([
   'backbone',
   'globals/exercise',
   'globals/workout',
-  'globals/workoutdata',
+  'globals/historydata',
   'models/workoutdata',
   'views/active/summaryrow',
   'views/global/confirm',
   'text!templates/active/summary.html',
   'text!templates/messages/savefailed.html'
-], function($, _, Backbone, Exercises, Workouts, WorkoutData, WorkoutDataModel, ActiveSummaryRowView, ConfirmView, activeSummaryTemplate, saveFailedTemplate) {
+], function($, _, Backbone, Exercises, Workouts, HistoryData, WorkoutDataModel, ActiveSummaryRowView, ConfirmView, activeSummaryTemplate, saveFailedTemplate) {
   var ActiveWorkoutSummary = Backbone.View.extend({
     events : {
       'click button.back' : 'onBack',
@@ -60,7 +60,7 @@ define([
             new WorkoutDataModel({
               _id : _self.data._id
             }).destroy();
-            WorkoutData.remove(_self.data._id);
+            HistoryData.remove(_self.data._id);
             Backbone.history.navigate('history', {
               trigger : true
             });
@@ -85,10 +85,10 @@ define([
         var _self = this;
         var old = undefined;
         if (_self.options.edit === true) {
-          old = WorkoutData.get(workoutData.id);
-          WorkoutData.remove(old.cid);
+          old = HistoryData.get(workoutData.id);
+          HistoryData.remove(old.cid);
         }
-        WorkoutData.create(workoutData, {
+        HistoryData.create(workoutData, {
           success : function() {
             // Update latest
             var workout = Workouts.get(_self.data.workout);
@@ -111,7 +111,7 @@ define([
             $('#top-message').html(saveFailedTemplate);
             $('#top-message :first-child').addClass('in');
             if (_.isObject(old)) {
-              WorkoutData.push(old);
+              HistoryData.push(old);
             }
           }
         });
