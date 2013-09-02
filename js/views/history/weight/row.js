@@ -3,8 +3,8 @@ define([
   'underscore',
   'backbone',
   'events',
-  'views/weight/edit',
-  'text!templates/weight/row.html'
+  'views/history/weight/edit',
+  'text!templates/history/weight/row.html'
 ], function($, _, Backbone, Events, WeightEditView, weightRowTemplate) {
   var WeightRow = Backbone.View.extend({
     tagName : 'tr',
@@ -14,8 +14,8 @@ define([
     initialize : function() {
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.remove);
-      this.listenTo(Events, 'weights:clear', this.remove);
-      this.listenTo(Events, 'weights:edit', function(id) {
+      this.listenTo(Events, 'historydata:clear', this.remove);
+      this.listenTo(Events, 'historydata:edit', function(id) {
         if (id === this.model.id) {
           this.startEdit();
         }
@@ -35,11 +35,11 @@ define([
       return this;
     },
     stopEdit : function() {
-      Events.trigger('weights:stopEdit');
+      Events.trigger('historydata:stopEdit');
       // Hide edit
       this.$('.edit').addClass('hidden');
       this.$('.value').removeClass('hidden');
-      Backbone.history.navigate('history/weight');
+      Backbone.history.navigate('history');
     },
     startEdit : function() {
       // Try to reuse old one
@@ -55,7 +55,7 @@ define([
       // Show edit
       this.$('.edit').removeClass('hidden');
       this.$('.value').addClass('hidden');
-      this.$('.weight-date').focus();
+      this.$('.weight').focus();
     },
     onEdit : function(e) {
       if (!this.$(e.target).is('a')) {

@@ -41,7 +41,7 @@ define([
       if (this.options.edit === true) {
         sessionStorage.removeItem('workoutData'); // Remove data
         sessionStorage.removeItem('exerciseData');
-        Backbone.history.navigate('history/workout', {
+        Backbone.history.navigate('history', {
           trigger : true
         });
       } else {
@@ -61,7 +61,7 @@ define([
               _id : _self.data._id
             }).destroy();
             WorkoutData.remove(_self.data._id);
-            Backbone.history.navigate('history/workout', {
+            Backbone.history.navigate('history', {
               trigger : true
             });
             // Update latest, it might have changed
@@ -98,7 +98,7 @@ define([
             sessionStorage.removeItem('workoutData'); // Remove data
             sessionStorage.removeItem('exerciseData');
             if (_self.options.edit === true) {
-              Backbone.history.navigate('history/workout', {
+              Backbone.history.navigate('history', {
                 trigger : true
               });
             } else {
@@ -125,7 +125,7 @@ define([
     onRowClick : function(e) {
       var index = this.$('tr.click').index(this.$(e.currentTarget));
       if (this.options.edit === true) {
-        Backbone.history.navigate('history/workout/edit/' + this.model.id + '/' + (index + 1), {
+        Backbone.history.navigate('history/edit/workout/' + this.model.id + '/' + (index + 1), {
           trigger : true
         });
       } else {

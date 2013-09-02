@@ -7,12 +7,11 @@ define([
 ], function($, _, Backbone, Vm, Events) {
   var AppRouter = Backbone.Router.extend({
     routes : {
-      'history/weight(/edit/:id)' : 'weightHistory',
-      'history/workout' : 'workoutHistory',
+      'history(/edit/weight/:id)' : 'history',
       'exercises(/edit/:id)' : 'exercises',
       'workouts(/edit/:id)' : 'workouts',
       'run/:workout(/:step)' : 'runWorkout',
-      'history/workout/edit/:workout(/:step)' : 'editWorkout',
+      'history/edit/workout/:workout(/:step)' : 'editWorkout',
 
       // Allow '/' at end of path
       '*dummy/' : 'endsWithSlash',
@@ -52,25 +51,15 @@ define([
         });
       }
     },
-    weightHistory : function(id) {
+    history : function(id) {
       require([
-        'views/weight/page'
-      ], function(WeightPage) {
-        $('#nav-weight-history').addClass('active');
-        var weightPage = Vm.create('Page', WeightPage, {
+        'views/history/page'
+      ], function(HistoryPage) {
+        $('#nav-history').addClass('active');
+        var historyPage = Vm.create('Page', HistoryPage, {
           editId : id
         });
-        weightPage.render();
-      });
-    },
-    workoutHistory : function() {
-      // TODO Merge workout and weight history into one view!
-      require([
-        'views/workoutdata/page'
-      ], function(WorkoutDataPage) {
-        $('#nav-workout-history').addClass('active');
-        var workoutDataPage = Vm.create('Page', WorkoutDataPage);
-        workoutDataPage.render();
+        historyPage.render();
       });
     },
     exercises : function(id) {
@@ -108,7 +97,7 @@ define([
     },
     editWorkout : function(workout, step) {
       require([
-        'views/workoutdata/edit'
+        'views/history/workoutdata/edit'
       ], function(WorkoutDataEditPage) {
         $('#nav-workout-history').addClass('active');
         Vm.create('Page', WorkoutDataEditPage, {

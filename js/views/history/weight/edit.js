@@ -2,7 +2,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'text!templates/weight/edit.html'
+  'text!templates/history/weight/edit.html'
 ], function($, _, Backbone, weightEditTemplate) {
   var WeightEdit = Backbone.View.extend({
     events : {
