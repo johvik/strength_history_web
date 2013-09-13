@@ -39,6 +39,9 @@ define([
       if (!this.$(e.target).is('a')) {
         // Click link
         this.$('td:first a:first')[0].click();
+      } else {
+        // Remember date from main view
+        sessionStorage.setItem('savedDate', $('#activeDate').val());
       }
     }
   });

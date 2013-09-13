@@ -13,6 +13,14 @@ define([
       'click button.cancel' : 'onCancel'
     },
     initialize : function() {
+      // Try to get page from main view
+      var savedDate = sessionStorage.getItem('savedDate');
+      if (_.isString(savedDate)) {
+        this.date = savedDate;
+        sessionStorage.removeItem('savedDate');
+      } else {
+        this.date = new Date().toISOString().slice(0, -5);
+      }
       this.exerciseData = [];
       var exercises = this.model.get('exercises');
       var _self = this;
@@ -43,7 +51,6 @@ define([
       this.reset();
     },
     reset : function() {
-      // TODO Move date select from this page and remove
       Events.trigger('previous:clear');
       var _self = this;
       var exercises = this.model.get('exercises');
@@ -57,7 +64,7 @@ define([
       });
     },
     render : function() {
-      this.$('#activeDate').val(new Date().toISOString().slice(0, -5));
+      this.$('#activeDate').val(this.date);
       return this;
     },
     onStart : function() {
