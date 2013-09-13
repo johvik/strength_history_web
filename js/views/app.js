@@ -25,12 +25,6 @@ define([
         Events.trigger('logout');
       }
     });
-    require([
-      'views/footer/footer'
-    ], function(FooterView) {
-      var footerView = Vm.create('FooterView', FooterView);
-      footerView.render();
-    });
   };
   return {
     initialize : initialize
