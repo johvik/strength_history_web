@@ -8,6 +8,7 @@ define([
   var ActivePrevious = Backbone.View.extend({
     tagName : 'tr',
     initialize : function() {
+      this.model.latest();
       this.listenTo(this.model, 'latest:exercise', this.render);
       this.listenTo(Events, 'previous:clear', this.remove);
     },

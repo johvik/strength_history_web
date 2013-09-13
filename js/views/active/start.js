@@ -43,13 +43,13 @@ define([
       this.reset();
     },
     reset : function() {
+      // TODO Move date select from this page and remove
       Events.trigger('previous:clear');
       var _self = this;
       var exercises = this.model.get('exercises');
       _.each(_.unique(exercises), function(exerciseId) {
         var exercise = Exercises.get(exerciseId);
         if (_.isObject(exercise)) {
-          exercise.latest();
           _self.$('table tbody:first').append(new ActivePreviousView({
             model : exercise
           }).render().el);

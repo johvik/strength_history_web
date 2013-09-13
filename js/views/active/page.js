@@ -16,7 +16,6 @@ define([
       'click #add-weight' : 'addWeight'
     },
     initialize : function() {
-      // TODO Move date select to this page?
       this.listenTo(ActiveWorkouts, 'add', this.addOne);
       this.listenTo(ActiveWorkouts, 'latest reset sort', this.reset);
       this.listenTo(Events, 'latest:weight', function(weight) {
@@ -24,6 +23,7 @@ define([
       });
       WeightModel.latest(); // Get latest weight
       $(this.el).html(_.template(activeListTemplate));
+      this.$('#activeDate').val(new Date().toISOString().slice(0, -5));
     },
     reset : function() {
       Events.trigger('activeworkouts:clear');
@@ -48,10 +48,9 @@ define([
         weight = this.latestWeight;
       }
       weight = prompt('Enter weight', weight);
-      var newDate = new Date();
       if (_.isFinite(weight)) {
         HistoryData.create({
-          time : newDate.getTime(),
+          time : new Date(this.$('#activeDate').val()).getTime(),
           weight : weight
         });
       }
