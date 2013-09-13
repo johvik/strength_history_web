@@ -7,6 +7,7 @@ define([
   'text!templates/messages/loginfailed.html'
 ], function($, _, Backbone, Events, headerTemplate, loginFailedTemplate) {
   var HeaderView = Backbone.View.extend({
+    // TODO User registration!
     el : '#header',
     render : function() {
       $(this.el).html(headerTemplate);
