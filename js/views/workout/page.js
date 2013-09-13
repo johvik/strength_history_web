@@ -27,7 +27,7 @@ define([
       this.listenTo(Events, 'workouts:stopEdit', function() {
         delete this.options.editId;
       });
-      $(this.el).html(_.template(workoutListTemplate));
+      $(this.el).html(workoutListTemplate);
     },
     reset : function() {
       Events.trigger('workouts:clear');

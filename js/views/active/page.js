@@ -22,7 +22,7 @@ define([
         this.latestWeight = weight;
       });
       WeightModel.latest(); // Get latest weight
-      $(this.el).html(_.template(activeListTemplate));
+      $(this.el).html(activeListTemplate);
       sessionStorage.removeItem('savedDate'); // Just to be safe
       this.$('#activeDate').val(new Date().toISOString().slice(0, -5));
     },

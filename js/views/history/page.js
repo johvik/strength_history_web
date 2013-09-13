@@ -19,7 +19,7 @@ define([
       this.listenTo(Events, 'historydata:stopEdit', function() {
         delete this.options.editId;
       });
-      $(this.el).html(_.template(historyListTemplate));
+      $(this.el).html(historyListTemplate);
     },
     reset : function() {
       Events.trigger('historydata:clear');

@@ -39,11 +39,11 @@ define([
         });
       } else {
         require([
-          'views/test/page'
-        ], function(TestPage) {
+          'views/home/page'
+        ], function(HomePage) {
           $('#nav-home').addClass('active');
-          var testPage = Vm.create('Page', TestPage);
-          testPage.render();
+          var homePage = Vm.create('Page', HomePage);
+          homePage.render();
           // Make sure path is home page
           Backbone.history.navigate('', {
             replace : true
