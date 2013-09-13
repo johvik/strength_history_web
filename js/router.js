@@ -99,7 +99,7 @@ define([
       require([
         'views/history/workoutdata/edit'
       ], function(WorkoutDataEditPage) {
-        $('#nav-workout-history').addClass('active');
+        $('#nav-history').addClass('active');
         Vm.create('Page', WorkoutDataEditPage, {
           workoutId : workout,
           step : step,

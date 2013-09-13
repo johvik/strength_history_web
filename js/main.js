@@ -45,7 +45,6 @@ require([
       }
     }
   });
-  var appView = Vm.create('AppView', AppView);
-  appView.render();
+  AppView.initialize();
   Router.initialize();
 });
