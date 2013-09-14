@@ -23,9 +23,10 @@ define([
       $('#top-message :first-child').alert('close'); // Hide previous message
       var email = this.$('#email').val();
       var password = this.$('#password').val();
-      if (!email || !password) {
-        // No input
-        this.loginFailed();
+      var emailPattern = new RegExp('^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$');
+      if (!email || !emailPattern.test(email) || !password || password.length < 7) {
+        // Bad input
+        this.loginFailed('Invalid login input.');
       } else {
         var _self = this;
         $.ajax('/login', {
@@ -34,8 +35,8 @@ define([
             email : email,
             password : password
           },
-          error : function() {
-            _self.loginFailed();
+          error : function(jqXHR) {
+            _self.loginFailed(jqXHR.responseText || 'Invalid email or password.');
           },
           success : function() {
             // Collapse header
@@ -48,9 +49,11 @@ define([
         });
       }
     },
-    loginFailed : function() {
+    loginFailed : function(message) {
       this.$('#login').button('reset');
-      $('#top-message').html(loginFailedTemplate);
+      $('#top-message').html(_.template(loginFailedTemplate, {
+        message : message
+      }));
       $('#top-message :first-child').addClass('in');
     }
   });
