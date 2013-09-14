@@ -1,4 +1,4 @@
-strength_history_web_client
-===========================
+Strength History Web
+====================
 
-The client part of Strength History
+The web client part of Strength History.
