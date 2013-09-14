@@ -21,27 +21,37 @@ define([
       }
       this.$('#login').button('loading');
       $('#top-message :first-child').alert('close'); // Hide previous message
-      $.ajax('/login', {
-        type : 'POST',
-        data : {
-          username : this.$('#email').val(),
-          password : this.$('#password').val()
-        },
-        error : function() {
-          this.$('#login').button('reset');
-          $('#top-message').html(loginFailedTemplate);
-          $('#top-message :first-child').addClass('in');
-        },
-        success : function() {
-          Events.trigger('login');
-        }
-      });
-      // Remove navbar highlight and collapse
-      $('.navbar .active').removeClass('active');
-      var collapse = $('.navbar button.navbar-toggle:not(.collapsed)');
-      if (collapse.css('display') !== 'none') {
-        collapse.trigger('click');
+      var email = this.$('#email').val();
+      var password = this.$('#password').val();
+      if (!email || !password) {
+        // No input
+        this.loginFailed();
+      } else {
+        var _self = this;
+        $.ajax('/login', {
+          type : 'POST',
+          data : {
+            email : email,
+            password : password
+          },
+          error : function() {
+            _self.loginFailed();
+          },
+          success : function() {
+            // Collapse header
+            var collapse = $('.navbar button.navbar-toggle:not(.collapsed)');
+            if (collapse.css('display') !== 'none') {
+              collapse.trigger('click');
+            }
+            Events.trigger('login');
+          }
+        });
       }
+    },
+    loginFailed : function() {
+      this.$('#login').button('reset');
+      $('#top-message').html(loginFailedTemplate);
+      $('#top-message :first-child').addClass('in');
     }
   });
   return HeaderView;
