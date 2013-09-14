@@ -7,7 +7,6 @@ define([
   'text!templates/messages/loginfailed.html'
 ], function($, _, Backbone, Events, headerTemplate, loginFailedTemplate) {
   var HeaderView = Backbone.View.extend({
-    // TODO User registration!
     el : '#header',
     render : function() {
       $(this.el).html(headerTemplate);
@@ -17,19 +16,19 @@ define([
     },
     login : function(e) {
       e.preventDefault();
-      if ($('#login').hasClass('disabled')) {
+      if (this.$('#login').hasClass('disabled')) {
         return; // Prevent multiple clicks
       }
-      $('#login').button('loading');
+      this.$('#login').button('loading');
       $('#top-message :first-child').alert('close'); // Hide previous message
       $.ajax('/login', {
         type : 'POST',
         data : {
-          username : $('#email').val(),
-          password : $('#password').val()
+          username : this.$('#email').val(),
+          password : this.$('#password').val()
         },
         error : function() {
-          $('#login').button('reset');
+          this.$('#login').button('reset');
           $('#top-message').html(loginFailedTemplate);
           $('#top-message :first-child').addClass('in');
         },

@@ -12,6 +12,7 @@ define([
       'workouts(/edit/:id)' : 'workouts',
       'run/:workout(/:step)' : 'runWorkout',
       'history/edit/workout/:workout(/:step)' : 'editWorkout',
+      'signup' : 'signUp',
 
       // Allow '/' at end of path
       '*dummy/' : 'endsWithSlash',
@@ -105,6 +106,23 @@ define([
           step : step,
         });
       });
+    },
+    signUp : function() {
+      if (Events.authenticated === true) {
+        // Can only sign up if not logged in
+        Backbone.history.navigate('', {
+          trigger : true,
+          replace : true
+        });
+      } else {
+        require([
+          'views/signup/page'
+        ], function(SignupPage) {
+          $('#nav-signup').addClass('active');
+          var signupPage = Vm.create('Page', SignupPage);
+          signupPage.render();
+        });
+      }
     }
   });
 
