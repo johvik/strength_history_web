@@ -15,6 +15,7 @@ define([
       'click #login' : 'login'
     },
     login : function(e) {
+      // TODO Change to normal login? so users can save their password
       e.preventDefault();
       if (this.$('#login').hasClass('disabled')) {
         return; // Prevent multiple clicks
