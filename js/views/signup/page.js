@@ -81,6 +81,7 @@ define([
             $('#top-message').html(signupSuccessTemplate);
             $('#top-message :first-child').addClass('in');
             _self.$('button[type="submit"]').button('reset');
+            window.scrollTo(window.scrollX, 0); // Scroll to top
           }
         });
       }
