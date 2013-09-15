@@ -9,16 +9,16 @@ define([
     $('#top-message div.alert:first').addClass('in');
   }
   return {
-    setError : function(options) {
-      options = options || {};
+    setError : function(opts) {
+      var options = opts || {};
       setMessage({
         type : 'danger',
         title : options.title || 'Error!',
         message : options.message || 'An error occured.'
       });
     },
-    setSuccess : function(options) {
-      options = options || {};
+    setSuccess : function(opts) {
+      var options = opts || {};
       setMessage({
         type : 'success',
         title : options.title || 'Success!',
