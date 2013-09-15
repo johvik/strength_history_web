@@ -4,8 +4,9 @@ define([
   'backbone',
   'views/global/confirm',
   'views/exercise/select',
+  'views/global/topmessage',
   'text!templates/workout/edit.html'
-], function($, _, Backbone, ConfirmView, ExerciseSelectView, workoutEditTemplate) {
+], function($, _, Backbone, ConfirmView, ExerciseSelectView, TopMessage, workoutEditTemplate) {
   var WorkoutEdit = Backbone.View.extend({
     events : {
       'click button.save' : 'onSave',
@@ -64,6 +65,7 @@ define([
       });
     },
     onSave : function() {
+      TopMessage.close();
       var workoutName = this.$('.workout-name').val();
       var exercises = [];
       this.$('.exercises select').each(function() {
@@ -79,7 +81,13 @@ define([
       var invalid = this.model.validate(attributes);
       if (_.isUndefined(invalid)) {
         this.onCancel(); // Ensure it will be hidden
-        this.model.save(attributes);
+        this.model.save(attributes, {
+          error : function() {
+            TopMessage.setError({
+              message : 'Failed to save the data on the server.'
+            });
+          }
+        });
       } else {
         this.$('.workout-name').parent().toggleClass('has-error', invalid.name);
         this.$('.exercises').parent().toggleClass('has-error', invalid.exercises);

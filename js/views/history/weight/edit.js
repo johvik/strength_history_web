@@ -2,8 +2,9 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'views/global/topmessage',
   'text!templates/history/weight/edit.html'
-], function($, _, Backbone, weightEditTemplate) {
+], function($, _, Backbone, TopMessage, weightEditTemplate) {
   var WeightEdit = Backbone.View.extend({
     events : {
       'click button.save' : 'onSave',
@@ -27,6 +28,7 @@ define([
       return this;
     },
     onSave : function() {
+      TopMessage.close();
       var weightDate = new Date(this.$('.weight-date').val());
       var weight = this.$('.weight').val();
       var attributes = {
@@ -36,7 +38,13 @@ define([
       var invalid = this.model.validate(attributes);
       if (_.isUndefined(invalid)) {
         this.onCancel(); // Ensure it will be hidden
-        this.model.save(attributes);
+        this.model.save(attributes, {
+          error : function() {
+            TopMessage.setError({
+              message : 'Failed to save the data on the server.'
+            });
+          }
+        });
       } else {
         this.$('.weight-date').parent().toggleClass('has-error', invalid.time);
         this.$('.weight').parent().toggleClass('has-error', invalid.weight);

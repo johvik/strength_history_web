@@ -3,8 +3,9 @@ define([
   'underscore',
   'backbone',
   'views/global/confirm',
+  'views/global/topmessage',
   'text!templates/exercise/edit.html'
-], function($, _, Backbone, ConfirmView, exerciseEditTemplate) {
+], function($, _, Backbone, ConfirmView, TopMessage, exerciseEditTemplate) {
   var ExerciseEdit = Backbone.View.extend({
     events : {
       'click button.save' : 'onSave',
@@ -27,6 +28,7 @@ define([
       return this;
     },
     onSave : function() {
+      TopMessage.close();
       var exerciseName = this.$('.exercise-name').val();
       var standardIncrease = this.$('.standard-increase').val();
       var attributes = {
@@ -36,8 +38,14 @@ define([
       var invalid = this.model.validate(attributes);
       if (_.isUndefined(invalid)) {
         this.onCancel(); // Ensure it will be hidden
-        this.model.save(attributes);
-        // TODO Show save errors
+        this.model.save(attributes, {
+          error : function() {
+            TopMessage.setError({
+              message : 'Failed to save the data on the server.'
+            });
+          }
+        });
+        // TODO Also show destroy errors
       } else {
         this.$('.exercise-name').parent().toggleClass('has-error', invalid.name);
         this.$('.standard-increase').parent().toggleClass('has-error', invalid.standardIncrease);
