@@ -3,9 +3,9 @@ define([
   'underscore',
   'backbone',
   'events',
-  'text!templates/header/header.html',
-  'text!templates/messages/loginfailed.html'
-], function($, _, Backbone, Events, headerTemplate, loginFailedTemplate) {
+  'views/global/topmessage',
+  'text!templates/header/header.html'
+], function($, _, Backbone, Events, TopMessage, headerTemplate) {
   var HeaderView = Backbone.View.extend({
     el : '#header',
     render : function() {
@@ -20,7 +20,7 @@ define([
         return; // Prevent multiple clicks
       }
       this.$('#login').button('loading');
-      $('#top-message :first-child').alert('close'); // Hide previous message
+      TopMessage.close();
       var email = this.$('#email').val();
       var password = this.$('#password').val();
       var emailPattern = new RegExp('^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$');
@@ -51,10 +51,9 @@ define([
     },
     loginFailed : function(message) {
       this.$('#login').button('reset');
-      $('#top-message').html(_.template(loginFailedTemplate, {
+      TopMessage.setError({
         message : message
-      }));
-      $('#top-message :first-child').addClass('in');
+      });
     }
   });
   return HeaderView;

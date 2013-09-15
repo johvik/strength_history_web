@@ -37,6 +37,7 @@ define([
       if (_.isUndefined(invalid)) {
         this.onCancel(); // Ensure it will be hidden
         this.model.save(attributes);
+        // TODO Show save errors
       } else {
         this.$('.exercise-name').parent().toggleClass('has-error', invalid.name);
         this.$('.standard-increase').parent().toggleClass('has-error', invalid.standardIncrease);

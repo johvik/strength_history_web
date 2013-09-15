@@ -2,10 +2,9 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'text!templates/signup/page.html',
-  'text!templates/messages/signupfail.html',
-  'text!templates/messages/signupsuccess.html'
-], function($, _, Backbone, signupPageTemplate, signupFailTemplate, signupSuccessTemplate) {
+  'views/global/topmessage',
+  'text!templates/signup/page.html'
+], function($, _, Backbone, TopMessage, signupPageTemplate) {
   var SignupPage = Backbone.View.extend({
     el : '#page',
     render : function() {
@@ -19,8 +18,9 @@ define([
       if (this.$('button[type="submit"]').hasClass('disabled')) {
         return; // Prevent multiple clicks
       }
+
+      TopMessage.close();
       this.$('button[type="submit"]').button('loading');
-      $('#top-message :first-child').alert('close'); // Hide previous message
       this.$('div input.form-control').popover('destroy');
       this.$('div').removeClass('has-error');
 
@@ -72,14 +72,17 @@ define([
               _self.$('#email').popover('show');
               _self.$('#email').parent().addClass('has-error');
             } else {
-              $('#top-message').html(signupFailTemplate);
-              $('#top-message :first-child').addClass('in');
+              TopMessage.setError({
+                message : 'Failed to create account, please try again later.'
+              });
             }
             _self.$('button[type="submit"]').button('reset');
           },
           success : function() {
-            $('#top-message').html(signupSuccessTemplate);
-            $('#top-message :first-child').addClass('in');
+            TopMessage.setSuccess({
+              title : 'Account created!',
+              message : 'Check your e-mail for account activation.'
+            });
             _self.$('button[type="submit"]').button('reset');
             window.scrollTo(window.scrollX, 0); // Scroll to top
           }

@@ -6,11 +6,11 @@ define([
   'globals/workout',
   'globals/historydata',
   'models/workoutdata',
+  'views/global/topmessage',
   'views/active/summaryrow',
   'views/global/confirm',
-  'text!templates/active/summary.html',
-  'text!templates/messages/savefailed.html'
-], function($, _, Backbone, Exercises, Workouts, HistoryData, WorkoutDataModel, ActiveSummaryRowView, ConfirmView, activeSummaryTemplate, saveFailedTemplate) {
+  'text!templates/active/summary.html'
+], function($, _, Backbone, Exercises, Workouts, HistoryData, WorkoutDataModel, TopMessage, ActiveSummaryRowView, ConfirmView, activeSummaryTemplate) {
   var ActiveWorkoutSummary = Backbone.View.extend({
     events : {
       'click button.back' : 'onBack',
@@ -77,8 +77,8 @@ define([
       }
     },
     onSave : function() {
-      // TODO Handle messages better, maybe stack and timeout?
-      $('#top-message :first-child').alert('close'); // Hide previous message
+      // TODO Disable save button when loading?
+      TopMessage.close();
       this.$('table:first tr').removeClass('danger');
       var workoutData = new WorkoutDataModel(this.data);
       if (workoutData.isValid()) {
@@ -108,8 +108,9 @@ define([
             }
           },
           error : function() {
-            $('#top-message').html(saveFailedTemplate);
-            $('#top-message :first-child').addClass('in');
+            TopMessage.setError({
+              message : 'Failed to save the data on the server.'
+            });
             if (_.isObject(old)) {
               HistoryData.push(old);
             }
