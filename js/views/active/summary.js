@@ -84,7 +84,10 @@ define([
       }
     },
     onSave : function() {
-      // TODO Disable save button when loading?
+      if (this.$('button.save').hasClass('disabled')) {
+        return; // Prevent multiple clicks
+      }
+      this.$('button.save').button('loading');
       TopMessage.close();
       this.$('table:first tr').removeClass('danger');
       var workoutData = new WorkoutDataModel(this.data);
@@ -121,6 +124,7 @@ define([
             if (_.isObject(old)) {
               HistoryData.push(old);
             }
+            _self.$('button.save').button('reset');
           }
         });
       } else {
@@ -128,6 +132,7 @@ define([
         _.each(error.sets, function(i) {
           this.$('table:first tr').eq(i).addClass('danger');
         });
+        this.$('button.save').button('reset');
       }
     },
     onRowClick : function(e) {
