@@ -54,8 +54,15 @@ define([
       this.options.rowView.stopEdit();
     },
     onDelete : function() {
+      TopMessage.close();
       this.onCancel(); // Ensure it will be hidden
-      this.model.destroy();
+      this.model.destroy({
+        error : function() {
+          TopMessage.setError({
+            message : 'Failed to delete the data on the server. Please refresh.'
+          });
+        }
+      });
     },
     onKeyup : function(e) {
       if (e.keyCode == 27) { // escape

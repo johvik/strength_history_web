@@ -45,7 +45,6 @@ define([
             });
           }
         });
-        // TODO Also show destroy errors
       } else {
         this.$('.exercise-name').parent().toggleClass('has-error', invalid.name);
         this.$('.standard-increase').parent().toggleClass('has-error', invalid.standardIncrease);
@@ -55,12 +54,19 @@ define([
       this.options.rowView.stopEdit();
     },
     onDelete : function() {
+      TopMessage.close();
       var _self = this;
       new ConfirmView({
         message : 'Exercise and all references will be permanently lost, are you sure?',
         callback : function() {
           _self.onCancel(); // Ensure it will be hidden
-          _self.model.destroy();
+          _self.model.destroy({
+            error : function() {
+              TopMessage.setError({
+                message : 'Failed to delete the data on the server. Please refresh.'
+              });
+            }
+          });
         }
       }).render();
     },

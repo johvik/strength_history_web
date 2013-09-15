@@ -52,6 +52,7 @@ define([
     },
     onDiscard : function() {
       if (this.options.edit === true) {
+        TopMessage.close();
         var _self = this;
         new ConfirmView({
           callback : function() {
@@ -59,7 +60,13 @@ define([
             sessionStorage.removeItem('exerciseData');
             new WorkoutDataModel({
               _id : _self.data._id
-            }).destroy();
+            }).destroy({
+              error : function() {
+                TopMessage.setError({
+                  message : 'Failed to delete the data on the server. Please refresh.'
+                });
+              }
+            });
             HistoryData.remove(_self.data._id);
             Backbone.history.navigate('history', {
               trigger : true

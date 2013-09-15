@@ -97,12 +97,19 @@ define([
       this.options.rowView.stopEdit();
     },
     onDelete : function() {
+      TopMessage.close();
       var _self = this;
       new ConfirmView({
         message : 'Workout and all references will be permanently lost, are you sure?',
         callback : function() {
           _self.onCancel(); // Ensure it will be hidden
-          _self.model.destroy();
+          _self.model.destroy({
+            error : function() {
+              TopMessage.setError({
+                message : 'Failed to delete the data on the server. Please refresh.'
+              });
+            }
+          });
         }
       }).render();
     },
