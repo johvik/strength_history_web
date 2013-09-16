@@ -65,7 +65,6 @@ define([
             password : password
           },
           error : function(jqXHR) {
-            console.log(jqXHR);
             if (jqXHR.status === 409) {
               // email in use
               _self.$('#email').popover({
