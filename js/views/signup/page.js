@@ -65,16 +65,17 @@ define([
             password : password
           },
           error : function(jqXHR) {
+            console.log(jqXHR);
             if (jqXHR.status === 409) {
               // email in use
               _self.$('#email').popover({
-                content : 'E-mail already in use.'
+                content : jqXHR.responseText || 'E-mail already in use.'
               });
               _self.$('#email').popover('show');
               _self.$('#email').parent().addClass('has-error');
             } else {
               TopMessage.setError({
-                message : 'Failed to create account, please try again later.'
+                message : jqXHR.responseText || 'Failed to create account, please try again later.'
               });
             }
             _self.$('button[type="submit"]').button('reset');
