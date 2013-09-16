@@ -3,19 +3,18 @@ define([
   'underscore',
   'backbone',
   'events',
-  'views/global/topmessage',
-  'text!templates/header/header.html'
-], function($, _, Backbone, Events, TopMessage, headerTemplate) {
+  'views/global/topmessage'
+], function($, _, Backbone, Events, TopMessage) {
   var HeaderView = Backbone.View.extend({
     el : '#header',
     render : function() {
-      $(this.el).html(headerTemplate);
+      $('#user-header').addClass('hidden');
+      $(this.el).removeClass('hidden');
     },
     events : {
       'click #login' : 'login'
     },
     login : function(e) {
-      // TODO Change to normal login? so users can save their password
       e.preventDefault();
       if (this.$('#login').hasClass('disabled')) {
         return; // Prevent multiple clicks
@@ -40,12 +39,7 @@ define([
             _self.loginFailed(jqXHR.responseText || 'Invalid email or password.');
           },
           success : function() {
-            // Collapse header
-            var collapse = $('.navbar button.navbar-toggle:not(.collapsed)');
-            if (collapse.css('display') !== 'none') {
-              collapse.trigger('click');
-            }
-            Events.trigger('login');
+            _self.$('form').submit();
           }
         });
       }

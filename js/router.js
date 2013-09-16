@@ -30,7 +30,7 @@ define([
         require([
           'views/active/page'
         ], function(ActivePage) {
-          $('#nav-home').addClass('active');
+          $('.nav-home').addClass('active');
           var activePage = Vm.create('Page', ActivePage);
           activePage.render();
           // Make sure path is home page
@@ -42,7 +42,7 @@ define([
         require([
           'views/home/page'
         ], function(HomePage) {
-          $('#nav-home').addClass('active');
+          $('.nav-home').addClass('active');
           var homePage = Vm.create('Page', HomePage);
           homePage.render();
           // Make sure path is home page
@@ -56,7 +56,7 @@ define([
       require([
         'views/history/page'
       ], function(HistoryPage) {
-        $('#nav-history').addClass('active');
+        $('.nav-history').addClass('active');
         var historyPage = Vm.create('Page', HistoryPage, {
           editId : id
         });
@@ -67,7 +67,7 @@ define([
       require([
         'views/exercise/page'
       ], function(ExercisePage) {
-        $('#nav-exercises').addClass('active');
+        $('.nav-exercises').addClass('active');
         var exercisePage = Vm.create('Page', ExercisePage, {
           editId : id
         });
@@ -78,7 +78,7 @@ define([
       require([
         'views/workout/page'
       ], function(WorkoutPage) {
-        $('#nav-workouts').addClass('active');
+        $('.nav-workouts').addClass('active');
         var workoutPage = Vm.create('Page', WorkoutPage, {
           editId : id
         });
@@ -89,7 +89,7 @@ define([
       require([
         'views/active/run'
       ], function(ActiveRunPage) {
-        $('#nav-home').addClass('active');
+        $('.nav-home').addClass('active');
         Vm.create('Page', ActiveRunPage, {
           workoutId : workout,
           step : step,
@@ -100,7 +100,7 @@ define([
       require([
         'views/history/workoutdata/edit'
       ], function(WorkoutDataEditPage) {
-        $('#nav-history').addClass('active');
+        $('.nav-history').addClass('active');
         Vm.create('Page', WorkoutDataEditPage, {
           workoutId : workout,
           step : step,
@@ -118,7 +118,7 @@ define([
         require([
           'views/signup/page'
         ], function(SignupPage) {
-          $('#nav-signup').addClass('active');
+          $('.nav-signup').addClass('active');
           var signupPage = Vm.create('Page', SignupPage);
           signupPage.render();
         });

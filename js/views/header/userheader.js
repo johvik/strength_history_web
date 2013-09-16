@@ -1,16 +1,16 @@
 define([
   'jquery',
   'underscore',
-  'backbone',
-  'text!templates/header/userheader.html'
-], function($, _, Backbone, userHeaderTemplate) {
+  'backbone'
+], function($, _, Backbone) {
   var UserHeaderView = Backbone.View.extend({
-    el : '#header',
+    el : '#user-header',
     events : {
       'click #logout' : 'onLogout'
     },
     render : function() {
-      $(this.el).html(userHeaderTemplate);
+      $('#header').addClass('hidden');
+      $(this.el).removeClass('hidden');
     },
     onLogout : function() {
       sessionStorage.removeItem('workoutData'); // Remove data

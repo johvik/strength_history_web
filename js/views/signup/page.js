@@ -14,7 +14,6 @@ define([
       'click button[type="submit"]' : 'onSignUp'
     },
     onSignUp : function(e) {
-      // TODO Change to normal submit? so users can save their password
       e.preventDefault();
       if (this.$('button[type="submit"]').hasClass('disabled')) {
         return; // Prevent multiple clicks
