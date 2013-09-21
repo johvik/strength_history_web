@@ -46,7 +46,7 @@ define([
     },
     loginFailed : function(message) {
       this.$('#login').button('reset');
-      TopMessage.setError({
+      TopMessage.setLoginError({
         message : message
       });
     }
