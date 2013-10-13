@@ -25,6 +25,13 @@ define([
         console.log(error);
       });
     },
+    save : function(attributes, options) {
+      // Always set sync to current time before saving
+      this.set({
+        sync : new Date().getTime()
+      });
+      return Backbone.Model.prototype.save.apply(this, arguments);
+    },
     latest : function() {
       if (!_.isUndefined(this.id)) {
         var _self = this;

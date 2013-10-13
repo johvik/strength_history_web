@@ -38,6 +38,7 @@ define([
       }
     },
     createExercise : function() {
+      // TODO Handle error on all create
       Exercises.create({
         name : 'New exercise',
         standardIncrease : 2.5
