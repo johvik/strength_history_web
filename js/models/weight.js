@@ -25,13 +25,6 @@ define([
         console.log(error);
       });
     },
-    parse : function(data, options) {
-      if (_.has(data, 'time')) {
-        // Convert date string to time
-        data.time = new Date(data.time).getTime();
-      }
-      return data;
-    },
   }, {
     // static function
     latest : function() {

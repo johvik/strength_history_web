@@ -33,7 +33,7 @@ define([
             var time = data.time;
             if (!_.isUndefined(time)) {
               _self.set({
-                latest : new Date(time).getTime()
+                latest : time
               });
               _self.trigger('latest:workout');
             }
