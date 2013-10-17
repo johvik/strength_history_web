@@ -7,9 +7,10 @@ define([
   'globals/activeworkout',
   'globals/historydata',
   'models/weight',
+  'views/global/topmessage',
   'views/active/row',
   'text!templates/active/list.html'
-], function($, _, Backbone, Vm, Events, ActiveWorkouts, HistoryData, WeightModel, ActiveWorkoutRowView, activeListTemplate) {
+], function($, _, Backbone, Vm, Events, ActiveWorkouts, HistoryData, WeightModel, TopMessage, ActiveWorkoutRowView, activeListTemplate) {
   var ActivePage = Backbone.View.extend({
     el : '#page',
     events : {
@@ -43,6 +44,7 @@ define([
       ActiveWorkouts.each(this.addOne, this);
     },
     addWeight : function() {
+      TopMessage.close();
       var weight = 75.0; // default value
       if (_.isFinite(this.latestWeight)) {
         // Use latest as base
@@ -53,6 +55,16 @@ define([
         HistoryData.create({
           time : new Date(this.$('#activeDate').val()).getTime(),
           weight : weight
+        }, {
+          success : function() {
+            // Update latest
+            WeightModel.latest();
+          },
+          error : function() {
+            TopMessage.setError({
+              message : 'Failed to save the data on the server.'
+            });
+          }
         });
       }
     }
