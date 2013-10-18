@@ -19,7 +19,7 @@ define([
         this.date = savedDate;
         sessionStorage.removeItem('savedDate');
       } else {
-        this.date = new Date().toISOString().slice(0, -1);
+        this.date = new Date().toISOString().slice(0, -5);
       }
       this.exerciseData = [];
       var exercises = this.model.get('exercises');

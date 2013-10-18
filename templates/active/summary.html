@@ -1,7 +1,7 @@
 <h1>Summary of <%= workout.get('name') %></h1>
 <div class="form-group">
   <label for="activeDate">Date</label>
-  <input id="activeDate" type="datetime-local" class="form-control" placeholder="Date" value="<%= new Date(time).toISOString().slice(0, -1) %>">
+  <input id="activeDate" type="datetime-local" class="form-control" placeholder="Date" value="<%= new Date(time).toISOString().slice(0, -5) %>">
 </div>
 <% if (edit) { %>
 <button type="button" class="pull-right btn btn-danger discard">Delete</button>

@@ -22,7 +22,8 @@ define([
       $('.value.hidden').removeClass('hidden');
       // Update this
       // TODO Support browsers without datetime-local
-      this.$('.weight-date').val(new Date(this.model.get('time')).toISOString().slice(0, -1));
+      // TODO When updating the date in other browsers the time will differ if the timezone is not 0
+      this.$('.weight-date').val(new Date(this.model.get('time')).toISOString().slice(0, -5));
       this.$('.weight').val(this.model.get('weight'));
       this.$('.form-group').removeClass('has-error');
       return this;
