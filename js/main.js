@@ -1,7 +1,7 @@
 requirejs.config({
   baseUrl : '/js',
   paths : {
-    jquery : 'vendor/jquery-1.10.2.min',
+    jquery : 'vendor/jquery-2.0.3.min',
     underscore : 'vendor/underscore-min',
     backbone : 'vendor/backbone-min',
     bootstrap : 'vendor/bootstrap.min',
@@ -37,6 +37,7 @@ require([
   'vm',
   'bootstrap'
 ], function($, AppView, Router, Events, Vm, Bootstrap) {
+  // TODO Update project to work with latest backbone
   $.ajaxSetup({
     statusCode : {
       // Unauthorized
