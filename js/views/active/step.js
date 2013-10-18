@@ -47,6 +47,7 @@ define([
     },
     render : function() {
       this.$('table tbody:first').empty();
+      // TODO Fix this table (not showing message when empty)
       _self = this;
       _.each(this.data.data[this.options.step - 1].sets, function(set) {
         _self.$('table tbody:first').append(new ActiveStepRowView(set).render().el);

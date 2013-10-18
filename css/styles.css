@@ -16,3 +16,7 @@ tr:hover .value a {
 td.edit {
   background-color: #fff !important;
 }
+
+tr.table-empty:not(:only-child ) {
+  display: none;
+}
