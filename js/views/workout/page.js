@@ -6,9 +6,10 @@ define([
   'events',
   'globals/exercise',
   'globals/workout',
+  'views/global/topmessage',
   'views/workout/row',
   'text!templates/workout/list.html'
-], function($, _, Backbone, Vm, Events, Exercises, Workouts, WorkoutRowView, workoutListTemplate) {
+], function($, _, Backbone, Vm, Events, Exercises, Workouts, TopMessage, WorkoutRowView, workoutListTemplate) {
   var WorkoutPage = Backbone.View.extend({
     el : '#page',
     events : {
@@ -40,9 +41,17 @@ define([
       }
     },
     createWorkout : function() {
+      TopMessage.close();
       Workouts.create({
         name : 'New workout',
         exercises : []
+      }, {
+        error : function(workout) {
+          workout.destroy();
+          TopMessage.setError({
+            message : 'Failed to save the data on the server.'
+          });
+        }
       });
     },
     addOne : function(workout) {

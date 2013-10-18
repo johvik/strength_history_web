@@ -117,7 +117,11 @@ define([
               });
             }
           },
-          error : function() {
+          error : function(data) {
+            if (data.isNew()) {
+              // Don't destroy if update fails
+              data.destroy();
+            }
             TopMessage.setError({
               message : 'Failed to save the data on the server.'
             });

@@ -61,7 +61,8 @@ define([
             // Update latest
             WeightModel.latest();
           },
-          error : function() {
+          error : function(w) {
+            w.destroy();
             TopMessage.setError({
               message : 'Failed to save the data on the server.'
             });
