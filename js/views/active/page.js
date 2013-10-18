@@ -17,6 +17,7 @@ define([
       'click #add-weight' : 'addWeight'
     },
     initialize : function() {
+      // TODO Show message when tables are empty
       this.listenTo(ActiveWorkouts, 'add', this.addOne);
       this.listenTo(ActiveWorkouts, 'latest reset sort', this.reset);
       this.listenTo(Events, 'latest:weight', function(weight) {
