@@ -47,27 +47,30 @@ define([
           step = 0;
         }
 
-        var exercises = this.model.get('exercises');
-        if (_.isNull(sessionStorage.getItem('workoutData'))) {
+        var sessionData = sessionStorage.getItem('workoutData');
+        if (_.isNull(sessionData)) {
           // Data is gone!
           this.$el.html(workoutDataGoneTemplate);
-        } else if (step >= 1 && step <= exercises.length) {
-          // Step page
-          var activeStepView = new ActiveStepView({
-            model : this.model,
-            step : step,
-            edit : true
-          });
-          this.$el.html(activeStepView.render().el);
         } else {
-          // Summary edit page
-          step = 1;
-          var activeSummaryView = new ActiveSummaryView({
-            model : this.model,
-            step : step,
-            edit : true
-          });
-          this.$el.html(activeSummaryView.render().el);
+          var exercises = _.pluck(JSON.parse(sessionData).data, 'exercise');
+          if (step >= 1 && step <= exercises.length) {
+            // Step page
+            var activeStepView = new ActiveStepView({
+              model : this.model,
+              step : step,
+              edit : true
+            });
+            this.$el.html(activeStepView.render().el);
+          } else {
+            // Summary edit page
+            step = 1;
+            var activeSummaryView = new ActiveSummaryView({
+              model : this.model,
+              step : step,
+              edit : true
+            });
+            this.$el.html(activeSummaryView.render().el);
+          }
         }
       }
     }

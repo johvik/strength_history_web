@@ -48,31 +48,36 @@ define([
           step = 0;
         }
 
-        var exercises = this.model.get('exercises');
         if (step <= 0) {
           // Start page
           var activeStartView = new ActiveStartView({
             model : this.model
           });
           this.$el.html(activeStartView.render().el);
-        } else if (_.isNull(sessionStorage.getItem('workoutData'))) {
-          // Data is gone!
-          this.$el.html(workoutDataGoneTemplate);
-        } else if (step <= exercises.length) {
-          // Step page
-          var activeStepView = new ActiveStepView({
-            model : this.model,
-            step : step
-          });
-          this.$el.html(activeStepView.render().el);
         } else {
-          // Summary page
-          step = exercises.length + 1;
-          var activeSummaryView = new ActiveSummaryView({
-            model : this.model,
-            step : step
-          });
-          this.$el.html(activeSummaryView.render().el);
+          var sessionData = sessionStorage.getItem('workoutData');
+          if (_.isNull(sessionData)) {
+            // Data is gone!
+            this.$el.html(workoutDataGoneTemplate);
+          } else {
+            var exercises = _.pluck(JSON.parse(sessionData).data, 'exercise');
+            if (step <= exercises.length) {
+              // Step page
+              var activeStepView = new ActiveStepView({
+                model : this.model,
+                step : step
+              });
+              this.$el.html(activeStepView.render().el);
+            } else {
+              // Summary page
+              step = exercises.length + 1;
+              var activeSummaryView = new ActiveSummaryView({
+                model : this.model,
+                step : step
+              });
+              this.$el.html(activeSummaryView.render().el);
+            }
+          }
         }
       }
     }
