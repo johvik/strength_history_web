@@ -2,11 +2,12 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'events',
   'globals/exercise',
   'views/active/steprow',
   'text!templates/active/step.html',
   'text!templates/global/broken.html'
-], function($, _, Backbone, Exercises, ActiveStepRowView, activeStepTemplate, globalBrokenTemplate) {
+], function($, _, Backbone, Events, Exercises, ActiveStepRowView, activeStepTemplate, globalBrokenTemplate) {
   var ActiveWorkoutStep = Backbone.View.extend({
     events : {
       'click button.add' : 'onAddSet',
@@ -46,7 +47,7 @@ define([
       }));
     },
     render : function() {
-      this.$('table tbody:first').empty();
+      Events.trigger('steprows:clear');
       _self = this;
       _.each(this.data.data[this.options.step - 1].sets, function(set) {
         _self.$('table tbody:first').append(new ActiveStepRowView(set).render().el);
