@@ -37,7 +37,6 @@ require([
   'vm',
   'bootstrap'
 ], function($, AppView, Router, Events, Vm, Bootstrap) {
-  // TODO Update project to work with latest backbone
   $.ajaxSetup({
     statusCode : {
       // Unauthorized

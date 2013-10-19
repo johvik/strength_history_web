@@ -13,7 +13,6 @@ define([
   var HistoryDataPage = Backbone.View.extend({
     el : '#page',
     initialize : function() {
-      // TODO Deleting the workout of a workoutdata produces an error when trying to edit
       this.listenTo(Workouts, 'sync', this.reset); // If workouts aren't loaded directly
       this.listenTo(HistoryData, 'add', this.addOne);
       this.listenTo(HistoryData, 'reset sort', this.reset);
