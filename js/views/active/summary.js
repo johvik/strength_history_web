@@ -2,6 +2,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'globals/datehandler',
   'globals/exercise',
   'globals/workout',
   'globals/historydata',
@@ -10,7 +11,7 @@ define([
   'views/active/summaryrow',
   'views/global/confirm',
   'text!templates/active/summary.html'
-], function($, _, Backbone, Exercises, Workouts, HistoryData, WorkoutDataModel, TopMessage, ActiveSummaryRowView, ConfirmView, activeSummaryTemplate) {
+], function($, _, Backbone, DateHandler, Exercises, Workouts, HistoryData, WorkoutDataModel, TopMessage, ActiveSummaryRowView, ConfirmView, activeSummaryTemplate) {
   var ActiveWorkoutSummary = Backbone.View.extend({
     events : {
       'click button.back' : 'onBack',
@@ -23,7 +24,7 @@ define([
       this.data = JSON.parse(sessionStorage.getItem('workoutData'));
       this.$el.html(_.template(activeSummaryTemplate, {
         workout : this.model,
-        time : this.data.time,
+        date : DateHandler.toDateTimeLocalString(new Date(this.data.time)),
         first : this.options.step === 1,
         edit : this.options.edit === true
       }));
@@ -152,7 +153,7 @@ define([
       }
     },
     onDataChange : function() {
-      this.data.time = new Date(this.$('#activeDate').val()).getTime();
+      this.data.time = DateHandler.parseDateTimeLocalString(this.$('#activeDate').val()).getTime();
       sessionStorage.setItem('workoutData', JSON.stringify(this.data));
     }
   });

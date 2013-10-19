@@ -4,13 +4,14 @@ define([
   'backbone',
   'vm',
   'events',
+  'globals/datehandler',
   'globals/activeworkout',
   'globals/historydata',
   'models/weight',
   'views/global/topmessage',
   'views/active/row',
   'text!templates/active/list.html'
-], function($, _, Backbone, Vm, Events, ActiveWorkouts, HistoryData, WeightModel, TopMessage, ActiveWorkoutRowView, activeListTemplate) {
+], function($, _, Backbone, Vm, Events, DateHandler, ActiveWorkouts, HistoryData, WeightModel, TopMessage, ActiveWorkoutRowView, activeListTemplate) {
   var ActivePage = Backbone.View.extend({
     el : '#page',
     events : {
@@ -25,7 +26,7 @@ define([
       WeightModel.latest(); // Get latest weight
       $(this.el).html(activeListTemplate);
       sessionStorage.removeItem('savedDate'); // Just to be safe
-      this.$('#activeDate').val(new Date().toISOString().slice(0, -5));
+      this.$('#activeDate').val(DateHandler.toDateTimeLocalString(new Date()));
     },
     reset : function() {
       Events.trigger('activeworkouts:clear');
@@ -53,7 +54,7 @@ define([
       weight = prompt('Enter weight', weight);
       if (_.isFinite(weight)) {
         HistoryData.create({
-          time : new Date(this.$('#activeDate').val()).getTime(),
+          time : DateHandler.parseDateTimeLocalString(this.$('#activeDate').val()).getTime(),
           weight : weight
         }, {
           success : function() {

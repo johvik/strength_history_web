@@ -3,10 +3,11 @@ define([
   'underscore',
   'backbone',
   'events',
+  'globals/datehandler',
   'globals/workout',
   'text!templates/history/workoutdata/row.html',
   'text!templates/global/broken.html'
-], function($, _, Backbone, Events, Workouts, workoutDataRowTemplate, globalBrokenTemplate) {
+], function($, _, Backbone, Events, DateHandler, Workouts, workoutDataRowTemplate, globalBrokenTemplate) {
   var WorkoutDataRow = Backbone.View.extend({
     tagName : 'tr',
     className : 'click',
@@ -30,7 +31,8 @@ define([
     render : function() {
       this.$el.html(_.template(workoutDataRowTemplate, {
         workoutData : this.model,
-        workoutName : this.getWorkoutName()
+        workoutName : this.getWorkoutName(),
+        date : DateHandler.toDateString(new Date(this.model.get('time')))
       }));
       return this;
     },

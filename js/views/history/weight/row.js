@@ -3,9 +3,10 @@ define([
   'underscore',
   'backbone',
   'events',
+  'globals/datehandler',
   'views/history/weight/edit',
   'text!templates/history/weight/row.html'
-], function($, _, Backbone, Events, WeightEditView, weightRowTemplate) {
+], function($, _, Backbone, Events, DateHandler, WeightEditView, weightRowTemplate) {
   var WeightRow = Backbone.View.extend({
     tagName : 'tr',
     events : {
@@ -30,7 +31,8 @@ define([
     },
     render : function() {
       this.$el.html(_.template(weightRowTemplate, {
-        weight : this.model
+        weight : this.model,
+        date : DateHandler.toDateString(new Date(this.model.get('time')))
       }));
       return this;
     },

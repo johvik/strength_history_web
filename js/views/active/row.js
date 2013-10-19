@@ -3,8 +3,9 @@ define([
   'underscore',
   'backbone',
   'events',
+  'globals/datehandler',
   'text!templates/active/row.html'
-], function($, _, Backbone, Events, activeRowTemplate) {
+], function($, _, Backbone, Events, DateHandler, activeRowTemplate) {
   var WorkoutRow = Backbone.View.extend({
     tagName : 'tr',
     events : {
@@ -25,7 +26,7 @@ define([
     render : function() {
       var latest = this.model.get('latest');
       if (!_.isUndefined(latest)) {
-        latest = new Date(latest).toDateString();
+        latest = DateHandler.toDateString(new Date(latest));
       } else {
         latest = 'Never';
       }
@@ -41,7 +42,7 @@ define([
         this.$('td:first a:first')[0].click();
       } else {
         // Remember date from main view
-        sessionStorage.setItem('savedDate', $('#activeDate').val());
+        sessionStorage.setItem('savedDate', DateHandler.parseDateTimeLocalString($('#activeDate').val()));
       }
     }
   });

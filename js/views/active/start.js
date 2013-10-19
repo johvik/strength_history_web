@@ -3,10 +3,11 @@ define([
   'underscore',
   'backbone',
   'events',
+  'globals/datehandler',
   'globals/exercise',
   'views/active/previous',
   'text!templates/active/start.html'
-], function($, _, Backbone, Events, Exercises, ActivePreviousView, activeStartTemplate) {
+], function($, _, Backbone, Events, DateHandler, Exercises, ActivePreviousView, activeStartTemplate) {
   var ActiveWorkoutStart = Backbone.View.extend({
     events : {
       'click button.start' : 'onStart',
@@ -16,10 +17,10 @@ define([
       // Try to get page from main view
       var savedDate = sessionStorage.getItem('savedDate');
       if (_.isString(savedDate)) {
-        this.date = savedDate;
+        this.date = new Date(savedDate);
         sessionStorage.removeItem('savedDate');
       } else {
-        this.date = new Date().toISOString().slice(0, -5);
+        this.date = new Date();
       }
       this.exerciseData = [];
       var exercises = this.model.get('exercises');
@@ -64,7 +65,7 @@ define([
       });
     },
     render : function() {
-      this.$('#activeDate').val(this.date);
+      this.$('#activeDate').val(DateHandler.toDateTimeLocalString(this.date));
       return this;
     },
     onStart : function() {
@@ -76,7 +77,7 @@ define([
         });
       });
       var workoutData = {
-        time : new Date(this.$('#activeDate').val()).getTime(),
+        time : DateHandler.parseDateTimeLocalString(this.$('#activeDate').val()).getTime(),
         workout : this.model.id,
         data : data
       };

@@ -2,9 +2,10 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'globals/datehandler',
   'views/global/topmessage',
   'text!templates/history/weight/edit.html'
-], function($, _, Backbone, TopMessage, weightEditTemplate) {
+], function($, _, Backbone, DateHandler, TopMessage, weightEditTemplate) {
   var WeightEdit = Backbone.View.extend({
     events : {
       'click button.save' : 'onSave',
@@ -21,14 +22,14 @@ define([
       $('.edit:not(hidden)').addClass('hidden');
       $('.value.hidden').removeClass('hidden');
       // Update this
-      this.$('.weight-date').val(new Date(this.model.get('time')).toISOString().slice(0, -5));
+      this.$('.weight-date').val(DateHandler.toDateTimeLocalString(new Date(this.model.get('time'))));
       this.$('.weight').val(this.model.get('weight'));
       this.$('.form-group').removeClass('has-error');
       return this;
     },
     onSave : function() {
       TopMessage.close();
-      var weightDate = new Date(this.$('.weight-date').val());
+      var weightDate = DateHandler.parseDateTimeLocalString(this.$('.weight-date').val());
       var weight = this.$('.weight').val();
       var attributes = {
         time : weightDate.getTime(),
