@@ -12,7 +12,8 @@ define([
       'click button.save' : 'onSave',
       'click button.cancel' : 'onCancel',
       'click button.delete' : 'onDelete',
-      'click button.add' : 'onAdd',
+      'click select.add' : 'onAdd',
+      'keypress select.add' : 'onAdd',
       'click button.remove' : 'onRemove',
       'keyup input' : 'onKeyup',
       'keypress input' : 'onKeypress'
@@ -113,7 +114,14 @@ define([
         }
       }).render();
     },
-    onAdd : function() {
+    onAdd : function(e) {
+      var val = this.$('.add-exercises select').val();
+      if (val === 'default' || (e.type === 'keypress' && e.keyCode !== 13)) {
+        // Ignore if value is default or when it is a keypress event and enter is not the key
+        return;
+      }
+      // Reset value of the select
+      this.$('.add-exercises select').val('default');
       // Add new select view
       var v = new ExerciseSelectView({
         type : 'remove'
@@ -121,7 +129,7 @@ define([
       this.selectRemoveViews.push(v);
       this.$('.exercises').append(v.render().el);
       // Set value
-      v.$('select').val(this.$('.add-exercises select').val());
+      v.$('select').val(val);
     },
     onRemove : function(e) {
       var index = this.$('button.remove').index($(e.currentTarget));
