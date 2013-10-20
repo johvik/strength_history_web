@@ -10,8 +10,9 @@ define([
   'views/global/topmessage',
   'views/active/summaryrow',
   'views/global/confirm',
-  'text!templates/active/summary.html'
-], function($, _, Backbone, DateHandler, Exercises, Workouts, HistoryData, WorkoutDataModel, TopMessage, ActiveSummaryRowView, ConfirmView, activeSummaryTemplate) {
+  'text!templates/active/summary.html',
+  'text!templates/global/broken.html'
+], function($, _, Backbone, DateHandler, Exercises, Workouts, HistoryData, WorkoutDataModel, TopMessage, ActiveSummaryRowView, ConfirmView, activeSummaryTemplate, globalBrokenTemplate) {
   var ActiveWorkoutSummary = Backbone.View.extend({
     events : {
       'click button.back' : 'onBack',
@@ -23,7 +24,7 @@ define([
     initialize : function() {
       this.data = JSON.parse(sessionStorage.getItem('workoutData'));
       this.$el.html(_.template(activeSummaryTemplate, {
-        workout : this.model,
+        workoutName : this.getWorkoutName(),
         date : DateHandler.toDateTimeLocalString(new Date(this.data.time)),
         first : this.options.step === 1,
         edit : this.options.edit === true
@@ -33,6 +34,15 @@ define([
         _self.$('table tbody:first').append(new ActiveSummaryRowView({
           data : i
         }).render().el);
+      });
+    },
+    getWorkoutName : function() {
+      var workout = Workouts.get(this.data.workout);
+      if (_.isObject(workout)) {
+        return workout.get('name');
+      }
+      return _.template(globalBrokenTemplate, {
+        type : 'Workout'
       });
     },
     render : function() {
@@ -46,7 +56,7 @@ define([
           trigger : true
         });
       } else {
-        Backbone.history.navigate('run/' + this.model.id + '/' + (this.options.step - 1), {
+        Backbone.history.navigate('run/' + this.data.workout + '/' + (this.options.step - 1), {
           trigger : true
         });
       }
@@ -143,11 +153,11 @@ define([
     onRowClick : function(e) {
       var index = this.$('tr.click').index(this.$(e.currentTarget));
       if (this.options.edit === true) {
-        Backbone.history.navigate('history/edit/workout/' + this.model.id + '/' + (index + 1), {
+        Backbone.history.navigate('history/edit/workout/' + this.data.workout + '/' + (index + 1), {
           trigger : true
         });
       } else {
-        Backbone.history.navigate('run/' + this.model.id + '/' + (index + 1), {
+        Backbone.history.navigate('run/' + this.data.workout + '/' + (index + 1), {
           trigger : true
         });
       }

@@ -11,72 +11,52 @@ define([
   'views/active/summary',
   'text!templates/global/notfound.html',
   'text!templates/active/workoutdatagone.html'
-], function($, _, Backbone, Vm, Events, Workouts, Exercise, ActiveStartView, ActiveStepView, ActiveSummaryView, globalNotFoundTemplate, workoutDataGoneTemplate) {
+], function($, _, Backbone, Vm, Events, Workouts, Exercises, ActiveStartView, ActiveStepView, ActiveSummaryView, globalNotFoundTemplate, workoutDataGoneTemplate) {
   var ActiveRunPage = Backbone.View.extend({
     el : '#page',
     initialize : function() {
-      var model = Workouts.get(this.options.workoutId);
-      if (_.isUndefined(model)) {
-        // Not found try to listen for it!
-        var workoutId = this.options.workoutId;
-        this.listenTo(Workouts, 'add', function(workout) {
-          if (workoutId === workout.id) {
-            this.workoutFound(workout);
-          }
-        });
-        this.listenTo(Workouts, 'reset', function(workouts) {
-          var workout = workouts.get(workoutId);
-          if (!_.isUndefined(workout)) {
-            this.workoutFound(workout);
-          }
-        });
-      } else {
-        this.workoutFound(model);
+      var workout = Workouts.get(this.options.workoutId);
+      if (_.isUndefined(workout)) {
+        this.listenTo(Workouts, 'sync', this.render); // If workout isn't loaded directly
       }
-    },
-    workoutFound : function(model) {
-      this.stopListening(Workouts);
-      this.model = model;
-      this.render();
+      this.listenTo(Exercises, 'sync', this.render); // If exercises aren't loaded directly
     },
     render : function() {
-      if (_.isUndefined(this.model)) {
-        this.$el.html(globalNotFoundTemplate);
-      } else {
-        var step = parseInt(this.options.step, 10);
-        if (_.isNaN(step)) {
-          step = 0;
-        }
-
-        if (step <= 0) {
+      var step = parseInt(this.options.step, 10);
+      if (_.isNaN(step)) {
+        step = 0;
+      }
+      var workout = Workouts.get(this.options.workoutId);
+      if (step <= 0) {
+        if (_.isUndefined(workout)) {
+          this.$el.html(globalNotFoundTemplate);
+        } else {
           // Start page
           var activeStartView = new ActiveStartView({
-            model : this.model
+            model : workout
           });
           this.$el.html(activeStartView.render().el);
+        }
+      } else {
+        var sessionData = sessionStorage.getItem('workoutData');
+        if (_.isNull(sessionData)) {
+          // Data is gone!
+          this.$el.html(workoutDataGoneTemplate);
         } else {
-          var sessionData = sessionStorage.getItem('workoutData');
-          if (_.isNull(sessionData)) {
-            // Data is gone!
-            this.$el.html(workoutDataGoneTemplate);
+          var exercises = _.pluck(JSON.parse(sessionData).data, 'exercise');
+          if (step <= exercises.length) {
+            // Step page
+            var activeStepView = new ActiveStepView({
+              step : step
+            });
+            this.$el.html(activeStepView.render().el);
           } else {
-            var exercises = _.pluck(JSON.parse(sessionData).data, 'exercise');
-            if (step <= exercises.length) {
-              // Step page
-              var activeStepView = new ActiveStepView({
-                model : this.model,
-                step : step
-              });
-              this.$el.html(activeStepView.render().el);
-            } else {
-              // Summary page
-              step = exercises.length + 1;
-              var activeSummaryView = new ActiveSummaryView({
-                model : this.model,
-                step : step
-              });
-              this.$el.html(activeSummaryView.render().el);
-            }
+            // Summary page
+            step = exercises.length + 1;
+            var activeSummaryView = new ActiveSummaryView({
+              step : step
+            });
+            this.$el.html(activeSummaryView.render().el);
           }
         }
       }

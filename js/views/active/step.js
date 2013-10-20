@@ -21,7 +21,7 @@ define([
       this.data = JSON.parse(sessionStorage.getItem('workoutData'));
       this.exerciseData = JSON.parse(sessionStorage.getItem('exerciseData'));
       var setData = this.exerciseData[this.options.step - 1];
-      var exercises = this.model.get('exercises');
+      var exercises = _.pluck(this.data.data, 'exercise');
       var exerciseId = exercises[this.options.step - 1];
       var exercise = Exercises.get(exerciseId);
       var exerciseName;
@@ -77,7 +77,7 @@ define([
     },
     onPrevious : function() {
       if (this.options.edit === true) {
-        Backbone.history.navigate('history/edit/workout/' + this.model.id, {
+        Backbone.history.navigate('history/edit/workout/' + this.data.workout, {
           trigger : true
         });
       } else {
@@ -88,7 +88,7 @@ define([
             trigger : true
           });
         } else {
-          Backbone.history.navigate('run/' + this.model.id + '/' + (this.options.step - 1), {
+          Backbone.history.navigate('run/' + this.data.workout + '/' + (this.options.step - 1), {
             trigger : true
           });
         }
@@ -97,11 +97,11 @@ define([
     onNext : function() {
       if (this.options.edit === true) {
         sessionStorage.setItem('workoutData', JSON.stringify(this.data));
-        Backbone.history.navigate('history/edit/workout/' + this.model.id, {
+        Backbone.history.navigate('history/edit/workout/' + this.data.workout, {
           trigger : true
         });
       } else {
-        Backbone.history.navigate('run/' + this.model.id + '/' + (this.options.step + 1), {
+        Backbone.history.navigate('run/' + this.data.workout + '/' + (this.options.step + 1), {
           trigger : true
         });
       }

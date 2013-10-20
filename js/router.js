@@ -90,10 +90,11 @@ define([
         'views/active/run'
       ], function(ActiveRunPage) {
         $('.nav-home').addClass('active');
-        Vm.create('Page', ActiveRunPage, {
+        var activeRunPage = Vm.create('Page', ActiveRunPage, {
           workoutId : workout,
           step : step,
         });
+        activeRunPage.render();
       });
     },
     editWorkout : function(workout, step) {
@@ -101,10 +102,11 @@ define([
         'views/history/workoutdata/edit'
       ], function(WorkoutDataEditPage) {
         $('.nav-history').addClass('active');
-        Vm.create('Page', WorkoutDataEditPage, {
+        var workoutDataEditPage = Vm.create('Page', WorkoutDataEditPage, {
           workoutId : workout,
           step : step,
         });
+        workoutDataEditPage.render();
       });
     },
     signUp : function() {
