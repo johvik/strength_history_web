@@ -14,7 +14,8 @@ define([
 ], function($, _, Backbone, Vm, Events, Workouts, Exercises, ActiveStartView, ActiveStepView, ActiveSummaryView, globalNotFoundTemplate, workoutDataGoneTemplate) {
   var ActiveRunPage = Backbone.View.extend({
     el : '#page',
-    initialize : function() {
+    initialize : function(options) {
+      this.options = options;
       var workout = Workouts.get(this.options.workoutId);
       if (_.isUndefined(workout)) {
         this.listenTo(Workouts, 'sync', this.render); // If workout isn't loaded directly

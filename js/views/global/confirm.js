@@ -4,6 +4,9 @@ define([
   'backbone',
 ], function($, _, Backbone) {
   var ConfirmView = Backbone.View.extend({
+    initialize : function(options) {
+      this.options = options;
+    },
     render : function() {
       var message = this.options.message || 'Are you sure?';
       if (true == confirm(message)) {

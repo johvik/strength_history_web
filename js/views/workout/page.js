@@ -15,7 +15,8 @@ define([
     events : {
       'click #create-workout' : 'createWorkout'
     },
-    initialize : function() {
+    initialize : function(options) {
+      this.options = options;
       this.listenTo(Workouts, 'change:_id', function(w) {
         // New items will trigger id change
         this.options.editId = w.id;

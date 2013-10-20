@@ -12,7 +12,8 @@ define([
 ], function($, _, Backbone, Vm, Events, Workouts, Exercises, ActiveStepView, ActiveSummaryView, workoutDataGoneTemplate) {
   var WorkoutDataEditPage = Backbone.View.extend({
     el : '#page',
-    initialize : function() {
+    initialize : function(options) {
+      this.options = options;
       var workout = Workouts.get(this.options.workoutId);
       if (_.isUndefined(workout)) {
         this.listenTo(Workouts, 'sync', this.render); // If workout isn't loaded directly

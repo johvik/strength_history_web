@@ -7,7 +7,8 @@ define([
 ], function($, _, Backbone, Events, activeStepRowTemplate) {
   var ActiveStepRow = Backbone.View.extend({
     tagName : 'tr',
-    initialize : function() {
+    initialize : function(options) {
+      this.options = options;
       this.listenTo(Events, 'steprows:clear', this.remove);
     },
     render : function() {

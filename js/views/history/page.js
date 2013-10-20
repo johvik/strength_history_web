@@ -12,7 +12,8 @@ define([
 ], function($, _, Backbone, Vm, Events, HistoryData, Workouts, WeightRowView, WorkoutDataRowView, historyListTemplate) {
   var HistoryDataPage = Backbone.View.extend({
     el : '#page',
-    initialize : function() {
+    initialize : function(options) {
+      this.options = options;
       this.listenTo(Workouts, 'sync', this.reset); // If workouts aren't loaded directly
       this.listenTo(HistoryData, 'add', this.addOne);
       this.listenTo(HistoryData, 'reset sort', this.reset);

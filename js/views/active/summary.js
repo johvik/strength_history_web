@@ -21,7 +21,8 @@ define([
       'click tr.click' : 'onRowClick',
       'change input#activeDate' : 'onDataChange'
     },
-    initialize : function() {
+    initialize : function(options) {
+      this.options = options;
       this.data = JSON.parse(sessionStorage.getItem('workoutData'));
       this.$el.html(_.template(activeSummaryTemplate, {
         workoutName : this.getWorkoutName(),

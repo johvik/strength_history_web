@@ -11,7 +11,8 @@ define([
 ], function($, _, Backbone, Vm, Exercises, exerciseSelectAddTemplate, exerciseSelectRemoveTemplate, exerciseOptionTemplate, exerciseOptionSelectTemplate) {
   var ExerciseSelectPage = Backbone.View.extend({
     className : 'form-group',
-    initialize : function() {
+    initialize : function(options) {
+      this.options = options;
       this.listenTo(Exercises, 'add', this.addOne);
       this.listenTo(Exercises, 'reset sort', this.reset);
       if (this.options.type === 'add') {

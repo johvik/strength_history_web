@@ -17,7 +17,8 @@ define([
       'change input#weight-step' : 'onDataChange',
       'change input#reps-step' : 'onDataChange'
     },
-    initialize : function() {
+    initialize : function(options) {
+      this.options = options;
       this.data = JSON.parse(sessionStorage.getItem('workoutData'));
       this.exerciseData = JSON.parse(sessionStorage.getItem('exerciseData'));
       var setData = this.exerciseData[this.options.step - 1];

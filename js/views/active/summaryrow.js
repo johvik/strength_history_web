@@ -9,7 +9,8 @@ define([
   var ActiveSummaryRow = Backbone.View.extend({
     tagName : 'tr',
     className : 'click',
-    initialize : function() {
+    initialize : function(options) {
+      this.options = options;
       this.listenTo(Exercises, 'sync', this.render);
     },
     render : function() {

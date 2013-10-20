@@ -18,7 +18,8 @@ define([
       'keyup input' : 'onKeyup',
       'keypress input' : 'onKeypress'
     },
-    initialize : function() {
+    initialize : function(options) {
+      this.options = options;
       this.$el.html(workoutEditTemplate);
       this.selectAddView = new ExerciseSelectView({
         type : 'add'
