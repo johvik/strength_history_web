@@ -1,0 +1,24 @@
+<h1>History</h1>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th class="col-xs-6">Event</th>
+      <th class="col-xs-6">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-empty">
+      <td colspan="2">No history, go to <a href="/">Home</a> to log data.</td>
+    </tr>
+    <tr ng-repeat="data in historyData | orderBy:['-time','_id']">
+      <td class="editable" ng-if="data.workout">
+        <a href="/history/edit/workout/{{data.workout}}">{{workouts | name:data.workout }}</a>
+      </td>
+      <td class="editable" ng-if="!data.workout">
+        <a href="/history/edit/weight/{{data._id}}">Weight</a>
+      </td>
+      <td class="editable">{{data.time | date}}</td>
+      <td class="edit" colspan="2"></td>
+    </tr>
+  </tbody>
+</table>

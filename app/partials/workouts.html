@@ -1,0 +1,34 @@
+<h1>Workouts<button class="pull-right btn btn-default" ng-click="create()">Create workout</button></h1>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th class="col-xs-6">Name</th>
+      <th class="col-xs-6">Exercises</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-empty">
+      <td colspan="2">Click on "Create workout" to add workouts.</td>
+    </tr>
+    <tr ng-repeat="workout in workouts | orderBy:['name','_id']">
+      <td class="editable-highlight" ng-show="workout._id!==routeId" ng-click="setRouteId(workout)">{{workout.name}}</td>
+      <td class="editable" ng-show="workout._id!==routeId" ng-click="setRouteId(workout)">{{workout.exercises | exercises}}</td>
+      <td class="edit" colspan="2" ng-if="workout._id===routeId" sh-edit="workout">
+        <div class="row">
+          <div class="form-group col-xs-6">
+            <input class="form-control" type="text" placeholder="Name" ng-model="editItem.name">
+          </div>
+          <div class="col-xs-6">
+            <div class="add-exercises"></div>
+            <div class="exercises"></div>
+          </div>
+        </div>
+        <button class="btn btn-danger delete" type="button" ng-click="remove(workouts)">Delete</button>
+        <div class="pull-right">
+          <button class="btn btn-default cancel" type="button" ng-click="cancel()">Cancel</button>
+          <button class="btn btn-success save" type="button" ng-click="save()">Save</button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

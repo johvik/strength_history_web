@@ -1,0 +1,22 @@
+@import url("bootstrap.min.css");
+
+button#login {
+  width: 80px;
+}
+
+tr.click,td.editable,td.editable-highlight {
+  cursor: pointer;
+}
+
+tr:hover .editable-highlight {
+  color: #2a6496;
+  text-decoration: underline;
+}
+
+td.edit {
+  background-color: #fff !important;
+}
+
+tr.table-empty:not(:only-child ) {
+  display: none;
+}

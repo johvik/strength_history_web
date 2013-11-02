@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en" ng-app="myApp"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="en" ng-app="myApp"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en" ng-app="myApp"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" ng-app="myApp"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Strength History</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/styles.css">
+    
+    <!-- In production use:
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    -->
+    <script src="/lib/angular/angular.js"></script>
+    <script src="/lib/angular/angular-route.js"></script>
+    <script src="/lib/angular/angular-resource.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/services.js"></script>
+    <script src="/js/controllers.js"></script>
+    <script src="/js/filters.js"></script>
+    <script src="/js/directives.js"></script>
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Strength History</a>
+      </div>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <div id="header" class="">
+          <ul class="nav navbar-nav">
+            <li class="nav-home"><a href="/">Home</a></li>
+            <li class="nav-signup"><a href="/signup">Sign up</a></li>
+          </ul>
+          <form class="navbar-form navbar-right form-inline" action="/" method="post" role="login">
+            <div id="top-small-message" class="visible-xs"></div>
+            <div class="form-group">
+              <label class="sr-only" for="email">Email address</label>
+              <input id="email" name="email" class="form-control" type="email" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label class="sr-only" for="password">Password</label>
+              <input id="password" name="password" class="form-control" type="password" placeholder="Password">
+            </div>
+            <button id="login" type="submit" class="btn btn-default" data-loading-text="Loading">Login</button>
+          </form>
+        </div>
+        <div id="user-header" class="">
+          <ul class="nav navbar-nav">
+            <li class="nav-home"><a href="/">Home</a></li>
+            <li class="nav-history"><a href="/history">History</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="nav-exercises"><a href="/exercises">Exercises</a></li>
+            <li class="nav-workouts"><a href="/workouts">Workouts</a></li>
+            <li class="nav-logout"><a id="logout" href="/logout" data-bypass>Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div id="top-message"></div>
+      <div ng-view></div>
+      <div id="footer">
+        <hr />
+        <p><a href="https://github.com/johvik/strength_history_web">GitHub repository</a> &middot; <a href="https://github.com/johvik/strength_history_web/issues">Issues</a> &middot; <span app-version></span></p>
+      </div>
+    </div>
+  </body>
+</html>
