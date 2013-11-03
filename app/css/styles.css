@@ -8,6 +8,10 @@ tr.click,td.editable,td.editable-highlight {
   cursor: pointer;
 }
 
+tr .editable-highlight {
+  color: #428bca
+}
+
 tr:hover .editable-highlight {
   color: #2a6496;
   text-decoration: underline;

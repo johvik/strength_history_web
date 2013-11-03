@@ -14,19 +14,21 @@
       <td class="editable-highlight" ng-show="workout._id!==routeId" ng-click="setRouteId(workout)">{{workout.name}}</td>
       <td class="editable" ng-show="workout._id!==routeId" ng-click="setRouteId(workout)">{{workout.exercises | exercises}}</td>
       <td class="edit" colspan="2" ng-if="workout._id===routeId" sh-edit="workout">
-        <div class="row">
-          <div class="form-group col-xs-6">
-            <input class="form-control" type="text" placeholder="Name" ng-model="editItem.name">
+        <form name="workout_edit" novalidate>
+          <div class="row">
+            <div class="form-group col-xs-6" ng-class="{'has-error': workout_edit.name.$invalid}">
+              <input class="form-control" type="text" name="name" placeholder="Name" required ng-model="editItem.name" ng-minlength="1" ng-maxlength="64">
+            </div>
+            <div class="col-xs-6">
+              <exercises-edit name="exercises" ng-model="editItem.exercises" valid-exercises></exercises-edit>
+            </div>
           </div>
-          <div class="col-xs-6">
-            <exercises-edit ng-model="editItem.exercises"></exercises-edit>
+          <button class="btn btn-danger delete" type="button" ng-click="remove(workouts)">Delete</button>
+          <div class="pull-right">
+            <button class="btn btn-default cancel" type="button" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-success save" type="button" ng-disabled="workout_edit.$invalid" ng-click="save()">Save</button>
           </div>
-        </div>
-        <button class="btn btn-danger delete" type="button" ng-click="remove(workouts)">Delete</button>
-        <div class="pull-right">
-          <button class="btn btn-default cancel" type="button" ng-click="cancel()">Cancel</button>
-          <button class="btn btn-success save" type="button" ng-click="save()">Save</button>
-        </div>
+        </form>
       </td>
     </tr>
   </tbody>

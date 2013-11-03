@@ -14,19 +14,21 @@
       <td class="editable-highlight" ng-show="exercise._id!==routeId" ng-click="setRouteId(exercise)">{{exercise.name}}</td>
       <td class="editable" ng-show="exercise._id!==routeId" ng-click="setRouteId(exercise)">{{exercise.standardIncrease}}</td>
       <td class="edit" colspan="2" ng-if="exercise._id===routeId" sh-edit="exercise">
-        <div class="row">
-          <div class="form-group col-xs-6">
-            <input class="form-control" type="text" placeholder="Name" ng-model="editItem.name">
+        <form name="exercise_edit" novalidate>
+          <div class="row">
+            <div class="form-group col-xs-6" ng-class="{'has-error': exercise_edit.name.$invalid}">
+              <input class="form-control" type="text" name="name" placeholder="Name" required ng-model="editItem.name" ng-minlength="1" ng-maxlength="64">
+            </div>
+            <div class="form-group col-xs-6" ng-class="{'has-error': exercise_edit.standardIncrease.$invalid}">
+              <input class="form-control" type="number" step="any" name="standardIncrease" placeholder="Standard increase" required ng-model="editItem.standardIncrease">
+            </div>
           </div>
-          <div class="form-group col-xs-6">
-            <input class="form-control" type="number" step="any" placeholder="Standard increase" ng-model="editItem.standardIncrease">
+          <button class="btn btn-danger delete" type="button" ng-click="remove(exercises)">Delete</button>
+          <div class="pull-right">
+            <button class="btn btn-default cancel" type="button" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-success save" type="button" ng-disabled="exercise_edit.$invalid" ng-click="save()">Save</button>
           </div>
-        </div>
-        <button class="btn btn-danger delete" type="button" ng-click="remove(exercises)">Delete</button>
-        <div class="pull-right">
-          <button class="btn btn-default cancel" type="button" ng-click="cancel()">Cancel</button>
-          <button class="btn btn-success save" type="button" ng-click="save()">Save</button>
-        </div>
+        </form>
       </td>
     </tr>
   </tbody>

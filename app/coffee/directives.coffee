@@ -69,6 +69,9 @@ angular.module 'myApp.directives',
       scope:
         editexercises: '=ngModel'
       link: (scope, element, attrs, ngModel) ->
+        scope.$watch 'editexercises',
+          ((val) ->
+            ngModel.$setViewValue val), true
         scope.defaultSelect = (e) ->
           if scope.defaultselect and (e.keyCode is 13 or e.type isnt 'keyup')
             scope.editexercises.push scope.defaultselect
@@ -78,4 +81,16 @@ angular.module 'myApp.directives',
             setTimeout (-> e.target.focus()), 0
         scope.removeExercise = (index) ->
           scope.editexercises.splice index, 1
+  ]
+.directive 'validExercises',
+  [
+    () ->
+      require: 'ngModel'
+      link: (scope, element, attrs, ctrl) ->
+        ctrl.$parsers.unshift (viewValue) ->
+          if null in viewValue
+            ctrl.$setValidity 'exercises', false
+            return undefined
+          ctrl.$setValidity 'exercises', true
+          return viewValue
   ]
