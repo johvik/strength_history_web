@@ -17,7 +17,7 @@ angular.module 'myApp.directives',
   [
     '$rootScope'
     ($rootScope) ->
-      restrict: 'A',
+      restrict: 'A'
       link: (scope, element, attrs) ->
         scope.realItem = scope.$parent[attrs.shEdit] # or scope.$eval attrs.shEdit
         # Create a copy of the real item
@@ -45,4 +45,37 @@ angular.module 'myApp.directives',
               scope.cancel()
               # TODO Show error
               console.log 'error')
+  ]
+.directive 'exerciseSelect',
+  [
+    '$rootScope'
+    'Exercise'
+    ($rootScope, Exercise) ->
+      restrict: 'E'
+      require: 'ngModel'
+      replace: true
+      templateUrl: 'partials/exercise-select.html'
+      link: (scope, element, attrs, ngModel) ->
+        scope.$watch $rootScope.exercises,
+          () ->
+            scope.selectexercises = $rootScope.exercises
+  ]
+.directive 'exercisesEdit',
+  [
+    () ->
+      restrict: 'E'
+      require: 'ngModel'
+      templateUrl: 'partials/exercises-edit.html'
+      scope:
+        editexercises: '=ngModel'
+      link: (scope, element, attrs, ngModel) ->
+        scope.defaultSelect = (e) ->
+          if scope.defaultselect and (e.keyCode is 13 or e.type isnt 'keyup')
+            scope.editexercises.push scope.defaultselect
+            scope.defaultselect = null
+            # Ugly hack to get it working...
+            e.target.blur()
+            setTimeout (-> e.target.focus()), 0
+        scope.removeExercise = (index) ->
+          scope.editexercises.splice index, 1
   ]

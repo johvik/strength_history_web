@@ -19,8 +19,7 @@
             <input class="form-control" type="text" placeholder="Name" ng-model="editItem.name">
           </div>
           <div class="col-xs-6">
-            <div class="add-exercises"></div>
-            <div class="exercises"></div>
+            <exercises-edit ng-model="editItem.exercises"></exercises-edit>
           </div>
         </div>
         <button class="btn btn-danger delete" type="button" ng-click="remove(workouts)">Delete</button>
