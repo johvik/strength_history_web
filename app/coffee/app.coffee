@@ -16,6 +16,8 @@ angular.module 'myApp',
     '$routeProvider'
     '$locationProvider'
     ($routeProvider, $locationProvider) ->
+      $routeProvider.when '/',
+        templateUrl: 'partials/home.html'
       $routeProvider.when '/history',
         templateUrl: 'partials/history.html'
         controller: 'History'
@@ -25,14 +27,18 @@ angular.module 'myApp',
       $routeProvider.when '/workouts',
         templateUrl: 'partials/workouts.html'
         controller: 'Workouts'
+      $routeProvider.when '/signup',
+        templateUrl: 'partials/signup.html'
+        controller: 'Signup'
       $routeProvider.otherwise
-        redirectTo: '/history'
+        redirectTo: '/'
       $locationProvider.html5Mode true
   ])
 .run [
     '$rootScope'
     ($rootScope) ->
       $rootScope.routeId = ''
+      $rootScope.authenticated = UserData.authenticated
       $rootScope.setRouteId = (item) ->
         $rootScope.routeId = item._id
 ]

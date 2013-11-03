@@ -9,13 +9,9 @@ angular.module 'myApp.controllers',
 .controller 'History',
   [
     '$scope'
-    '$http'
     'HistoryData'
     'Workout'
-    ($scope, $http, HistoryData, Workout) ->
-      $http.post '/login',
-        email: 'strength.history@gmail.com'
-        password: 'testing'
+    ($scope, HistoryData, Workout) ->
   ]
 .controller 'Exercises',
   [
@@ -54,4 +50,19 @@ angular.module 'myApp.controllers',
           () ->
             # TODO Show error
             console.log 'error')
+  ]
+.controller 'Signup',
+  [
+    '$scope'
+    '$http'
+    ($scope, $http) ->
+      $scope.submit = ->
+        $http.post '/signup',
+          email: $scope.signupEmail
+          password: $scope.signupPassword
+        .success () ->
+            console.log 'abc'
+        .error (data) ->
+            console.log 'error', data
+        console.log $scope
   ]
